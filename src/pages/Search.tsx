@@ -47,7 +47,7 @@ export default function Search() {
 const s: Record<string, React.CSSProperties> = {
   page: {
     minHeight: '100vh',
-    background: '#FFF5F0',
+    background: '#fff',
     padding: '0 12px',
   },
 
@@ -63,12 +63,12 @@ const s: Record<string, React.CSSProperties> = {
     width: 32,
     height: 32,
     borderRadius: '50%',
-    background: 'rgba(232,180,162,0.2)',
+    background: 'rgba(227,97,123,0.08)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 16,
-    color: '#4A3B3C',
+    color: '#222',
     cursor: 'pointer',
     fontWeight: 700,
     lineHeight: 1,
@@ -91,7 +91,7 @@ const s: Record<string, React.CSSProperties> = {
   sectionTitle: {
     fontSize: 14,
     fontWeight: 600,
-    color: '#4A3B3C',
+    color: '#222',
     marginBottom: 12,
   },
   tagRow: {
@@ -105,8 +105,8 @@ const s: Record<string, React.CSSProperties> = {
     fontSize: 12,
     fontWeight: 500,
     background: '#FFFFFF',
-    color: '#4A3B3C',
-    border: '1px solid #F0E8E0',
+    color: '#222',
+    border: '1px solid #ddd',
     cursor: 'pointer',
     lineHeight: 1.2,
     whiteSpace: 'nowrap',

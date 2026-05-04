@@ -112,7 +112,7 @@ export default function BookingConfirm() {
 const s: Record<string, React.CSSProperties> = {
   page: {
     minHeight: '100vh',
-    background: '#FFF5F0',
+    background: '#fff',
     paddingBottom: 20,
   },
 
@@ -127,12 +127,12 @@ const s: Record<string, React.CSSProperties> = {
     padding: 20,
   },
   notFoundEmoji: { fontSize: 48, lineHeight: 1 },
-  notFoundText: { fontSize: 16, color: '#4A3B3C', fontWeight: 500, margin: 0 },
+  notFoundText: { fontSize: 16, color: '#222', fontWeight: 500, margin: 0 },
   backBtn: {
     marginTop: 8,
     padding: '10px 28px',
     borderRadius: 24,
-    background: '#E8B4A2',
+    background: '#E3617B',
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: 600,
@@ -151,12 +151,12 @@ const s: Record<string, React.CSSProperties> = {
     width: 32,
     height: 32,
     borderRadius: '50%',
-    background: 'rgba(232,180,162,0.2)',
+    background: 'rgba(227,97,123,0.08)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 16,
-    color: '#4A3B3C',
+    color: '#222',
     cursor: 'pointer',
     fontWeight: 700,
     lineHeight: 1,
@@ -164,7 +164,7 @@ const s: Record<string, React.CSSProperties> = {
   navTitle: {
     fontSize: 16,
     fontWeight: 600,
-    color: '#4A3B3C',
+    color: '#222',
   },
   navPlaceholder: { width: 32 },
 
@@ -179,7 +179,7 @@ const s: Record<string, React.CSSProperties> = {
   courseTitle: {
     fontSize: 15,
     fontWeight: 700,
-    color: '#4A3B3C',
+    color: '#222',
     margin: 0,
     lineHeight: 1.3,
   },
@@ -190,11 +190,11 @@ const s: Record<string, React.CSSProperties> = {
   },
   coachName: {
     fontSize: 13,
-    color: '#4A3B3C',
+    color: '#222',
   },
   coachRatingNum: {
     fontSize: 11,
-    color: '#8B7E74',
+    color: '#6a6a6a',
   },
   venueRow: {
     display: 'flex',
@@ -207,11 +207,11 @@ const s: Record<string, React.CSSProperties> = {
   },
   venueName: {
     fontSize: 12,
-    color: '#8B7E74',
+    color: '#6a6a6a',
   },
   address: {
     fontSize: 11,
-    color: '#8B7E74',
+    color: '#6a6a6a',
     marginTop: 2,
     lineHeight: 1.3,
   },
@@ -223,7 +223,7 @@ const s: Record<string, React.CSSProperties> = {
   sectionTitle: {
     fontSize: 14,
     fontWeight: 600,
-    color: '#4A3B3C',
+    color: '#222',
     marginBottom: 10,
   },
 
@@ -239,16 +239,16 @@ const s: Record<string, React.CSSProperties> = {
     fontSize: 12,
     fontWeight: 500,
     background: '#FFFFFF',
-    color: '#4A3B3C',
-    border: '1px solid #F0E8E0',
+    color: '#222',
+    border: '1px solid #ddd',
     cursor: 'pointer',
     lineHeight: 1.2,
     whiteSpace: 'nowrap',
   },
   timeChipActive: {
-    background: '#E8B4A2',
+    background: '#E3617B',
     color: '#FFFFFF',
-    border: '1px solid #E8B4A2',
+    border: '1px solid #E3617B',
   },
 
   // Price Card
@@ -267,7 +267,7 @@ const s: Record<string, React.CSSProperties> = {
     width: '100%',
     padding: '14px 0',
     borderRadius: 24,
-    background: '#E8B4A2',
+    background: '#E3617B',
     color: '#FFFFFF',
     fontSize: 15,
     fontWeight: 700,

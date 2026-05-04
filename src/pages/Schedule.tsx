@@ -148,7 +148,7 @@ export default function Schedule() {
 const s: Record<string, React.CSSProperties> = {
   page: {
     minHeight: '100vh',
-    background: '#FFF5F0',
+    background: '#fff',
     paddingBottom: 80,
   },
 
@@ -157,7 +157,7 @@ const s: Record<string, React.CSSProperties> = {
     textAlign: 'center',
     fontSize: 17,
     fontWeight: 700,
-    color: '#4A3B3C',
+    color: '#222',
     padding: '16px 0 12px',
   },
 
@@ -173,7 +173,7 @@ const s: Record<string, React.CSSProperties> = {
     textAlign: 'center',
     fontSize: 14,
     fontWeight: 600,
-    color: '#4A3B3C',
+    color: '#222',
     marginBottom: 10,
   },
 
@@ -186,7 +186,7 @@ const s: Record<string, React.CSSProperties> = {
     flex: 1,
     textAlign: 'center',
     fontSize: 11,
-    color: '#8B7E74',
+    color: '#6a6a6a',
     fontWeight: 500,
     padding: '4px 0',
   },
@@ -202,7 +202,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   normalDay: {
     fontSize: 12,
-    color: '#4A3B3C',
+    color: '#222',
     lineHeight: 1,
   },
   highlightedDay: {
@@ -212,7 +212,7 @@ const s: Record<string, React.CSSProperties> = {
     width: 24,
     height: 24,
     borderRadius: '50%',
-    background: '#E8B4A2',
+    background: '#E3617B',
     color: '#FFFFFF',
     fontSize: 12,
     fontWeight: 600,
@@ -227,23 +227,23 @@ const s: Record<string, React.CSSProperties> = {
     gap: 4,
     marginTop: 8,
     paddingTop: 8,
-    borderTop: '1px solid #F0E8E0',
+    borderTop: '1px solid #ddd',
   },
   legendDot: {
     fontSize: 10,
-    color: '#E8B4A2',
+    color: '#E3617B',
     lineHeight: 1,
   },
   legendText: {
     fontSize: 11,
-    color: '#8B7E74',
+    color: '#6a6a6a',
   },
 
   // Tab Toggle
   tabRow: {
     display: 'flex',
     margin: '16px 12px 0',
-    borderBottom: '2px solid #F0E8E0',
+    borderBottom: '2px solid #ddd',
   },
   tab: {
     flex: 1,
@@ -251,7 +251,7 @@ const s: Record<string, React.CSSProperties> = {
     padding: '10px 0',
     fontSize: 14,
     fontWeight: 500,
-    color: '#8B7E74',
+    color: '#6a6a6a',
     cursor: 'pointer',
     borderBottom: '2px solid transparent',
     marginBottom: -2,
@@ -259,9 +259,9 @@ const s: Record<string, React.CSSProperties> = {
     background: 'transparent',
   },
   tabActive: {
-    color: '#E8B4A2',
+    color: '#E3617B',
     fontWeight: 600,
-    borderBottom: '2px solid #E8B4A2',
+    borderBottom: '2px solid #E3617B',
     background: 'transparent',
   },
 

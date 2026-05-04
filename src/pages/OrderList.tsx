@@ -15,10 +15,10 @@ const statusMap: Record<string, string[]> = {
 }
 
 const statusDisplay: Record<string, { label: string; color: string }> = {
-  upcoming: { label: '待上课', color: '#E8B4A2' },
-  confirmed: { label: '待上课', color: '#E8B4A2' },
+  upcoming: { label: '待上课', color: '#E3617B' },
+  confirmed: { label: '待上课', color: '#E3617B' },
   completed: { label: '已完成', color: '#7BC67E' },
-  cancelled: { label: '已退款', color: '#8B7E74' },
+  cancelled: { label: '已退款', color: '#6a6a6a' },
 }
 
 export default function OrderList() {
@@ -111,7 +111,7 @@ export default function OrderList() {
 const s: Record<string, React.CSSProperties> = {
   page: {
     minHeight: '100vh',
-    background: '#FFF5F0',
+    background: '#fff',
   },
 
   // NavBar
@@ -126,12 +126,12 @@ const s: Record<string, React.CSSProperties> = {
     width: 32,
     height: 32,
     borderRadius: '50%',
-    background: 'rgba(232,180,162,0.2)',
+    background: 'rgba(227,97,123,0.08)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 16,
-    color: '#4A3B3C',
+    color: '#222',
     cursor: 'pointer',
     fontWeight: 700,
     lineHeight: 1,
@@ -139,7 +139,7 @@ const s: Record<string, React.CSSProperties> = {
   navTitle: {
     fontSize: 16,
     fontWeight: 600,
-    color: '#4A3B3C',
+    color: '#222',
   },
   navPlaceholder: { width: 32 },
 
@@ -158,8 +158,8 @@ const s: Record<string, React.CSSProperties> = {
     fontSize: 12,
     fontWeight: 500,
     background: '#FFFFFF',
-    color: '#8B7E74',
-    border: '1px solid #F0E8E0',
+    color: '#6a6a6a',
+    border: '1px solid #ddd',
     cursor: 'pointer',
     flexShrink: 0,
     whiteSpace: 'nowrap',
@@ -167,9 +167,9 @@ const s: Record<string, React.CSSProperties> = {
     lineHeight: 1.2,
   },
   filterChipActive: {
-    background: '#E8B4A2',
+    background: '#E3617B',
     color: '#FFFFFF',
-    border: '1px solid #E8B4A2',
+    border: '1px solid #E3617B',
   },
 
   // List Area
@@ -195,7 +195,7 @@ const s: Record<string, React.CSSProperties> = {
   courseName: {
     fontSize: 14,
     fontWeight: 700,
-    color: '#4A3B3C',
+    color: '#222',
     margin: 0,
     lineHeight: 1.3,
     flex: 1,
@@ -207,20 +207,20 @@ const s: Record<string, React.CSSProperties> = {
   },
   cardMeta: {
     fontSize: 11,
-    color: '#8B7E74',
+    color: '#6a6a6a',
     display: 'flex',
     alignItems: 'center',
     gap: 4,
     marginBottom: 6,
   },
   metaDot: {
-    color: '#F0E8E0',
+    color: '#ddd',
   },
   cardDate: {
     display: 'flex',
     alignItems: 'center',
     gap: 12,
     fontSize: 11,
-    color: '#8B7E74',
+    color: '#6a6a6a',
   },
 }

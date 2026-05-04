@@ -5,47 +5,159 @@ export default function Profile() {
   const nav = useNavigate()
 
   return (
-    <div style={s.page}>
+    <div style={{ minHeight: '100vh', background: '#fff' }}>
       {/* Header */}
-      <div style={s.header}>
+      <div
+        style={{
+          background: 'linear-gradient(135deg, #E3617B, #D44A65)',
+          padding: '30px 16px 24px',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
         {/* Settings gear top-right */}
-        <div style={s.settingsIcon} onClick={() => nav('/settings')}>⚙️</div>
-
-        {/* User Info */}
-        <div style={s.avatar}>
-          <span style={s.avatarText}>{(userProfile.name || '李')[0]}</span>
+        <div
+          onClick={() => nav('/settings')}
+          style={{
+            position: 'absolute',
+            top: 14,
+            right: 16,
+            fontSize: 18,
+            color: 'rgba(255,255,255,0.8)',
+            cursor: 'pointer',
+            lineHeight: 1,
+            padding: 4,
+          }}
+        >
+          ⚙️
         </div>
-        <h2 style={s.userName}>{userProfile.name}</h2>
-        <div style={s.userMeta}>
+
+        {/* Avatar */}
+        <div
+          style={{
+            width: 64,
+            height: 64,
+            borderRadius: '50%',
+            background: 'rgba(255,255,255,0.25)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginBottom: 10,
+          }}
+        >
+          <span
+            style={{
+              fontSize: 24,
+              fontWeight: 600,
+              color: '#fff',
+              lineHeight: 1,
+            }}
+          >
+            {(userProfile.name || '李')[0]}
+          </span>
+        </div>
+        <h2
+          style={{
+            fontSize: 18,
+            fontWeight: 600,
+            color: '#fff',
+            margin: '0 0 4px 0',
+          }}
+        >
+          {userProfile.name}
+        </h2>
+        <div
+          style={{
+            fontSize: 12,
+            color: 'rgba(255,255,255,0.75)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+          }}
+        >
           <span>{userProfile.phone}</span>
-          <span style={s.metaDot}>·</span>
+          <span style={{ color: 'rgba(255,255,255,0.4)' }}>·</span>
           <span>{userProfile.membership}</span>
         </div>
       </div>
 
       {/* Stats Cards (floating up) */}
-      <div style={s.statsRow}>
-        <div style={s.statCard}>
-          <span style={s.statNum}>{userProfile.stats.totalClasses}</span>
-          <span style={s.statLabel}>累计课时</span>
-        </div>
-        <div style={s.statCard}>
-          <span style={s.statNum}>{userProfile.stats.totalMinutes}</span>
-          <span style={s.statLabel}>训练分钟</span>
-        </div>
-        <div style={s.statCard}>
-          <span style={s.statNum}>{userProfile.stats.followedCoaches}</span>
-          <span style={s.statLabel}>关注教练</span>
-        </div>
+      <div
+        style={{
+          display: 'flex',
+          gap: 10,
+          margin: '-16px 12px 0',
+          position: 'relative',
+          zIndex: 2,
+        }}
+      >
+        {[
+          { num: userProfile.stats.totalClasses, label: '累计课时' },
+          { num: userProfile.stats.totalMinutes, label: '训练分钟' },
+          { num: userProfile.stats.followedCoaches, label: '关注教练' },
+        ].map((stat, i) => (
+          <div
+            key={i}
+            style={{
+              flex: 1,
+              background: '#fff',
+              borderRadius: 14,
+              border: '1px solid #ddd',
+              padding: '14px 8px',
+              textAlign: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 4,
+            }}
+          >
+            <span
+              style={{
+                fontSize: 20,
+                fontWeight: 600,
+                color: '#E3617B',
+                lineHeight: 1.18,
+              }}
+            >
+              {stat.num}
+            </span>
+            <span style={{ fontSize: 11, color: '#929292', lineHeight: 1.29 }}>
+              {stat.label}
+            </span>
+          </div>
+        ))}
       </div>
 
       {/* Order Status Bar */}
-      <div style={s.orderSection}>
-        <div style={s.orderHeader} onClick={() => nav('/orders')}>
+      <div
+        style={{
+          margin: '16px 12px 0',
+          background: '#fff',
+          borderRadius: 14,
+          border: '1px solid #ddd',
+          padding: '14px 16px',
+        }}
+      >
+        <div
+          onClick={() => nav('/orders')}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            fontSize: 15,
+            fontWeight: 600,
+            color: '#222',
+            marginBottom: 14,
+            cursor: 'pointer',
+          }}
+        >
           <span>📋 我的订单</span>
-          <span style={s.orderArrow}>›</span>
+          <span style={{ fontSize: 16, color: '#929292', fontWeight: 500 }}>
+            ›
+          </span>
         </div>
-        <div style={s.orderIconsRow}>
+        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           {[
             { icon: '💰', label: '待付款' },
             { icon: '📅', label: '待上课' },
@@ -54,325 +166,314 @@ export default function Profile() {
           ].map((item) => (
             <div
               key={item.label}
-              style={s.orderIconItem}
               onClick={() => nav('/orders')}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 6,
+                cursor: 'pointer',
+              }}
             >
-              <span style={s.orderIcon}>{item.icon}</span>
-              <span style={s.orderIconLabel}>{item.label}</span>
+              <span style={{ fontSize: 24, lineHeight: 1 }}>{item.icon}</span>
+              <span style={{ fontSize: 12, color: '#6a6a6a' }}>
+                {item.label}
+              </span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Menu Groups */}
-      <div style={s.menuContainer}>
+      <div style={{ padding: '0 12px', marginTop: 12 }}>
         {/* Group 1 */}
-        <div style={s.menuGroup}>
-          <div style={s.menuItem}>
-            <div style={s.menuItemLeft}>
-              <span style={s.menuItemIcon}>💳</span>
-              <span style={s.menuItemLabel}>储值卡</span>
+        <div
+          style={{
+            background: '#fff',
+            borderRadius: 14,
+            border: '1px solid #ddd',
+            marginBottom: 12,
+            overflow: 'hidden',
+          }}
+        >
+          {[
+            { icon: '💳', label: '储值卡', value: `¥${userProfile.balance}` },
+            {
+              icon: '🎫',
+              label: '优惠券',
+              value: `${userProfile.coupons}张可用`,
+              highlight: true,
+            },
+            { icon: '📞', label: '客服帮助' },
+          ].map((item, idx, arr) => (
+            <div key={item.label}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '14px 16px',
+                  cursor: 'pointer',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 10,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 18,
+                      lineHeight: 1,
+                      width: 24,
+                      textAlign: 'center' as const,
+                    }}
+                  >
+                    {item.icon}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 15,
+                      color: '#222',
+                      fontWeight: 500,
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                >
+                  {item.value && (
+                    <span
+                      style={{
+                        fontSize: 13,
+                        color: item.highlight ? '#E3617B' : '#6a6a6a',
+                        fontWeight: item.highlight ? 500 : 400,
+                      }}
+                    >
+                      {item.value}
+                    </span>
+                  )}
+                  <span
+                    style={{
+                      fontSize: 16,
+                      color: '#929292',
+                      lineHeight: 1,
+                    }}
+                  >
+                    ›
+                  </span>
+                </div>
+              </div>
+              {idx < arr.length - 1 && (
+                <div
+                  style={{
+                    height: 1,
+                    background: '#ddd',
+                    margin: '0 16px',
+                  }}
+                />
+              )}
             </div>
-            <div style={s.menuItemRight}>
-              <span style={s.menuItemValue}>¥{userProfile.balance}</span>
-              <span style={s.menuArrow}>›</span>
-            </div>
-          </div>
-          <div style={s.menuDivider} />
-          <div style={s.menuItem}>
-            <div style={s.menuItemLeft}>
-              <span style={s.menuItemIcon}>🎫</span>
-              <span style={s.menuItemLabel}>优惠券</span>
-            </div>
-            <div style={s.menuItemRight}>
-              <span style={s.menuItemValueHighlight}>{userProfile.coupons}张可用</span>
-              <span style={s.menuArrow}>›</span>
-            </div>
-          </div>
-          <div style={s.menuDivider} />
-          <div style={s.menuItem}>
-            <div style={s.menuItemLeft}>
-              <span style={s.menuItemIcon}>📞</span>
-              <span style={s.menuItemLabel}>客服帮助</span>
-            </div>
-            <div style={s.menuItemRight}>
-              <span style={s.menuArrow}>›</span>
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Group 2 */}
-        <div style={s.menuGroup}>
-          <div style={s.menuItem}>
-            <div style={s.menuItemLeft}>
-              <span style={s.menuItemIcon}>📊</span>
-              <span style={s.menuItemLabel}>训练档案</span>
+        <div
+          style={{
+            background: '#fff',
+            borderRadius: 14,
+            border: '1px solid #ddd',
+            marginBottom: 12,
+            overflow: 'hidden',
+          }}
+        >
+          {[
+            { icon: '📊', label: '训练档案' },
+            {
+              icon: '⭐',
+              label: '我的评价',
+              value: '待评价 1条',
+              highlight: true,
+            },
+            {
+              icon: '❤️',
+              label: '关注教练',
+              value: `${userProfile.stats.followedCoaches}位`,
+            },
+            { icon: '🏛️', label: '收藏场馆', value: '3家' },
+          ].map((item, idx, arr) => (
+            <div key={item.label}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '14px 16px',
+                  cursor: 'pointer',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 10,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 18,
+                      lineHeight: 1,
+                      width: 24,
+                      textAlign: 'center' as const,
+                    }}
+                  >
+                    {item.icon}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 15,
+                      color: '#222',
+                      fontWeight: 500,
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                >
+                  {item.value && (
+                    <span
+                      style={{
+                        fontSize: 13,
+                        color: item.highlight ? '#E3617B' : '#6a6a6a',
+                        fontWeight: item.highlight ? 500 : 400,
+                      }}
+                    >
+                      {item.value}
+                    </span>
+                  )}
+                  <span
+                    style={{
+                      fontSize: 16,
+                      color: '#929292',
+                      lineHeight: 1,
+                    }}
+                  >
+                    ›
+                  </span>
+                </div>
+              </div>
+              {idx < arr.length - 1 && (
+                <div
+                  style={{
+                    height: 1,
+                    background: '#ddd',
+                    margin: '0 16px',
+                  }}
+                />
+              )}
             </div>
-            <div style={s.menuItemRight}>
-              <span style={s.menuArrow}>›</span>
-            </div>
-          </div>
-          <div style={s.menuDivider} />
-          <div style={s.menuItem}>
-            <div style={s.menuItemLeft}>
-              <span style={s.menuItemIcon}>⭐</span>
-              <span style={s.menuItemLabel}>我的评价</span>
-            </div>
-            <div style={s.menuItemRight}>
-              <span style={s.menuItemValueHighlight}>待评价 1条</span>
-              <span style={s.menuArrow}>›</span>
-            </div>
-          </div>
-          <div style={s.menuDivider} />
-          <div style={s.menuItem}>
-            <div style={s.menuItemLeft}>
-              <span style={s.menuItemIcon}>❤️</span>
-              <span style={s.menuItemLabel}>关注教练</span>
-            </div>
-            <div style={s.menuItemRight}>
-              <span style={s.menuItemValue}>{userProfile.stats.followedCoaches}位</span>
-              <span style={s.menuArrow}>›</span>
-            </div>
-          </div>
-          <div style={s.menuDivider} />
-          <div style={s.menuItem}>
-            <div style={s.menuItemLeft}>
-              <span style={s.menuItemIcon}>🏛️</span>
-              <span style={s.menuItemLabel}>收藏场馆</span>
-            </div>
-            <div style={s.menuItemRight}>
-              <span style={s.menuItemValue}>3家</span>
-              <span style={s.menuArrow}>›</span>
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Group 3 */}
-        <div style={s.menuGroup}>
-          <div style={s.menuItem}>
-            <div style={s.menuItemLeft}>
-              <span style={s.menuItemIcon}>📍</span>
-              <span style={s.menuItemLabel}>常用地址</span>
+        <div
+          style={{
+            background: '#fff',
+            borderRadius: 14,
+            border: '1px solid #ddd',
+            marginBottom: 12,
+            overflow: 'hidden',
+          }}
+        >
+          {[
+            { icon: '📍', label: '常用地址' },
+            { icon: '⚙️', label: '设置' },
+          ].map((item, idx, arr) => (
+            <div key={item.label}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '14px 16px',
+                  cursor: 'pointer',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 10,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 18,
+                      lineHeight: 1,
+                      width: 24,
+                      textAlign: 'center' as const,
+                    }}
+                  >
+                    {item.icon}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 15,
+                      color: '#222',
+                      fontWeight: 500,
+                    }}
+                  >
+                    {item.label}
+                  </span>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 16,
+                      color: '#929292',
+                      lineHeight: 1,
+                    }}
+                  >
+                    ›
+                  </span>
+                </div>
+              </div>
+              {idx < arr.length - 1 && (
+                <div
+                  style={{
+                    height: 1,
+                    background: '#ddd',
+                    margin: '0 16px',
+                  }}
+                />
+              )}
             </div>
-            <div style={s.menuItemRight}>
-              <span style={s.menuArrow}>›</span>
-            </div>
-          </div>
-          <div style={s.menuDivider} />
-          <div style={s.menuItem}>
-            <div style={s.menuItemLeft}>
-              <span style={s.menuItemIcon}>⚙️</span>
-              <span style={s.menuItemLabel}>设置</span>
-            </div>
-            <div style={s.menuItemRight}>
-              <span style={s.menuArrow}>›</span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
       {/* Bottom spacer for TabBar */}
-      <div style={s.bottomSpacer} />
+      <div style={{ height: 70 }} />
     </div>
   )
-}
-
-const s: Record<string, React.CSSProperties> = {
-  page: {
-    minHeight: '100vh',
-    background: '#FFF5F0',
-  },
-
-  // Header
-  header: {
-    background: 'linear-gradient(135deg, #E8B4A2, #D4A08A)',
-    padding: '30px 16px 24px',
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  settingsIcon: {
-    position: 'absolute',
-    top: 14,
-    right: 16,
-    fontSize: 18,
-    color: 'rgba(255,255,255,0.8)',
-    cursor: 'pointer',
-    lineHeight: 1,
-    padding: 4,
-  },
-
-  // Avatar
-  avatar: {
-    width: 64,
-    height: 64,
-    borderRadius: '50%',
-    background: 'rgba(255,255,255,0.25)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 10,
-  },
-  avatarText: {
-    fontSize: 24,
-    fontWeight: 600,
-    color: '#FFFFFF',
-    lineHeight: 1,
-  },
-  userName: {
-    fontSize: 18,
-    fontWeight: 700,
-    color: '#FFFFFF',
-    margin: '0 0 4px 0',
-  },
-  userMeta: {
-    fontSize: 12,
-    color: 'rgba(255,255,255,0.75)',
-    display: 'flex',
-    alignItems: 'center',
-    gap: 6,
-  },
-  metaDot: {
-    color: 'rgba(255,255,255,0.4)',
-  },
-
-  // Stats Cards
-  statsRow: {
-    display: 'flex',
-    gap: 10,
-    margin: '-16px 12px 0',
-    position: 'relative',
-    zIndex: 2,
-  },
-  statCard: {
-    flex: 1,
-    background: '#FFFFFF',
-    borderRadius: 14,
-    padding: '14px 8px',
-    textAlign: 'center',
-    boxShadow: '0 2px 12px rgba(74,59,60,0.06)',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 4,
-  },
-  statNum: {
-    fontSize: 20,
-    fontWeight: 700,
-    color: '#E8B4A2',
-    lineHeight: 1.2,
-  },
-  statLabel: {
-    fontSize: 10,
-    color: '#B8A89E',
-    lineHeight: 1.2,
-  },
-
-  // Order Status Bar
-  orderSection: {
-    margin: '16px 12px 0',
-    background: '#FFFFFF',
-    borderRadius: 16,
-    padding: '14px 16px',
-    boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
-  },
-  orderHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    fontSize: 14,
-    fontWeight: 600,
-    color: '#4A3B3C',
-    marginBottom: 14,
-    cursor: 'pointer',
-  },
-  orderArrow: {
-    fontSize: 16,
-    color: '#B8A89E',
-    fontWeight: 400,
-  },
-  orderIconsRow: {
-    display: 'flex',
-    justifyContent: 'space-around',
-  },
-  orderIconItem: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: 6,
-    cursor: 'pointer',
-  },
-  orderIcon: {
-    fontSize: 24,
-    lineHeight: 1,
-  },
-  orderIconLabel: {
-    fontSize: 11,
-    color: '#8B7E74',
-  },
-
-  // Menu Groups
-  menuContainer: {
-    padding: '0 12px',
-    marginTop: 12,
-  },
-  menuGroup: {
-    background: '#FFFFFF',
-    borderRadius: 16,
-    marginBottom: 12,
-    boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
-    overflow: 'hidden',
-  },
-  menuItem: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '14px 16px',
-    cursor: 'pointer',
-  },
-  menuItemLeft: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 10,
-  },
-  menuItemIcon: {
-    fontSize: 18,
-    lineHeight: 1,
-    width: 24,
-    textAlign: 'center',
-  },
-  menuItemLabel: {
-    fontSize: 14,
-    color: '#4A3B3C',
-    fontWeight: 500,
-  },
-  menuItemRight: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 4,
-  },
-  menuItemValue: {
-    fontSize: 12,
-    color: '#8B7E74',
-  },
-  menuItemValueHighlight: {
-    fontSize: 12,
-    color: '#E8B4A2',
-    fontWeight: 500,
-  },
-  menuArrow: {
-    fontSize: 16,
-    color: '#B8A89E',
-    lineHeight: 1,
-  },
-  menuDivider: {
-    height: 1,
-    background: '#F0E8E0',
-    margin: '0 16px',
-  },
-
-  // Bottom Spacer for TabBar
-  bottomSpacer: {
-    height: 70,
-  },
 }

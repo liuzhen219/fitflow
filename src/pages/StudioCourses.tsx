@@ -23,12 +23,12 @@ export default function StudioCourses() {
   }, [])
 
   const filtered = useMemo(() => {
-    let result = [...studioCourses]
+    const result = [...studioCourses]
 
     if (activeFilter === 'corebed') {
-      result = result.filter((c) => c.title.includes('核心床'))
+      return result.filter((c) => c.title.includes('核心床'))
     } else if (activeFilter === 'mat') {
-      result = result.filter((c) => c.title.includes('垫上'))
+      return result.filter((c) => c.title.includes('垫上'))
     }
 
     if (activeFilter === 'distance') {
@@ -47,15 +47,32 @@ export default function StudioCourses() {
   }, [activeFilter, studioCourses])
 
   return (
-    <div style={s.page}>
-      {/* Filter chips */}
-      <div style={s.filterRow}>
+    <div style={{ minHeight: '100vh', background: '#fff', paddingBottom: 32 }}>
+      {/* Filter chips — Airbnb pill style */}
+      <div
+        style={{
+          display: 'flex',
+          gap: 8,
+          overflowX: 'auto',
+          whiteSpace: 'nowrap',
+          padding: '12px 16px',
+        }}
+      >
         {filters.map((f) => (
           <span
             key={f.key}
             style={{
-              ...s.chip,
-              ...(activeFilter === f.key ? s.chipActive : {}),
+              display: 'inline-block',
+              padding: '8px 16px',
+              borderRadius: 32,
+              fontSize: 13,
+              fontWeight: 500,
+              flexShrink: 0,
+              whiteSpace: 'nowrap',
+              cursor: 'pointer',
+              color: activeFilter === f.key ? '#fff' : '#222',
+              background: activeFilter === f.key ? '#222' : '#fff',
+              border: activeFilter === f.key ? 'none' : '1px solid #ddd',
             }}
             onClick={() => setActiveFilter(f.key)}
           >
@@ -64,78 +81,32 @@ export default function StudioCourses() {
         ))}
       </div>
 
-      {/* Course list */}
-      <div style={s.list}>
+      {/* Course list — Airbnb divider-list style */}
+      <div style={{ padding: '0 16px' }}>
         {filtered.length > 0 ? (
           filtered.map((course) => (
-            <div key={course.id} style={{ marginBottom: 12 }}>
-              <CourseCard
-                title={course.title}
-                coachName={course.coachName}
-                venueName={course.venueName}
-                distance={course.distance}
-                duration={`${course.duration} min`}
-                price={course.price}
-                time={course.time}
-                imageGradient={course.imageGradient}
-                isHomeService={course.isHomeService}
-                thumbnail={course.thumbnail}
-                onClick={() => nav(`/course/${course.id}`)}
-              />
-            </div>
+            <CourseCard
+              key={course.id}
+              title={course.title}
+              coachName={course.coachName}
+              venueName={course.venueName}
+              distance={course.distance}
+              duration={course.duration}
+              price={course.price}
+              time={course.time}
+              imageGradient={course.imageGradient}
+              isHomeService={course.isHomeService}
+              thumbnail={course.thumbnail}
+              onClick={() => nav(`/course/${course.id}`)}
+            />
           ))
         ) : (
-          <EmptyState
-            icon="📭"
-            text="暂无符合条件的场馆课程"
-          />
+          <EmptyState icon="📭" text="暂无符合条件的场馆课程" />
         )}
       </div>
 
       {/* Bottom spacer for TabBar */}
-      <div style={s.bottomSpacer} />
+      <div style={{ height: 70 }} />
     </div>
   )
-}
-
-const s: Record<string, React.CSSProperties> = {
-  page: {
-    minHeight: '100vh',
-    background: '#FFF5F0',
-    padding: '0 16px',
-    paddingTop: 12,
-  },
-  filterRow: {
-    display: 'flex',
-    gap: 8,
-    overflowX: 'auto',
-    whiteSpace: 'nowrap',
-    paddingBottom: 12,
-    paddingTop: 4,
-  },
-  chip: {
-    display: 'inline-block',
-    padding: '7px 16px',
-    borderRadius: 18,
-    fontSize: 12,
-    color: '#8B7E74',
-    background: '#FFFFFF',
-    border: '1px solid #F0E8E0',
-    cursor: 'pointer',
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-    fontWeight: 400,
-  },
-  chipActive: {
-    color: '#FFFFFF',
-    background: '#E8B4A2',
-    borderColor: '#E8B4A2',
-    fontWeight: 500,
-  },
-  list: {
-    paddingBottom: 8,
-  },
-  bottomSpacer: {
-    height: 70,
-  },
 }

@@ -168,7 +168,7 @@ export default function PostReview() {
 const s: Record<string, React.CSSProperties> = {
   page: {
     minHeight: '100vh',
-    background: '#FFF5F0',
+    background: '#fff',
   },
   scrollArea: {
     padding: '0 12px 40px',
@@ -186,12 +186,12 @@ const s: Record<string, React.CSSProperties> = {
     width: 32,
     height: 32,
     borderRadius: '50%',
-    background: 'rgba(232,180,162,0.2)',
+    background: 'rgba(227,97,123,0.08)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 16,
-    color: '#4A3B3C',
+    color: '#222',
     cursor: 'pointer',
     fontWeight: 700,
     lineHeight: 1,
@@ -199,7 +199,7 @@ const s: Record<string, React.CSSProperties> = {
   navTitle: {
     fontSize: 16,
     fontWeight: 600,
-    color: '#4A3B3C',
+    color: '#222',
   },
   navPlaceholder: { width: 32 },
 
@@ -214,12 +214,12 @@ const s: Record<string, React.CSSProperties> = {
     padding: 20,
   },
   notFoundEmoji: { fontSize: 48, lineHeight: 1 },
-  notFoundText: { fontSize: 16, color: '#4A3B3C', fontWeight: 500, margin: 0 },
+  notFoundText: { fontSize: 16, color: '#222', fontWeight: 500, margin: 0 },
   backBtn: {
     marginTop: 8,
     padding: '10px 28px',
     borderRadius: 24,
-    background: '#E8B4A2',
+    background: '#E3617B',
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: 600,
@@ -237,20 +237,20 @@ const s: Record<string, React.CSSProperties> = {
   courseName: {
     fontSize: 15,
     fontWeight: 700,
-    color: '#4A3B3C',
+    color: '#222',
     margin: '0 0 6px 0',
     lineHeight: 1.3,
   },
   courseMeta: {
     fontSize: 12,
-    color: '#8B7E74',
+    color: '#6a6a6a',
     display: 'flex',
     alignItems: 'center',
     gap: 4,
     flexWrap: 'wrap',
   },
   metaDot: {
-    color: '#F0E8E0',
+    color: '#ddd',
   },
 
   // Section
@@ -264,7 +264,7 @@ const s: Record<string, React.CSSProperties> = {
   sectionTitle: {
     fontSize: 14,
     fontWeight: 600,
-    color: '#4A3B3C',
+    color: '#222',
     marginBottom: 10,
   },
 
@@ -277,7 +277,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   ratingLabel: {
     fontSize: 12,
-    color: '#E8B4A2',
+    color: '#E3617B',
     fontWeight: 600,
   },
 
@@ -293,22 +293,22 @@ const s: Record<string, React.CSSProperties> = {
     fontSize: 12,
     fontWeight: 500,
     background: '#FFFFFF',
-    color: '#8B7E74',
-    border: '1px solid #F0E8E0',
+    color: '#6a6a6a',
+    border: '1px solid #ddd',
     cursor: 'pointer',
     lineHeight: 1.2,
     whiteSpace: 'nowrap',
     userSelect: 'none',
   },
   tagChipCoachActive: {
-    background: '#E8B4A2',
+    background: '#E3617B',
     color: '#FFFFFF',
-    border: '1px solid #E8B4A2',
+    border: '1px solid #E3617B',
   },
   tagChipVenueActive: {
-    background: '#C4A882',
+    background: '#E3617B',
     color: '#FFFFFF',
-    border: '1px solid #C4A882',
+    border: '1px solid #E3617B',
   },
 
   // Text Area
@@ -317,10 +317,10 @@ const s: Record<string, React.CSSProperties> = {
     minHeight: 80,
     background: '#FFFFFF',
     borderRadius: 12,
-    border: '1px solid #F0E8E0',
+    border: '1px solid #ddd',
     padding: 12,
     fontSize: 12,
-    color: '#4A3B3C',
+    color: '#222',
     outline: 'none',
     lineHeight: 1.6,
     overflowY: 'auto',
@@ -330,7 +330,7 @@ const s: Record<string, React.CSSProperties> = {
   charCount: {
     textAlign: 'right',
     fontSize: 11,
-    color: '#B8A89E',
+    color: '#929292',
     marginTop: 6,
   },
 
@@ -343,7 +343,7 @@ const s: Record<string, React.CSSProperties> = {
     width: 60,
     height: 60,
     borderRadius: 10,
-    border: '1.5px dashed #F0E8E0',
+    border: '1.5px dashed #ddd',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -364,7 +364,7 @@ const s: Record<string, React.CSSProperties> = {
     width: '100%',
     padding: '14px 0',
     borderRadius: 24,
-    background: '#E8B4A2',
+    background: '#E3617B',
     color: '#FFFFFF',
     fontSize: 15,
     fontWeight: 700,

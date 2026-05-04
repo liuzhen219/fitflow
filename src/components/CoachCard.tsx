@@ -7,69 +7,9 @@ interface CoachCardProps {
   rating: number
   classCount: number
   price: number
-  gradient: string
   imageUrl?: string
+  gradient: string
   onClick: () => void
-}
-
-const s: Record<string, React.CSSProperties> = {
-  card: {
-    minWidth: 148,
-    flexShrink: 0,
-    background: '#FFFFFF',
-    borderRadius: 16,
-    overflow: 'hidden',
-    cursor: 'pointer',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  gradientArea: {
-    height: 110,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 48,
-    fontWeight: 700,
-    color: 'rgba(255,255,255,0.7)',
-    lineHeight: 1,
-  },
-  bottom: {
-    padding: '10px 10px 12px',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 4,
-  },
-  name: {
-    fontSize: 13,
-    fontWeight: 700,
-    color: '#4A3B3C',
-    margin: 0,
-    lineHeight: 1.2,
-  },
-  cert: {
-    fontSize: 10,
-    color: '#8B7E74',
-    margin: 0,
-    lineHeight: 1.2,
-  },
-  ratingRow: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 4,
-    fontSize: 11,
-    color: '#8B7E74',
-  },
-  star: {
-    color: '#E8B4A2',
-  },
-  price: {
-    fontSize: 13,
-    fontWeight: 700,
-    color: '#E8B4A2',
-    margin: 0,
-    lineHeight: 1.2,
-  },
 }
 
 const CoachCard: React.FC<CoachCardProps> = ({
@@ -79,33 +19,91 @@ const CoachCard: React.FC<CoachCardProps> = ({
   rating,
   classCount,
   price,
-  gradient,
   imageUrl,
+  gradient,
   onClick,
-}) => {
-  return (
-    <div style={s.card} onClick={onClick}>
-      <div style={{ ...s.gradientArea, background: gradient }}>
-        {imageUrl ? (
-          <img src={imageUrl} alt={name} style={{ objectFit: 'cover', width: '100%', height: '100%', borderTopLeftRadius: 16, borderTopRightRadius: 16 }} />
-        ) : (
-          name.charAt(0)
-        )}
-      </div>
-      <div style={s.bottom}>
-        <p style={s.name}>{name}</p>
-        <p style={s.cert}>{certification}</p>
-        <div style={s.ratingRow}>
-          <span style={s.star}>
-            {'★'.repeat(Math.floor(rating))}{'☆'.repeat(5 - Math.floor(rating))}
-          </span>
-          <span>{rating.toFixed(1)}</span>
-          <span>| {classCount}课</span>
+}) => (
+  <div
+    onClick={onClick}
+    style={{
+      minWidth: 156,
+      cursor: 'pointer',
+      flexShrink: 0,
+    }}
+  >
+    {/* Photo — 4:3 Airbnb style */}
+    <div
+      style={{
+        width: '100%',
+        height: 200,
+        borderRadius: 14,
+        overflow: 'hidden',
+        background: gradient,
+        position: 'relative',
+      }}
+    >
+      {imageUrl ? (
+        <img
+          src={imageUrl}
+          alt={name}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      ) : (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+            fontSize: 64,
+            color: '#fff',
+          }}
+        >
+          {name[0]}
         </div>
-        <p style={s.price}>¥{price}/节起</p>
+      )}
+    </div>
+    {/* Text below image — Airbnb listing card pattern */}
+    <div style={{ padding: '12px 0 0' }}>
+      <div style={{ fontWeight: 600, fontSize: 15, lineHeight: 1.25, color: '#222' }}>
+        {name}
+      </div>
+      <div
+        style={{
+          fontSize: 14,
+          fontWeight: 500,
+          color: '#6a6a6a',
+          lineHeight: 1.29,
+          marginTop: 2,
+        }}
+      >
+        {certification}
+      </div>
+      <div
+        style={{
+          fontSize: 14,
+          fontWeight: 500,
+          color: '#6a6a6a',
+          lineHeight: 1.29,
+        }}
+      >
+        ⭐ {rating} · {classCount}节课
+      </div>
+      <div
+        style={{
+          fontSize: 15,
+          fontWeight: 600,
+          color: '#222',
+          marginTop: 4,
+        }}
+      >
+        <span className="num">¥{price}</span>
+        <span style={{ fontSize: 14, fontWeight: 500, color: '#6a6a6a' }}>
+          {' '}/节起
+        </span>
       </div>
     </div>
-  )
-}
+  </div>
+)
 
 export default CoachCard

@@ -6,7 +6,11 @@ interface StarRatingProps {
   size?: number
 }
 
-const StarRating: React.FC<StarRatingProps> = ({ value, onChange, size = 28 }) => {
+const StarRating: React.FC<StarRatingProps> = ({
+  value,
+  onChange,
+  size = 28,
+}) => {
   const [hover, setHover] = useState(0)
 
   const active = hover || value

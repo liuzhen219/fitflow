@@ -75,7 +75,7 @@ export default function CheckIn() {
 const s: Record<string, React.CSSProperties> = {
   page: {
     minHeight: '100vh',
-    background: '#FFF5F0',
+    background: '#fff',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -94,12 +94,12 @@ const s: Record<string, React.CSSProperties> = {
     width: 32,
     height: 32,
     borderRadius: '50%',
-    background: 'rgba(232,180,162,0.2)',
+    background: 'rgba(227,97,123,0.08)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 16,
-    color: '#4A3B3C',
+    color: '#222',
     cursor: 'pointer',
     fontWeight: 700,
     lineHeight: 1,
@@ -107,7 +107,7 @@ const s: Record<string, React.CSSProperties> = {
   navTitle: {
     fontSize: 16,
     fontWeight: 600,
-    color: '#4A3B3C',
+    color: '#222',
   },
   navPlaceholder: { width: 32 },
 
@@ -122,12 +122,12 @@ const s: Record<string, React.CSSProperties> = {
     padding: 20,
   },
   notFoundEmoji: { fontSize: 48, lineHeight: 1 },
-  notFoundText: { fontSize: 16, color: '#4A3B3C', fontWeight: 500, margin: 0 },
+  notFoundText: { fontSize: 16, color: '#222', fontWeight: 500, margin: 0 },
   backBtn: {
     marginTop: 8,
     padding: '10px 28px',
     borderRadius: 24,
-    background: '#E8B4A2',
+    background: '#E3617B',
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: 600,
@@ -147,7 +147,7 @@ const s: Record<string, React.CSSProperties> = {
   courseName: {
     fontSize: 16,
     fontWeight: 700,
-    color: '#4A3B3C',
+    color: '#222',
     margin: '0 0 12px 0',
     lineHeight: 1.3,
   },
@@ -165,7 +165,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   infoText: {
     fontSize: 13,
-    color: '#8B7E74',
+    color: '#6a6a6a',
   },
 
   // QR Code
@@ -179,7 +179,7 @@ const s: Record<string, React.CSSProperties> = {
     height: 200,
     background: '#FFFFFF',
     borderRadius: 16,
-    boxShadow: '0 4px 24px rgba(74,59,60,0.08)',
+    boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -191,7 +191,7 @@ const s: Record<string, React.CSSProperties> = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    border: '2px dashed #F0E8E0',
+    border: '2px dashed #ddd',
     borderRadius: 8,
   },
   qrEmoji: {
@@ -203,7 +203,7 @@ const s: Record<string, React.CSSProperties> = {
   hintText: {
     marginTop: 24,
     fontSize: 13,
-    color: '#8B7E74',
+    color: '#6a6a6a',
     textAlign: 'center',
     lineHeight: 1.6,
   },

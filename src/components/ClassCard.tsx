@@ -13,14 +13,14 @@ interface ClassCardProps {
 }
 
 const statusConfig: Record<string, { color: string; label: string; bg: string }> = {
-  upcoming: { color: '#E8B4A2', label: '待上课', bg: '#FFF5F0' },
-  confirmed: { color: '#C4A882', label: '待确认', bg: '#FFF5F0' },
+  upcoming: { color: '#E3617B', label: '待上课', bg: '#fff' },
+  confirmed: { color: '#E3617B', label: '待确认', bg: '#fff' },
   completed: { color: '#7BC67E', label: '已完成', bg: '#F5FFF5' },
 }
 
 const borderColorMap: Record<string, string> = {
-  upcoming: '#E8B4A2',
-  confirmed: '#C4A882',
+  upcoming: '#E3617B',
+  confirmed: '#E3617B',
   completed: '#7BC67E',
 }
 
@@ -53,7 +53,7 @@ const s: Record<string, React.CSSProperties> = {
   courseName: {
     fontSize: 13,
     fontWeight: 700,
-    color: '#4A3B3C',
+    color: '#222',
     margin: 0,
     lineHeight: 1.3,
     flex: 1,
@@ -72,13 +72,13 @@ const s: Record<string, React.CSSProperties> = {
   },
   coachVenue: {
     fontSize: 11,
-    color: '#8B7E74',
+    color: '#6a6a6a',
     margin: 0,
     lineHeight: 1.3,
   },
   dateTime: {
     fontSize: 11,
-    color: '#8B7E74',
+    color: '#6a6a6a',
     margin: 0,
     lineHeight: 1.3,
   },
@@ -99,13 +99,13 @@ const s: Record<string, React.CSSProperties> = {
     lineHeight: 1.2,
   },
   primaryBtn: {
-    background: '#E8B4A2',
+    background: '#E3617B',
     color: '#FFFFFF',
   },
   outlineBtn: {
     background: '#FFFFFF',
-    color: '#E8B4A2',
-    border: '1px solid #E8B4A2',
+    color: '#E3617B',
+    border: '1px solid #E3617B',
   },
 }
 
@@ -121,7 +121,7 @@ const ClassCard: React.FC<ClassCardProps> = ({
   onViewDetail,
 }) => {
   const sc = statusConfig[status] || statusConfig.upcoming
-  const borderColor = borderColorMap[status] || '#E8B4A2'
+  const borderColor = borderColorMap[status] || '#E3617B'
 
   return (
     <div style={s.card}>

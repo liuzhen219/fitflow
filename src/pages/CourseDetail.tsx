@@ -165,7 +165,7 @@ export default function CourseDetail() {
 const s: Record<string, React.CSSProperties> = {
   page: {
     minHeight: '100vh',
-    background: '#FFF5F0',
+    background: '#fff',
   },
   notFound: {
     display: 'flex',
@@ -182,7 +182,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   notFoundText: {
     fontSize: 16,
-    color: '#4A3B3C',
+    color: '#222',
     fontWeight: 500,
     margin: 0,
   },
@@ -190,7 +190,7 @@ const s: Record<string, React.CSSProperties> = {
     marginTop: 8,
     padding: '10px 28px',
     borderRadius: 24,
-    background: '#E8B4A2',
+    background: '#E3617B',
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: 600,
@@ -200,7 +200,7 @@ const s: Record<string, React.CSSProperties> = {
   // Hero
   hero: {
     height: 180,
-    background: 'linear-gradient(135deg, #E8B4A2, #F5D5C8)',
+    background: 'linear-gradient(135deg, #E3617B, #F5D5C8)',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -266,7 +266,7 @@ const s: Record<string, React.CSSProperties> = {
   courseTitle: {
     fontSize: 18,
     fontWeight: 700,
-    color: '#4A3B3C',
+    color: '#222',
     margin: 0,
     lineHeight: 1.3,
   },
@@ -277,7 +277,7 @@ const s: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     gap: 10,
     padding: '10px 14px',
-    background: '#FFF5F0',
+    background: '#fff',
     borderRadius: 12,
     cursor: 'pointer',
   },
@@ -285,7 +285,7 @@ const s: Record<string, React.CSSProperties> = {
     width: 36,
     height: 36,
     borderRadius: '50%',
-    background: 'linear-gradient(135deg, #E8B4A2, #D4A08A)',
+    background: 'linear-gradient(135deg, #E3617B, #D44A65)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -300,7 +300,7 @@ const s: Record<string, React.CSSProperties> = {
   coachName: {
     fontSize: 13,
     fontWeight: 600,
-    color: '#4A3B3C',
+    color: '#222',
     margin: 0,
     lineHeight: 1.2,
   },
@@ -312,11 +312,11 @@ const s: Record<string, React.CSSProperties> = {
   },
   coachRatingNum: {
     fontSize: 11,
-    color: '#8B7E74',
+    color: '#6a6a6a',
   },
   coachArrow: {
     fontSize: 20,
-    color: '#8B7E74',
+    color: '#6a6a6a',
     fontWeight: 300,
     lineHeight: 1,
   },
@@ -338,14 +338,14 @@ const s: Record<string, React.CSSProperties> = {
   },
   infoValue: {
     fontSize: 12,
-    color: '#4A3B3C',
+    color: '#222',
   },
 
   // Section
   sectionLabel: {
     fontSize: 14,
     fontWeight: 600,
-    color: '#4A3B3C',
+    color: '#222',
     margin: '0 0 10px',
     lineHeight: 1.3,
   },
@@ -365,8 +365,8 @@ const s: Record<string, React.CSSProperties> = {
     width: 20,
     height: 20,
     borderRadius: '50%',
-    background: '#FFF5F0',
-    color: '#E8B4A2',
+    background: '#fff',
+    color: '#E3617B',
     fontSize: 11,
     fontWeight: 700,
     display: 'flex',
@@ -377,7 +377,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   outlineText: {
     fontSize: 13,
-    color: '#4A3B3C',
+    color: '#222',
     lineHeight: 1.5,
   },
 
@@ -392,14 +392,14 @@ const s: Record<string, React.CSSProperties> = {
     padding: '6px 14px',
     borderRadius: 16,
     fontSize: 12,
-    background: '#FFF5F0',
-    color: '#8B7E74',
+    background: '#fff',
+    color: '#6a6a6a',
     fontWeight: 500,
   },
 
   // Trust
   trustBox: {
-    background: '#FFF5F0',
+    background: '#fff',
     borderRadius: 12,
     padding: '12px 14px',
     display: 'flex',
@@ -417,7 +417,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   trustText: {
     fontSize: 12,
-    color: '#4A3B3C',
+    color: '#222',
     fontWeight: 500,
   },
 
@@ -438,7 +438,7 @@ const s: Record<string, React.CSSProperties> = {
     display: 'flex',
     alignItems: 'center',
     gap: 12,
-    borderTop: '1px solid #F0E8E0',
+    borderTop: '1px solid #ddd',
     boxShadow: '0 -2px 12px rgba(0,0,0,0.04)',
     zIndex: 10,
   },
@@ -447,14 +447,14 @@ const s: Record<string, React.CSSProperties> = {
   },
   trustLabel: {
     fontSize: 11,
-    color: '#8B7E74',
+    color: '#6a6a6a',
     margin: 0,
     lineHeight: 1.3,
   },
   ctaBtn: {
     padding: '12px 28px',
     borderRadius: 24,
-    background: 'linear-gradient(135deg, #E8B4A2, #D4A08A)',
+    background: 'linear-gradient(135deg, #E3617B, #D44A65)',
     color: '#FFFFFF',
     fontSize: 15,
     fontWeight: 600,

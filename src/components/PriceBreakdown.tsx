@@ -10,7 +10,7 @@ const s: Record<string, React.CSSProperties> = {
   container: {
     fontSize: 12,
     lineHeight: 2.2,
-    color: '#4A3B3C',
+    color: '#222',
   },
   lineItem: {
     display: 'flex',
@@ -18,15 +18,15 @@ const s: Record<string, React.CSSProperties> = {
     alignItems: 'center',
   },
   label: {
-    color: '#8B7E74',
+    color: '#6a6a6a',
   },
   amount: {
     fontWeight: 500,
-    color: '#4A3B3C',
+    color: '#222',
   },
   divider: {
     border: 0,
-    borderTop: '1px solid #F0E8E0',
+    borderTop: '1px solid #ddd',
     margin: '6px 0',
   },
   totalRow: {
@@ -36,12 +36,12 @@ const s: Record<string, React.CSSProperties> = {
   },
   totalLabel: {
     fontWeight: 600,
-    color: '#4A3B3C',
+    color: '#222',
   },
   totalAmount: {
     fontSize: 14,
     fontWeight: 700,
-    color: '#E8B4A2',
+    color: '#E3617B',
   },
 }
 

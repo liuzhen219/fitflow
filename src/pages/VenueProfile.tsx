@@ -133,7 +133,7 @@ export default function VenueProfile() {
 const s: Record<string, React.CSSProperties> = {
   page: {
     minHeight: '100vh',
-    background: '#FFF5F0',
+    background: '#fff',
   },
   notFound: {
     display: 'flex',
@@ -150,7 +150,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   notFoundText: {
     fontSize: 16,
-    color: '#4A3B3C',
+    color: '#222',
     fontWeight: 500,
     margin: 0,
   },
@@ -158,7 +158,7 @@ const s: Record<string, React.CSSProperties> = {
     marginTop: 8,
     padding: '10px 28px',
     borderRadius: 24,
-    background: '#E8B4A2',
+    background: '#E3617B',
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: 600,
@@ -168,7 +168,7 @@ const s: Record<string, React.CSSProperties> = {
   // Hero
   hero: {
     height: 200,
-    background: 'linear-gradient(135deg, #C4A882, #A89070)',
+    background: 'linear-gradient(135deg, #E3617B, #444)',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
@@ -248,7 +248,7 @@ const s: Record<string, React.CSSProperties> = {
   venueName: {
     fontSize: 20,
     fontWeight: 700,
-    color: '#4A3B3C',
+    color: '#222',
     margin: 0,
     lineHeight: 1.2,
   },
@@ -261,7 +261,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   ratingText: {
     fontSize: 11,
-    color: '#8B7E74',
+    color: '#6a6a6a',
   },
   locationRow: {
     display: 'flex',
@@ -270,8 +270,8 @@ const s: Record<string, React.CSSProperties> = {
   },
   locationTag: {
     fontSize: 11,
-    color: '#E8B4A2',
-    background: 'rgba(232,180,162,0.10)',
+    color: '#E3617B',
+    background: 'rgba(227,97,123,0.08)',
     padding: '3px 10px',
     borderRadius: 8,
     fontWeight: 500,
@@ -291,14 +291,14 @@ const s: Record<string, React.CSSProperties> = {
   },
   infoText: {
     fontSize: 13,
-    color: '#4A3B3C',
+    color: '#222',
     lineHeight: 1.5,
   },
 
   // Description
   description: {
     fontSize: 13,
-    color: '#4A3B3C',
+    color: '#222',
     lineHeight: 1.7,
     margin: 0,
   },
@@ -314,8 +314,8 @@ const s: Record<string, React.CSSProperties> = {
     padding: '6px 14px',
     borderRadius: 16,
     fontSize: 12,
-    background: '#FFF5F0',
-    color: '#4A3B3C',
+    background: '#fff',
+    color: '#222',
     fontWeight: 500,
   },
   svcChip: {
@@ -323,8 +323,8 @@ const s: Record<string, React.CSSProperties> = {
     padding: '6px 14px',
     borderRadius: 16,
     fontSize: 12,
-    background: '#F0E8E0',
-    color: '#4A3B3C',
+    background: '#ddd',
+    color: '#222',
     fontWeight: 500,
   },
 
@@ -335,7 +335,7 @@ const s: Record<string, React.CSSProperties> = {
     gap: 8,
     padding: '14px 16px',
     borderRadius: 12,
-    background: 'linear-gradient(135deg, rgba(232,180,162,0.12), rgba(212,160,138,0.08))',
+    background: 'linear-gradient(135deg, rgba(227,97,123,0.06), rgba(212,74,101,0.04))',
   },
   scheduleIcon: {
     fontSize: 16,
@@ -344,6 +344,6 @@ const s: Record<string, React.CSSProperties> = {
   scheduleText: {
     fontSize: 13,
     fontWeight: 600,
-    color: '#4A3B3C',
+    color: '#222',
   },
 }
