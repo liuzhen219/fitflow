@@ -32,10 +32,14 @@ export default function PaymentSuccess() {
         <p style={s.subtitle}>课程开始前1小时可签到</p>
       </div>
 
-      {/* QR Code Placeholder */}
+      {/* QR Code */}
       <div style={s.qrSection}>
         <div style={s.qrBox}>
-          <span style={s.qrEmoji}>📱</span>
+          <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://fitflow.app/checkin/12345"
+            alt="签到二维码"
+            style={{ width: 140, height: 140, borderRadius: 12 }}
+          />
         </div>
         <p style={s.qrHint}>到店出示此码完成签到核销</p>
       </div>

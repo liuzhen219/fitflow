@@ -82,6 +82,7 @@ export default function Home() {
               classCount={coach.totalStudents}
               price={coach.basePrice}
               gradient={coachGradients[coach.id] || 'linear-gradient(135deg, #E8B4A2, #F5D5C8)'}
+              imageUrl={coach.avatar}
               onClick={() => nav(`/coach/${coach.id}`)}
             />
           ))}
@@ -104,6 +105,7 @@ export default function Home() {
                 time={course.time}
                 imageGradient={course.imageGradient}
                 isHomeService={course.isHomeService}
+                thumbnail={course.thumbnail}
                 onClick={() => nav(`/course/${course.id}`)}
               />
             </div>

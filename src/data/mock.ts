@@ -22,6 +22,7 @@ export interface Coach {
   id: number
   name: string
   avatar: string
+  heroImage: string
   title: string
   years: number
   rating: number
@@ -43,6 +44,7 @@ export interface Venue {
   id: number
   name: string
   images: string[]
+  heroImage: string
   address: string
   district: string
   distance: string
@@ -70,6 +72,7 @@ export interface CourseItem {
   price: number
   isHomeService: boolean
   imageGradient: string
+  thumbnail: string
   time: string
   targetAudience: string[]
   outline: string[]
@@ -119,7 +122,8 @@ export const coaches: Coach[] = [
   {
     id: 1,
     name: '林悦然',
-    avatar: '',
+    avatar: 'https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&h=400&fit=crop&crop=face',
+    heroImage: 'https://images.unsplash.com/photo-1545389336-cf090694435e?w=800&h=400&fit=crop',
     title: '资深普拉提导师',
     years: 9,
     rating: 4.9,
@@ -145,7 +149,8 @@ export const coaches: Coach[] = [
   {
     id: 2,
     name: '陈正阳',
-    avatar: '',
+    avatar: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=400&h=400&fit=crop&crop=face',
+    heroImage: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&h=400&fit=crop',
     title: '运动康复专家',
     years: 12,
     rating: 4.8,
@@ -171,7 +176,8 @@ export const coaches: Coach[] = [
   {
     id: 3,
     name: '苏曼',
-    avatar: '',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&crop=face',
+    heroImage: 'https://images.unsplash.com/photo-1518611012118-6960729ce99a?w=800&h=400&fit=crop',
     title: '孕产普拉提导师',
     years: 10,
     rating: 5.0,
@@ -202,6 +208,7 @@ export const venues: Venue[] = [
     id: 1,
     name: '梵音普拉提馆',
     images: [],
+    heroImage: 'https://images.unsplash.com/photo-1599901868904-6f95f09e0a1c?w=800&h=400&fit=crop',
     address: '上海市徐汇区衡山路8号3楼',
     district: '徐汇区',
     distance: '1.2km',
@@ -219,6 +226,7 @@ export const venues: Venue[] = [
     id: 2,
     name: 'BodyLab',
     images: [],
+    heroImage: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=400&fit=crop',
     address: '上海市静安区南京西路1515号B1',
     district: '静安区',
     distance: '2.8km',
@@ -236,6 +244,7 @@ export const venues: Venue[] = [
     id: 3,
     name: 'ZenSpace',
     images: [],
+    heroImage: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800&h=400&fit=crop',
     address: '上海市黄浦区建国中路10号2层',
     district: '黄浦区',
     distance: '3.5km',
@@ -267,6 +276,7 @@ export const courses: CourseItem[] = [
     price: 420,
     isHomeService: false,
     imageGradient: 'linear-gradient(135deg, #E8B4A2, #F5D5C8)',
+    thumbnail: 'https://images.unsplash.com/photo-1518611012118-6960729ce99a?w=400&h=300&fit=crop',
     time: '每周一至周六 可约',
     targetAudience: ['驼背圆肩人群', '脊柱侧弯轻度患者', '长期伏案工作者', '追求体态美的人群'],
     outline: ['体态评估与问题分析', '呼吸模式重建', '核心肌群激活训练', '脊柱灵活性与稳定性练习', '肩带稳定性强化', '骨盆正位调整', '日常体态习惯指导'],
@@ -284,6 +294,7 @@ export const courses: CourseItem[] = [
     price: 680,
     isHomeService: true,
     imageGradient: 'linear-gradient(135deg, #F5D5C8, #D4A08A)',
+    thumbnail: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop',
     time: '提前一天预约',
     targetAudience: ['产后6周以上妈妈', '腹直肌分离人群', '盆底肌修复需求者', '希望在家训练的新手妈妈'],
     outline: ['产后身体评估', '腹直肌分离修复训练', '盆底肌激活与强化', '核心力量重建', '体态与骨盆恢复', '温和有氧调理', '居家日常训练方案'],
@@ -301,6 +312,7 @@ export const courses: CourseItem[] = [
     price: 580,
     isHomeService: false,
     imageGradient: 'linear-gradient(135deg, #C4A882, #E8B4A2)',
+    thumbnail: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=300&fit=crop',
     time: '每周一至周日 可约',
     targetAudience: ['腰椎间盘突出康复期', '慢性腰痛困扰者', '久坐办公人群', '运动损伤恢复期'],
     outline: ['腰部功能评估与筛查', '核心稳定肌群激活', '脊柱分段控制训练', '髋关节灵活性训练', '腰部力学模式重建', '功能性力量恢复', '日常护腰指导'],
@@ -313,11 +325,11 @@ export const reviews: Review[] = [
   {
     id: 1,
     userName: '小美妈妈',
-    userAvatar: '',
+    userAvatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
     rating: 5,
     tags: ['耐心细致', '体态明显改善', '专业负责'],
     content: '跟林老师上了三个月的体态矫正课，圆肩和头前伸的问题改善特别明显。林老师很耐心，每次上课都会讲解动作原理，不只是带着做动作。工作室环境也很好，推荐！',
-    images: [],
+    images: ['https://images.unsplash.com/photo-1575057913256-f0c15f37d64e?w=200&h=200&fit=crop'],
     courseLabel: '核心床私教·体态矫正',
     classCount: 24,
     date: '2026-04-28',
@@ -325,11 +337,11 @@ export const reviews: Review[] = [
   {
     id: 2,
     userName: 'AndyChen',
-    userAvatar: '',
+    userAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
     rating: 5,
     tags: ['康复效果显著', '专业度高', '认真负责'],
     content: '因为长期加班导致腰部不适，经朋友推荐找到陈教练。上了10节课后腰部疼痛明显缓解，陈教练还给了一套日常训练方案，在家也能练。非常专业的康复型教练！',
-    images: [],
+    images: ['https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=200&h=200&fit=crop'],
     courseLabel: '康复私教·腰部护理',
     classCount: 10,
     date: '2026-04-25',
@@ -337,11 +349,11 @@ export const reviews: Review[] = [
   {
     id: 3,
     userName: '静静',
-    userAvatar: '',
+    userAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face',
     rating: 5,
     tags: ['温柔体贴', '产后恢复快', '像朋友一样'],
     content: '产后42天开始跟苏老师上课，现在产后半年，腹直肌分离从3指恢复到不到1指，肚子也平了很多！苏老师真的很懂妈妈的需求，每次上课都很放松和舒服。',
-    images: [],
+    images: ['https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=200&h=200&fit=crop'],
     courseLabel: '上门私教·产后恢复',
     classCount: 20,
     date: '2026-04-20',

@@ -10,6 +10,7 @@ interface CourseCardProps {
   time: string
   imageGradient: string
   isHomeService?: boolean
+  thumbnail?: string
   onClick: () => void
 }
 
@@ -95,12 +96,17 @@ const CourseCard: React.FC<CourseCardProps> = ({
   time,
   imageGradient,
   isHomeService,
+  thumbnail,
   onClick,
 }) => {
   return (
     <div style={s.card} onClick={onClick}>
       <div style={{ ...s.thumbnail, background: imageGradient }}>
-        {isHomeService ? '🏠' : '🧘'}
+        {thumbnail ? (
+          <img src={thumbnail} alt={title} style={{ objectFit: 'cover', width: '100%', height: '100%', borderRadius: 12 }} />
+        ) : (
+          isHomeService ? '🏠' : '🧘'
+        )}
       </div>
       <div style={s.content}>
         <div>

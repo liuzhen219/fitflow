@@ -24,7 +24,16 @@ export default function CourseDetail() {
   return (
     <div style={s.page}>
       {/* Hero */}
-      <div style={{ ...s.hero, background: course.imageGradient }}>
+      <div
+        style={{
+          ...s.hero,
+          background: course.imageGradient,
+          backgroundImage: `url(${course.thumbnail}), ${course.imageGradient}`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
         {/* NavBar */}
         <div style={s.navBar}>
           <div style={s.navBack} onClick={() => nav(-1)}>
@@ -34,12 +43,8 @@ export default function CourseDetail() {
           <div style={s.navPlaceholder} />
         </div>
 
-        {/* Center emoji */}
-        <div style={s.heroCenter}>
-          <div style={s.heroEmoji}>
-            {course.isHomeService ? '🏠' : '🧘'}
-          </div>
-        </div>
+        {/* Center (image background, no emoji) */}
+        <div style={s.heroCenter} />
       </div>
 
       {/* Info Card */}
@@ -195,6 +200,10 @@ const s: Record<string, React.CSSProperties> = {
   // Hero
   hero: {
     height: 180,
+    background: 'linear-gradient(135deg, #E8B4A2, #F5D5C8)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',

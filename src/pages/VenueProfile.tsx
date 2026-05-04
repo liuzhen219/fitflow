@@ -25,7 +25,15 @@ export default function VenueProfile() {
   return (
     <div style={s.page}>
       {/* Hero */}
-      <div style={s.hero}>
+      <div
+        style={{
+          ...s.hero,
+          backgroundImage: `url(${venue.heroImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
         {/* NavBar */}
         <div style={s.navBar}>
           <div style={s.navBack} onClick={() => nav(-1)}>
@@ -35,10 +43,8 @@ export default function VenueProfile() {
           <div style={s.navPlaceholder} />
         </div>
 
-        {/* Center emoji */}
-        <div style={s.heroCenter}>
-          <div style={s.heroEmoji}>🏛️</div>
-        </div>
+        {/* Center (image background, no emoji) */}
+        <div style={s.heroCenter} />
 
         {/* Verified badge */}
         {venue.verified && (
@@ -163,6 +169,9 @@ const s: Record<string, React.CSSProperties> = {
   hero: {
     height: 200,
     background: 'linear-gradient(135deg, #C4A882, #A89070)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',

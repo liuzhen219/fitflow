@@ -3,6 +3,7 @@ import StarRating from './StarRating'
 
 interface ReviewCardProps {
   userName: string
+  userAvatar?: string
   rating: number
   tags: string[]
   content: string
@@ -101,6 +102,7 @@ const s: Record<string, React.CSSProperties> = {
 
 const ReviewCard: React.FC<ReviewCardProps> = ({
   userName,
+  userAvatar,
   rating,
   tags,
   content,
@@ -111,7 +113,13 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
   return (
     <div style={s.card}>
       <div style={s.header}>
-        <div style={s.avatar}>{userName.charAt(0)}</div>
+        <div style={s.avatar}>
+          {userAvatar ? (
+            <img src={userAvatar} alt={userName} style={{ objectFit: 'cover', width: 32, height: 32, borderRadius: '50%' }} />
+          ) : (
+            userName.charAt(0)
+          )}
+        </div>
         <div style={s.userInfo}>
           <p style={s.userName}>{userName}</p>
           <p style={s.classCount}>{classCount}节课</p>

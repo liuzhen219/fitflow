@@ -18,6 +18,10 @@ export default function Splash() {
 
   return (
     <div style={s.page}>
+      {/* Background image layer */}
+      <div style={s.bgImage} />
+      {/* Content */}
+      <div style={s.content}>
       {/* Logo */}
       <div style={{ marginBottom: 36 }}>
         <svg width="56" height="56" viewBox="0 0 56 56" fill="none" style={{ marginBottom: 16 }}>
@@ -57,6 +61,7 @@ export default function Splash() {
           立即登录
         </span>
       </p>
+      </div>
     </div>
   )
 }
@@ -65,6 +70,26 @@ const s: Record<string, React.CSSProperties> = {
   page: {
     height: '100vh',
     background: '#FFF5F0',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  bgImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundImage: 'url(https://images.unsplash.com/photo-1545389336-cf090694435e?w=800&h=1200&fit=crop)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    opacity: 0.08,
+    zIndex: 0,
+  },
+  content: {
+    position: 'relative',
+    zIndex: 1,
+    height: '100vh',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

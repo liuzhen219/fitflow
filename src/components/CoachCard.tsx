@@ -8,6 +8,7 @@ interface CoachCardProps {
   classCount: number
   price: number
   gradient: string
+  imageUrl?: string
   onClick: () => void
 }
 
@@ -79,12 +80,17 @@ const CoachCard: React.FC<CoachCardProps> = ({
   classCount,
   price,
   gradient,
+  imageUrl,
   onClick,
 }) => {
   return (
     <div style={s.card} onClick={onClick}>
       <div style={{ ...s.gradientArea, background: gradient }}>
-        {name.charAt(0)}
+        {imageUrl ? (
+          <img src={imageUrl} alt={name} style={{ objectFit: 'cover', width: '100%', height: '100%', borderTopLeftRadius: 16, borderTopRightRadius: 16 }} />
+        ) : (
+          name.charAt(0)
+        )}
       </div>
       <div style={s.bottom}>
         <p style={s.name}>{name}</p>

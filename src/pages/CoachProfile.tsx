@@ -39,7 +39,15 @@ export default function CoachProfile() {
   return (
     <div style={s.page}>
       {/* Hero */}
-      <div style={s.hero}>
+      <div
+        style={{
+          ...s.hero,
+          backgroundImage: `url(${coach.heroImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
         {/* NavBar */}
         <div style={s.navBar}>
           <div style={s.navBack} onClick={() => nav(-1)}>
@@ -49,10 +57,8 @@ export default function CoachProfile() {
           <div style={s.navPlaceholder} />
         </div>
 
-        {/* Center emoji */}
-        <div style={s.heroCenter}>
-          <div style={s.heroEmoji}>👩‍🏫</div>
-        </div>
+        {/* Center (image background, no emoji) */}
+        <div style={s.heroCenter} />
 
         {/* Bottom right badge */}
         <div style={s.heroBadgeRow}>
@@ -189,6 +195,7 @@ export default function CoachProfile() {
             <ReviewCard
               key={review.id}
               userName={review.userName}
+              userAvatar={review.userAvatar}
               rating={review.rating}
               tags={review.tags}
               content={review.content}
@@ -264,6 +271,9 @@ const s: Record<string, React.CSSProperties> = {
   hero: {
     height: 240,
     background: 'linear-gradient(135deg, #E8B4A2, #D4A08A)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',

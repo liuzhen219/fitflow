@@ -53,12 +53,14 @@ export default function CheckIn() {
         </div>
       </div>
 
-      {/* QR Code Placeholder */}
+      {/* QR Code */}
       <div style={s.qrContainer}>
         <div style={s.qrBox}>
-          <div style={s.qrInner}>
-            <span style={s.qrEmoji}>📱</span>
-          </div>
+          <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://fitflow.app/checkin/12345"
+            alt="签到二维码"
+            style={{ width: 200, height: 200, borderRadius: 16 }}
+          />
         </div>
       </div>
 

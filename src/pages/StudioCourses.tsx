@@ -79,6 +79,7 @@ export default function StudioCourses() {
                 time={course.time}
                 imageGradient={course.imageGradient}
                 isHomeService={course.isHomeService}
+                thumbnail={course.thumbnail}
                 onClick={() => nav(`/course/${course.id}`)}
               />
             </div>
