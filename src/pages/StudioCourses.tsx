@@ -32,12 +32,10 @@ export default function StudioCourses() {
     }
 
     if (activeFilter === 'distance') {
-      result.sort((a, b) => {
-        const distA = parseFloat(a.distance) || 999
-        const distB = parseFloat(b.distance) || 999
-        return distA - distB
-      })
-    } else if (activeFilter === 'price') {
+      result.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance))
+    }
+
+    if (activeFilter === 'price') {
       result.sort((a, b) => a.price - b.price)
     } else if (activeFilter === 'rating') {
       result.sort((a, b) => b.coachRating - a.coachRating)
@@ -48,37 +46,34 @@ export default function StudioCourses() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff', paddingBottom: 32 }}>
-      {/* Filter chips */}
-      <div
-        style={{
-          display: 'flex',
-          gap: 8,
-          overflowX: 'auto',
-          whiteSpace: 'nowrap',
-          padding: '12px 16px',
-        }}
-      >
-        {filters.map((f) => (
-          <span
-            key={f.key}
-            style={{
-              display: 'inline-block',
-              padding: '8px 16px',
-              borderRadius: 32,
-              fontSize: 13,
-              fontWeight: 500,
-              flexShrink: 0,
-              whiteSpace: 'nowrap',
-              cursor: 'pointer',
-              color: activeFilter === f.key ? '#fff' : '#222',
-              background: activeFilter === f.key ? '#222' : '#fff',
-              border: activeFilter === f.key ? 'none' : '1px solid #ddd',
-            }}
-            onClick={() => setActiveFilter(f.key)}
-          >
-            {f.label}
-          </span>
-        ))}
+      {/* Filter chips — scrollable with fade hint */}
+      <div style={{ position: 'relative' }}>
+        <div
+          style={{
+            display: 'flex', gap: 8, overflowX: 'auto',
+            padding: '14px 16px', scrollbarWidth: 'none',
+            WebkitOverflowScrolling: 'touch',
+            maskImage: 'linear-gradient(to right, #000 calc(100% - 40px), transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to right, #000 calc(100% - 40px), transparent 100%)',
+          }}
+        >
+          {filters.map((f) => (
+            <span
+              key={f.key}
+              onClick={() => setActiveFilter(f.key)}
+              style={{
+                padding: '8px 16px', borderRadius: 32, fontSize: 13, fontWeight: 500,
+                flexShrink: 0, whiteSpace: 'nowrap', cursor: 'pointer',
+                transition: 'all 0.15s ease', userSelect: 'none',
+                color: activeFilter === f.key ? '#fff' : '#222',
+                background: activeFilter === f.key ? '#222' : '#fff',
+                border: activeFilter === f.key ? 'none' : '1px solid #ddd',
+              }}
+            >
+              {f.label}
+            </span>
+          ))}
+        </div>
       </div>
 
       {/* Course list */}

@@ -40,9 +40,24 @@ export default function Home() {
   const [locationVisible, setLocationVisible] = useState(false)
   const [cityIndex, setCityIndex] = useState(0)
   const [districtIndex, setDistrictIndex] = useState(0)
+  const [activeTag, setActiveTag] = useState<string | null>(null)
 
   const currentCity = cities[cityIndex]
   const currentDistrict = currentCity.districts[districtIndex]
+
+  // Filter courses by active tag
+  const filteredCourses = activeTag
+    ? courses.filter(c => {
+        const searchText = c.title + ' ' + (c.targetAudience || []).join(' ')
+        const kw = activeTag
+        if (kw === '普拉提核心床') return searchText.includes('核心床')
+        if (kw === '产后恢复') return searchText.includes('产后')
+        if (kw === '体态矫正') return searchText.includes('体态') || searchText.includes('矫正')
+        if (kw === '脊柱健康') return searchText.includes('脊柱')
+        if (kw === '孕期普拉提') return searchText.includes('孕期')
+        return searchText.includes(kw)
+      })
+    : courses
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff', paddingBottom: 32 }}>
@@ -105,37 +120,46 @@ export default function Home() {
         />
       </div>
 
-      {/* Hot Tags */}
+      {/* Hot Tags — tappable & scrollable */}
       <div
         style={{
           padding: '0 16px 20px',
           display: 'flex',
           gap: 8,
           overflowX: 'auto',
+          WebkitOverflowScrolling: 'touch',
+          scrollbarWidth: 'none',
         }}
       >
-        {hotTags.map((tag, i) => (
-          <span
-            key={tag}
-            style={{
-              background: i === 2 ? '#222' : '#fff',
-              color: i === 2 ? '#fff' : '#222',
-              padding: '8px 16px',
-              borderRadius: 32,
-              fontSize: 13,
-              fontWeight: 500,
-              whiteSpace: 'nowrap',
-              border: i === 2 ? 'none' : '1px solid #ddd',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 4,
-            }}
-          >
-            {i === 2 && <FireIcon size={14} color="#fff" />}
-            {tag}
-          </span>
-        ))}
+        {hotTags.map((tag, i) => {
+          const isActive = activeTag === tag
+          return (
+            <span
+              key={tag}
+              onClick={() => setActiveTag(isActive ? null : tag)}
+              style={{
+                background: isActive ? '#222' : '#fff',
+                color: isActive ? '#fff' : '#222',
+                padding: '8px 16px',
+                borderRadius: 32,
+                fontSize: 13,
+                fontWeight: 500,
+                whiteSpace: 'nowrap',
+                border: isActive ? 'none' : '1px solid #ddd',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+                flexShrink: 0,
+                transition: 'all 0.15s ease',
+                userSelect: 'none',
+              }}
+            >
+              {isActive && <FireIcon size={14} color="#fff" />}
+              {tag}
+            </span>
+          )
+        })}
       </div>
 
       {/* Featured Coaches */}
@@ -180,28 +204,45 @@ export default function Home() {
       <div>
         <div style={{ padding: '0 16px', marginBottom: 0 }}>
           <SectionHeader
-            title="为你推荐"
+            title={activeTag ? `「${activeTag}」相关课程` : '为你推荐'}
             icon={<SparkleIcon size={16} color="#E3617B" />}
             onMore={() => nav('/studio')}
           />
+          {activeTag && (
+            <div
+              onClick={() => setActiveTag(null)}
+              style={{
+                fontSize: 13, fontWeight: 500, color: '#E3617B', cursor: 'pointer',
+                marginBottom: 12, marginTop: -8, display: 'inline-block',
+              }}
+            >
+              ← 清除筛选，查看全部
+            </div>
+          )}
         </div>
         <div style={{ padding: '0 16px' }}>
-          {courses.map((c) => (
-            <CourseCard
-              key={c.id}
-              title={c.title}
-              coachName={c.coachName}
-              venueName={c.venueName}
-              distance={c.distance}
-              duration={c.duration}
-              price={c.price}
-              time={c.time}
-              imageGradient={c.imageGradient}
-              thumbnail={c.thumbnail}
-              isHomeService={c.isHomeService}
-              onClick={() => nav(`/course/${c.id}`)}
-            />
-          ))}
+          {filteredCourses.length > 0 ? (
+            filteredCourses.map((c) => (
+              <CourseCard
+                key={c.id}
+                title={c.title}
+                coachName={c.coachName}
+                venueName={c.venueName}
+                distance={c.distance}
+                duration={c.duration}
+                price={c.price}
+                time={c.time}
+                imageGradient={c.imageGradient}
+                thumbnail={c.thumbnail}
+                isHomeService={c.isHomeService}
+                onClick={() => nav(`/course/${c.id}`)}
+              />
+            ))
+          ) : (
+            <div style={{ textAlign: 'center', padding: '40px 0', color: '#6a6a6a', fontSize: 14 }}>
+              暂无「{activeTag}」相关课程，尝试其他标签
+            </div>
+          )}
         </div>
       </div>
 
