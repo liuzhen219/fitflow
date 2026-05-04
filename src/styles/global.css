@@ -1,0 +1,91 @@
+:root {
+  --c-primary: #E8B4A2;
+  --c-primary-light: #F5D5C8;
+  --c-primary-deep: #D4A08A;
+  --c-warm-brown: #C4A882;
+  --c-bg: #FFF5F0;
+  --c-bg-card: #FFFFFF;
+  --c-text: #4A3B3C;
+  --c-text-secondary: #8B7E74;
+  --c-text-muted: #B8A89E;
+  --c-divider: #F0E8E0;
+  --c-tag-bg: #FFF0E8;
+  --c-success: #7BC67E;
+  --radius-xl: 24px;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --shadow-soft: 0 2px 16px rgba(74, 59, 60, 0.04);
+  --shadow-card: 0 4px 24px rgba(74, 59, 60, 0.06);
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body, #root { height: 100%; overflow-x: hidden; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: var(--c-bg);
+  color: var(--c-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+::-webkit-scrollbar { width: 0; height: 0; }
+
+/* 动画 */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.06); opacity: 0.8; }
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+@keyframes checkPulse {
+  0%   { transform: scale(0.8); opacity: 0; }
+  50%  { transform: scale(1.15); opacity: 0.9; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.a-fade-in    { animation: fadeIn 0.6s ease both; }
+.a-fade-up    { animation: fadeInUp 0.6s ease both; }
+.a-scale-in  { animation: scaleIn 0.4s ease both; }
+.a-slide-up  { animation: slideUp 0.4s ease both; }
+.a-d1 { animation-delay: 0.05s; }  .a-d2 { animation-delay: 0.12s; }
+.a-d3 { animation-delay: 0.19s; }  .a-d4 { animation-delay: 0.26s; }
+.a-d5 { animation-delay: 0.33s; }
+
+/* 页面壳 */
+.page {
+  min-height: 100vh;
+  background: var(--c-bg);
+  padding-bottom: calc(env(safe-area-inset-bottom, 16px) + 60px);
+}
+
+/* 覆盖 antd-mobile 部分样式 */
+.adm-button {
+  --border-radius: 24px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.5px;
+}
+.adm-nav-bar {
+  background: rgba(255, 245, 240, 0.9) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--c-divider);
+}
+.adm-tab-bar {
+  background: var(--c-bg-card) !important;
+  border-top: 1px solid var(--c-divider);
+}
