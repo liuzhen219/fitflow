@@ -2,7 +2,7 @@ import { HashRouter, Routes, Route, useNavigate, useLocation, Outlet } from 'rea
 import { TabBar } from 'antd-mobile'
 import { AppOutline, UnorderedListOutline, EnvironmentOutline, CalendarOutline, UserOutline } from 'antd-mobile-icons'
 
-import Splash from './pages/Welcome'
+import Splash from './pages/Splash'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import StudioCourses from './pages/StudioCourses'

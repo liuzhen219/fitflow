@@ -1,157 +1,214 @@
 import { useNavigate } from 'react-router-dom'
+import SceneCard from '../components/SceneCard'
+import CoachCard from '../components/CoachCard'
+import CourseCard from '../components/CourseCard'
+import SectionHeader from '../components/SectionHeader'
+import { coaches, courses } from '../data/mock'
 
-const cats = [
-  { label: '核心床', icon: '○' },
-  { label: '垫上', icon: '◇' },
-  { label: '瑜伽', icon: '△' },
-  { label: '冥想', icon: '□' },
-  { label: '塑形', icon: '☆' },
-]
-
-const courses = [
-  { id: 1, title: '核心床 · 脊柱灵活', coach: '林若溪', dur: '45 min', level: '初级', color: 'linear-gradient(135deg, #E8DDD2, #D9CFC0)' },
-  { id: 2, title: '垫上普拉提 · 核心唤醒', coach: 'Serena Li', dur: '60 min', level: '中级', color: 'linear-gradient(135deg, #DCDACC, #CDD0C0)' },
-  { id: 3, title: '流瑜伽 · 身体流动', coach: '王语晴', dur: '50 min', level: '初级', color: 'linear-gradient(135deg, #E0D8CC, #D5CBB8)' },
-]
-
-const coaches = [
-  { name: '林若溪', role: '核心床导师', exp: '8年', color: '#E8DDD2' },
-  { name: 'Serena Li', role: '瑜伽导师', exp: '6年', color: '#DCDACC' },
-  { name: '王语晴', role: '冥想导师', exp: '10年', color: '#E0D8CC' },
-  { name: 'Mia Chen', role: '塑形导师', exp: '5年', color: '#D9CFC0' },
-]
-
-const tabs = [
-  { key: 'home', label: '首页', icon: '⌂' },
-  { key: 'courses', label: '课程', icon: '⊞' },
-  { key: 'coaches', label: '教练', icon: '★' },
-  { key: 'profile', label: '我的', icon: '👤' },
+const hotTags = [
+  { label: '普拉提核心床', highlighted: false },
+  { label: '产后恢复', highlighted: false },
+  { label: '体态矫正', highlighted: true },
+  { label: '脊柱健康', highlighted: false },
+  { label: '孕期普拉提', highlighted: false },
 ]
 
 export default function Home() {
   const nav = useNavigate()
 
-  const goto = (path: string) => nav(path)
-
   return (
-    <div style={{ minHeight: '100vh', background: '#F9F9F7', paddingBottom: 90 }}>
-      {/* Top bar */}
-      <div style={{
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        padding: '12px 20px', background: 'rgba(249,249,247,0.92)',
-        backdropFilter: 'blur(16px)', borderBottom: '1px solid rgba(200,182,166,0.08)',
-        position: 'sticky', top: 0, zIndex: 10,
-      }}>
-        <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: 3, color: '#C8B6A6' }}>FLOW</span>
-        <span style={{ fontSize: 20, cursor: 'pointer' }}>🔔</span>
-      </div>
-
-      <div style={{ padding: '0 20px' }}>
-        {/* Banner */}
-        <div style={{
-          height: 160, borderRadius: 20, margin: '12px 0',
-          background: 'linear-gradient(135deg, #E8DDD2 0%, #DCDACC 60%, #D4CFC0 100%)',
-          display: 'flex', alignItems: 'center', padding: 24,
-        }}>
-          <div>
-            <span style={{ fontSize: 11, background: 'rgba(255,255,255,0.4)', padding: '4px 12px', borderRadius: 10 }}>新课程上线</span>
-            <h2 style={{ fontSize: 22, fontWeight: 400, lineHeight: 1.4, marginTop: 10, color: '#2A2A2A' }}>
-              感受身体的<br />流动之美
-            </h2>
-          </div>
+    <div style={s.page}>
+      {/* Location bar */}
+      <div style={s.topBar}>
+        <div style={s.locationRow}>
+          <span style={s.locationText}>{'📍 上海 · 徐汇区 ▼'}</span>
         </div>
-
-        {/* Categories */}
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-            <h3 style={{ fontSize: 18, fontWeight: 500, color: '#2A2A2A' }}>探索课程</h3>
-            <span style={{ fontSize: 13, color: '#A69480', cursor: 'pointer' }} onClick={() => goto('/courses')}>全部 →</span>
-          </div>
-          <div style={{ display: 'flex', gap: 10, overflowX: 'auto' }}>
-            {cats.map(c => (
-              <div key={c.label} onClick={() => goto('/courses')} style={{
-                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
-                minWidth: 64, height: 72, background: '#fff', borderRadius: 14,
-                justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 16px rgba(42,42,42,0.05)',
-              }}>
-                <span style={{ fontSize: 20, color: '#C8B6A6' }}>{c.icon}</span>
-                <span style={{ fontSize: 11, color: '#8C8C88' }}>{c.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Featured Courses */}
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-            <h3 style={{ fontSize: 18, fontWeight: 500, color: '#2A2A2A' }}>精品课程</h3>
-            <span style={{ fontSize: 13, color: '#A69480', cursor: 'pointer' }} onClick={() => goto('/courses')}>全部 →</span>
-          </div>
-          <div style={{ display: 'flex', gap: 14, overflowX: 'auto' }}>
-            {courses.map(c => (
-              <div key={c.id} onClick={() => goto(`/course/${c.id}`)} style={{
-                minWidth: 240, background: '#fff', borderRadius: 16, overflow: 'hidden',
-                boxShadow: '0 2px 16px rgba(42,42,42,0.05)', cursor: 'pointer',
-              }}>
-                <div style={{ ...s.courseImg, background: c.color }}>
-                  <span style={{ fontSize: 10, color:'#fff', background:'rgba(0,0,0,0.12)', padding:'3px 10px', borderRadius:8 }}>{c.level}</span>
-                </div>
-                <div style={{ padding: 12 }}>
-                  <h4 style={{ fontSize: 14, fontWeight: 500, color:'#2A2A2A', marginBottom: 4 }}>{c.title}</h4>
-                  <p style={{ fontSize: 12, color:'#8C8C88' }}>{c.coach} · {c.dur}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Coaches */}
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-            <h3 style={{ fontSize: 18, fontWeight: 500, color: '#2A2A2A' }}>专业导师</h3>
-            <span style={{ fontSize: 13, color: '#A69480', cursor: 'pointer' }} onClick={() => goto('/coaches')}>全部 →</span>
-          </div>
-          <div style={{ display: 'flex', gap: 12, overflowX: 'auto' }}>
-            {coaches.map(c => (
-              <div key={c.name} onClick={() => goto('/coaches')} style={{
-                display:'flex', flexDirection:'column', alignItems:'center',
-                background:'#fff', borderRadius:16, padding:'18px 16px 14px',
-                minWidth:110, boxShadow:'0 2px 16px rgba(42,42,42,0.05)', cursor:'pointer',
-              }}>
-                <div style={{ width:56, height:56, borderRadius:'50%', background:c.color, display:'flex', alignItems:'center', justifyContent:'center', fontSize:22, color:'#fff', marginBottom:10 }}>
-                  {c.name[0]}
-                </div>
-                <span style={{ fontSize:13, fontWeight:500, color:'#2A2A2A', marginBottom:2 }}>{c.name}</span>
-                <span style={{ fontSize:11, color:'#8C8C88', marginBottom:6 }}>{c.role}</span>
-                <span style={{ fontSize:10, color:'#A69480', background:'rgba(200,182,166,0.1)', padding:'2px 10px', borderRadius:8 }}>{c.exp} 经验</span>
-              </div>
-            ))}
-          </div>
+        <div style={s.searchBar} onClick={() => nav('/search')}>
+          <span style={s.searchIcon}>🔍</span>
+          <span style={s.searchPlaceholder}>搜索课程、教练...</span>
         </div>
       </div>
 
-      {/* TabBar */}
-      <div style={{
-        position: 'fixed', bottom: 0, left: 0, right: 0,
-        background: 'rgba(249,249,247,0.95)', backdropFilter: 'blur(16px)',
-        borderTop: '1px solid rgba(200,182,166,0.08)',
-        display: 'flex', justifyContent: 'space-around',
-        padding: '8px 16px calc(env(safe-area-inset-bottom, 0) + 8px)',
-      }}>
-        {tabs.map(t => (
-          <div key={t.key} onClick={() => goto(`/${t.key === 'home' ? 'home' : t.key}`)} style={{
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
-            cursor: 'pointer', padding: '4px 12px', color: '#8C8C88',
-          }}>
-            <span style={{ fontSize: 20 }}>{t.icon}</span>
-            <span style={{ fontSize: 10 }}>{t.label}</span>
-          </div>
-        ))}
+      {/* Scene Cards */}
+      <div style={s.sceneRow}>
+        <SceneCard
+          icon="🏛️"
+          title="场馆课程"
+          subtitle="到店体验 · 专业器械"
+          count="32家场馆可选"
+          gradient="linear-gradient(135deg, #E8B4A2, #D4A08A)"
+          onClick={() => nav('/studio')}
+        />
+        <div style={{ width: 12 }} />
+        <SceneCard
+          icon="🏠"
+          title="上门私教"
+          subtitle="在家练 · 专属指导"
+          count="48位教练可约"
+          gradient="linear-gradient(135deg, #C4A882, #A89070)"
+          onClick={() => nav('/homeservice')}
+        />
       </div>
+
+      {/* Hot Tags */}
+      <div style={s.tagSection}>
+        <div style={s.tagRow}>
+          {hotTags.map((tag) => (
+            <span
+              key={tag.label}
+              style={{
+                ...s.tag,
+                ...(tag.highlighted ? s.tagHighlighted : {}),
+              }}
+            >
+              {tag.highlighted ? '🔥 ' : ''}
+              {tag.label}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Featured Coaches */}
+      <div style={s.section}>
+        <SectionHeader title="⭐ 精选教练" />
+        <div style={s.scrollRow}>
+          {coaches.map((coach) => (
+            <CoachCard
+              key={coach.id}
+              name={coach.name}
+              title={coach.title}
+              certification={coach.certifications[0]}
+              rating={coach.rating}
+              classCount={coach.totalStudents}
+              price={coach.basePrice}
+              gradient={coachGradients[coach.id] || 'linear-gradient(135deg, #E8B4A2, #F5D5C8)'}
+              onClick={() => nav(`/coach/${coach.id}`)}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Recommended Courses */}
+      <div style={s.section}>
+        <SectionHeader title="📌 为你推荐" />
+        <div style={s.courseList}>
+          {courses.map((course) => (
+            <div key={course.id} style={{ marginBottom: 12 }}>
+              <CourseCard
+                title={course.title}
+                coachName={course.coachName}
+                venueName={course.venueName}
+                distance={course.distance}
+                duration={`${course.duration} min`}
+                price={course.price}
+                time={course.time}
+                imageGradient={course.imageGradient}
+                isHomeService={course.isHomeService}
+                onClick={() => nav(`/course/${course.id}`)}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Bottom spacer for TabBar */}
+      <div style={s.bottomSpacer} />
     </div>
   )
 }
 
-const s = {
-  courseImg: { height: 150, padding: 10, display: 'flex' as const, alignItems: 'flex-end' as const },
+const coachGradients: Record<number, string> = {
+  1: 'linear-gradient(135deg, #E8B4A2, #F5D5C8)',
+  2: 'linear-gradient(135deg, #C4A882, #E8D5C0)',
+  3: 'linear-gradient(135deg, #D4A08A, #F0D8D0)',
+}
+
+const s: Record<string, React.CSSProperties> = {
+  page: {
+    minHeight: '100vh',
+    background: '#FFF5F0',
+    padding: '0 16px',
+    paddingTop: 12,
+  },
+  topBar: {
+    padding: '8px 4px 12px',
+  },
+  locationRow: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  locationText: {
+    fontSize: 14,
+    fontWeight: 500,
+    color: '#4A3B3C',
+    cursor: 'pointer',
+  },
+  searchBar: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    background: '#FFFFFF',
+    borderRadius: 24,
+    padding: '10px 16px',
+    cursor: 'pointer',
+    boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+  },
+  searchIcon: {
+    fontSize: 14,
+    lineHeight: 1,
+  },
+  searchPlaceholder: {
+    fontSize: 13,
+    color: '#8B7E74',
+  },
+  sceneRow: {
+    display: 'flex',
+    gap: 0,
+    marginBottom: 16,
+  },
+  tagSection: {
+    marginBottom: 20,
+  },
+  tagRow: {
+    display: 'flex',
+    gap: 8,
+    overflowX: 'auto',
+    whiteSpace: 'nowrap',
+    paddingBottom: 4,
+  },
+  tag: {
+    display: 'inline-block',
+    padding: '6px 14px',
+    borderRadius: 16,
+    fontSize: 12,
+    color: '#8B7E74',
+    background: '#FFFFFF',
+    border: '1px solid #F0E8E0',
+    cursor: 'pointer',
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+  },
+  tagHighlighted: {
+    color: '#E8B4A2',
+    borderColor: '#E8B4A2',
+    background: 'rgba(232,180,162,0.08)',
+  },
+  section: {
+    marginBottom: 20,
+  },
+  scrollRow: {
+    display: 'flex',
+    gap: 10,
+    overflowX: 'auto',
+    paddingBottom: 4,
+  },
+  courseList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 0,
+  },
+  bottomSpacer: {
+    height: 70,
+  },
 }

@@ -47,7 +47,7 @@ export default function Login() {
         {!isLogin && (
           <div style={s.agree}>
             <Checkbox checked={agreed} onChange={setAgreed} style={{ '--icon-size':'16px', fontSize:12 } as any}>
-              同意 <span style={{color:'var(--c-primary-deep)'}}>《用户协议》</span>和<span style={{color:'var(--c-primary-deep)'}}>《隐私政策》</span>
+              同意 <span style={{color:'#D4A08A'}}>《用户协议》</span>和<span style={{color:'#D4A08A'}}>《隐私政策》</span>
             </Checkbox>
           </div>
         )}
@@ -68,30 +68,30 @@ export default function Login() {
 }
 
 const s: Record<string, React.CSSProperties> = {
-  page: { minHeight: '100vh', background: 'var(--c-bg)' },
+  page: { minHeight: '100vh', background: '#FFF5F0' },
   nav: { '--border-bottom': 'none' } as any,
   body: { padding: '24px 28px' },
   header: { marginBottom: 32, marginTop: 16 },
-  title: { fontSize: 28, fontWeight: 500, color: 'var(--c-text)', marginBottom: 6, letterSpacing: 1 },
-  sub: { fontSize: 14, color: 'var(--c-text-secondary)', fontWeight: 300 },
-  form: { '--border-inner': 'none', '--border-top': 'none', '--border-bottom': '1px solid rgba(200,182,166,0.15)' } as any,
+  title: { fontSize: 28, fontWeight: 500, color: '#E8B4A2', marginBottom: 6, letterSpacing: 1 },
+  sub: { fontSize: 14, color: '#8B7E74', fontWeight: 300 },
+  form: { '--border-inner': 'none', '--border-top': 'none', '--border-bottom': '1px solid #F0E8E0' } as any,
   input: {
     '--font-size': '15px',
     '--placeholder-color': '#C0BBB6',
     padding: '14px 0',
   } as any,
-  codeBtn: { color: 'var(--c-primary-deep)', fontSize: 13, fontWeight: 500 },
+  codeBtn: { color: '#E8B4A2', fontSize: 13, fontWeight: 500 },
   agree: { marginTop: 16, marginBottom: 20 },
   btn: {
-    '--color': '#C8B6A6',
+    '--color': '#E8B4A2',
     borderRadius: 28,
     height: 50,
     fontSize: 16,
     fontWeight: 500,
-    boxShadow: '0 6px 24px rgba(200,182,166,0.35)',
+    boxShadow: '0 6px 24px rgba(232,180,162,0.35)',
     border: 'none',
     marginTop: 12,
   } as any,
-  switch: { textAlign: 'center', marginTop: 28, fontSize: 14, color: 'var(--c-text-secondary)', fontWeight: 300 },
-  switchLink: { color: 'var(--c-primary-deep)', fontWeight: 500, cursor: 'pointer', marginLeft: 4 },
+  switch: { textAlign: 'center', marginTop: 28, fontSize: 14, color: '#8B7E74', fontWeight: 300 },
+  switchLink: { color: '#D4A08A', fontWeight: 500, cursor: 'pointer', marginLeft: 4 },
 }
