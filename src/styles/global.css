@@ -58,6 +58,7 @@ body {
   100% { transform: scale(1); opacity: 1; }
 }
 
+.a-check     { animation: checkPulse 0.5s ease both; }
 .a-fade-in    { animation: fadeIn 0.6s ease both; }
 .a-fade-up    { animation: fadeInUp 0.6s ease both; }
 .a-scale-in  { animation: scaleIn 0.4s ease both; }
