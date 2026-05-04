@@ -1,6 +1,13 @@
 import { HashRouter, Routes, Route, useNavigate, useLocation, Outlet } from 'react-router-dom'
 import { TabBar } from 'antd-mobile'
-import { AppOutline, UnorderedListOutline, EnvironmentOutline, CalendarOutline, UserOutline } from 'antd-mobile-icons'
+import { AppOutline } from 'antd-mobile-icons'
+
+import {
+  BuildingIcon,
+  HomeServiceIcon,
+  CalendarIcon,
+  UserIcon,
+} from './components/Icons'
 
 import Splash from './pages/Splash'
 import Login from './pages/Login'
@@ -20,11 +27,11 @@ import Search from './pages/Search'
 import OrderList from './pages/OrderList'
 
 const tabs = [
-  { key: '/home', title: '首页', icon: <AppOutline /> },
-  { key: '/studio', title: '场馆课程', icon: <UnorderedListOutline /> },
-  { key: '/homeservice', title: '上门服务', icon: <EnvironmentOutline /> },
-  { key: '/schedule', title: '约课', icon: <CalendarOutline /> },
-  { key: '/profile', title: '我的', icon: <UserOutline /> },
+  { key: '/home', title: '首页', icon: (active: boolean) => <AppOutline fontSize={22} color={active ? '#E3617B' : '#6a6a6a'} /> },
+  { key: '/studio', title: '场馆课程', icon: (active: boolean) => <BuildingIcon size={22} color={active ? '#E3617B' : '#6a6a6a'} /> },
+  { key: '/homeservice', title: '上门服务', icon: (active: boolean) => <HomeServiceIcon size={22} color={active ? '#E3617B' : '#6a6a6a'} /> },
+  { key: '/schedule', title: '约课', icon: (active: boolean) => <CalendarIcon size={22} color={active ? '#E3617B' : '#6a6a6a'} /> },
+  { key: '/profile', title: '我的', icon: (active: boolean) => <UserIcon size={22} color={active ? '#E3617B' : '#6a6a6a'} /> },
 ]
 
 function TabLayout() {
@@ -49,7 +56,7 @@ function TabLayout() {
         }}
       >
         {tabs.map(tab => (
-          <TabBar.Item key={tab.key} icon={tab.icon} title={tab.title} />
+          <TabBar.Item key={tab.key} icon={tab.icon(activeKey === tab.key)} title={tab.title} />
         ))}
       </TabBar>
     </>

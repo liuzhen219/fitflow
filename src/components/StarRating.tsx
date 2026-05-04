@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { StarFilledIcon, StarIcon } from './Icons'
 
 interface StarRatingProps {
   value: number
@@ -24,15 +25,18 @@ const StarRating: React.FC<StarRatingProps> = ({
           onMouseLeave={() => onChange && setHover(0)}
           onClick={() => onChange?.(star)}
           style={{
-            fontSize: size,
-            opacity: star <= active ? 1 : 0.25,
             cursor: onChange ? 'pointer' : 'default',
             lineHeight: 1,
             userSelect: 'none',
             transition: 'opacity 0.15s',
+            opacity: star <= active ? 1 : 0.25,
           }}
         >
-          ⭐
+          {star <= active ? (
+            <StarFilledIcon size={size} color="#E3617B" />
+          ) : (
+            <StarIcon size={size} color="#ddd" />
+          )}
         </span>
       ))}
     </div>

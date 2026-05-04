@@ -4,6 +4,15 @@ import CoachCard from '../components/CoachCard'
 import CourseCard from '../components/CourseCard'
 import SectionHeader from '../components/SectionHeader'
 import { coaches, courses } from '../data/mock'
+import {
+  LocationIcon,
+  SearchIcon,
+  BuildingIcon,
+  HomeServiceIcon,
+  StarFilledIcon,
+  SparkleIcon,
+  FireIcon,
+} from '../components/Icons'
 
 const hotTags = ['普拉提核心床', '产后恢复', '体态矫正', '脊柱健康', '孕期普拉提']
 
@@ -11,10 +20,12 @@ export default function Home() {
   const nav = useNavigate()
   return (
     <div style={{ minHeight: '100vh', background: '#fff', paddingBottom: 32 }}>
-      {/* Location + Search Pill — Airbnb style */}
+      {/* Location + Search Pill */}
       <div style={{ padding: '16px 16px 12px' }}>
-        <div style={{ fontSize: 15, fontWeight: 600, color: '#222', marginBottom: 10 }}>
-          📍 上海 · 徐汇区 <span style={{ fontSize: 10 }}>▼</span>
+        <div style={{ fontSize: 15, fontWeight: 600, color: '#222', marginBottom: 10, display: 'flex', alignItems: 'center', gap: 4 }}>
+          <LocationIcon size={16} color="#222" />
+          上海 · 徐汇区
+          <span style={{ fontSize: 10 }}>▼</span>
         </div>
         <div
           onClick={() => nav('/search')}
@@ -30,7 +41,7 @@ export default function Home() {
             boxShadow: 'rgba(0,0,0,0.04) 0 2px 6px 0',
           }}
         >
-          <span style={{ fontSize: 15 }}>🔍</span>
+          <SearchIcon size={16} color="#6a6a6a" />
           <span style={{ fontSize: 15, fontWeight: 500, color: '#6a6a6a' }}>
             搜索教练、场馆、课程...
           </span>
@@ -40,7 +51,7 @@ export default function Home() {
       {/* Scene Cards */}
       <div style={{ padding: '0 16px 16px', display: 'flex', gap: 12 }}>
         <SceneCard
-          icon="🏛️"
+          icon={<BuildingIcon size={32} color="#fff" />}
           title="场馆课程"
           subtitle="到店体验 · 专业器械"
           count="32家场馆可选"
@@ -48,7 +59,7 @@ export default function Home() {
           onClick={() => nav('/studio')}
         />
         <SceneCard
-          icon="🏠"
+          icon={<HomeServiceIcon size={32} color="#fff" />}
           title="上门私教"
           subtitle="在家练 · 专属指导"
           count="48位教练可约"
@@ -79,19 +90,23 @@ export default function Home() {
               whiteSpace: 'nowrap',
               border: i === 2 ? 'none' : '1px solid #ddd',
               cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
             }}
           >
-            {i === 2 ? '🔥 ' : ''}
+            {i === 2 && <FireIcon size={14} color="#fff" />}
             {tag}
           </span>
         ))}
       </div>
 
-      {/* Featured Coaches — Photography-first */}
+      {/* Featured Coaches */}
       <div style={{ padding: '0 0 24px' }}>
         <div style={{ padding: '0 16px' }}>
           <SectionHeader
-            title="⭐ 精选教练"
+            title="精选教练"
+            icon={<StarFilledIcon size={16} color="#E3617B" />}
             onMore={() => nav('/homeservice')}
           />
         </div>
@@ -124,11 +139,12 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Recommended Courses — Airbnb divider-list style */}
+      {/* Recommended Courses */}
       <div>
         <div style={{ padding: '0 16px', marginBottom: 0 }}>
           <SectionHeader
-            title="📌 为你推荐"
+            title="为你推荐"
+            icon={<SparkleIcon size={16} color="#E3617B" />}
             onMore={() => nav('/studio')}
           />
         </div>

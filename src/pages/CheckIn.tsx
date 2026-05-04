@@ -1,5 +1,12 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { scheduleItems } from '../data/mock'
+import {
+  SearchIcon,
+  ClockIcon,
+  UserIcon,
+  HomeServiceIcon,
+  LocationIcon,
+} from '../components/Icons'
 
 export default function CheckIn() {
   const { id } = useParams<{ id: string }>()
@@ -15,7 +22,7 @@ export default function CheckIn() {
           <div style={s.navPlaceholder} />
         </div>
         <div style={s.notFound}>
-          <div style={s.notFoundEmoji}>🔍</div>
+          <SearchIcon size={48} color="#c0c0c0" />
           <p style={s.notFoundText}>课程未找到</p>
           <div style={s.backBtn} onClick={() => nav(-1)}>返回</div>
         </div>
@@ -36,17 +43,19 @@ export default function CheckIn() {
       <div style={s.infoCard}>
         <h2 style={s.courseName}>{item.courseName}</h2>
         <div style={s.infoRow}>
-          <span style={s.infoIcon}>⏱</span>
+          <ClockIcon size={14} color="#6a6a6a" />
           <span style={s.infoText}>{item.date} {item.time}</span>
         </div>
         <div style={s.infoRow}>
-          <span style={s.infoIcon}>👩‍🏫</span>
+          <UserIcon size={14} color="#6a6a6a" />
           <span style={s.infoText}>{item.coachName}</span>
         </div>
         <div style={s.infoRow}>
-          <span style={s.infoIcon}>
-            {item.isHomeService ? '🏠' : '📍'}
-          </span>
+          {item.isHomeService ? (
+            <HomeServiceIcon size={14} color="#6a6a6a" />
+          ) : (
+            <LocationIcon size={14} color="#6a6a6a" />
+          )}
           <span style={s.infoText}>
             {item.isHomeService ? '上门服务' : item.venueName}
           </span>
@@ -121,7 +130,6 @@ const s: Record<string, React.CSSProperties> = {
     gap: 12,
     padding: 20,
   },
-  notFoundEmoji: { fontSize: 48, lineHeight: 1 },
   notFoundText: { fontSize: 16, color: '#222', fontWeight: 500, margin: 0 },
   backBtn: {
     marginTop: 8,
@@ -157,12 +165,6 @@ const s: Record<string, React.CSSProperties> = {
     gap: 6,
     marginBottom: 6,
   },
-  infoIcon: {
-    fontSize: 14,
-    lineHeight: 1,
-    width: 20,
-    textAlign: 'center',
-  },
   infoText: {
     fontSize: 13,
     color: '#6a6a6a',
@@ -183,20 +185,6 @@ const s: Record<string, React.CSSProperties> = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    animation: 'breathe 2s ease-in-out infinite',
-  },
-  qrInner: {
-    width: '80%',
-    height: '80%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    border: '2px dashed #ddd',
-    borderRadius: 8,
-  },
-  qrEmoji: {
-    fontSize: 48,
-    lineHeight: 1,
   },
 
   // Hint
@@ -208,4 +196,3 @@ const s: Record<string, React.CSSProperties> = {
     lineHeight: 1.6,
   },
 }
-

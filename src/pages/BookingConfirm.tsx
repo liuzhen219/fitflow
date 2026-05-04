@@ -3,6 +3,12 @@ import { useState } from 'react'
 import StarRating from '../components/StarRating'
 import PriceBreakdown from '../components/PriceBreakdown'
 import { courses, venues } from '../data/mock'
+import {
+  SearchIcon,
+  HomeServiceIcon,
+  LocationIcon,
+  ClockIcon,
+} from '../components/Icons'
 
 const timeSlots = ['周六 10:00', '周六 14:00', '周日 09:00', '周一 10:00']
 
@@ -17,7 +23,7 @@ export default function BookingConfirm() {
     return (
       <div style={s.page}>
         <div style={s.notFound}>
-          <div style={s.notFoundEmoji}>🔍</div>
+          <SearchIcon size={48} color="#c0c0c0" />
           <p style={s.notFoundText}>课程未找到</p>
           <div style={s.backBtn} onClick={() => nav(-1)}>返回</div>
         </div>
@@ -53,9 +59,11 @@ export default function BookingConfirm() {
         <div style={{ height: 6 }} />
 
         <div style={s.venueRow}>
-          <span style={s.venueIcon}>
-            {course.isHomeService ? '🏠' : '📍'}
-          </span>
+          {course.isHomeService ? (
+            <HomeServiceIcon size={14} color="#6a6a6a" />
+          ) : (
+            <LocationIcon size={14} color="#6a6a6a" />
+          )}
           <span style={s.venueName}>
             {course.isHomeService ? '上门服务' : course.venueName}
           </span>
@@ -68,7 +76,10 @@ export default function BookingConfirm() {
 
       {/* Time Selection */}
       <div style={s.section}>
-        <div style={s.sectionTitle}>⏱ 选择时间</div>
+        <div style={s.sectionTitle}>
+          <ClockIcon size={14} color="#222" />
+          {' '}选择时间
+        </div>
         <div style={s.timeChips}>
           {timeSlots.map((t, i) => (
             <div
@@ -126,7 +137,6 @@ const s: Record<string, React.CSSProperties> = {
     gap: 12,
     padding: 20,
   },
-  notFoundEmoji: { fontSize: 48, lineHeight: 1 },
   notFoundText: { fontSize: 16, color: '#222', fontWeight: 500, margin: 0 },
   backBtn: {
     marginTop: 8,
@@ -201,10 +211,6 @@ const s: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     gap: 4,
   },
-  venueIcon: {
-    fontSize: 12,
-    lineHeight: 1,
-  },
   venueName: {
     fontSize: 12,
     color: '#6a6a6a',
@@ -225,6 +231,9 @@ const s: Record<string, React.CSSProperties> = {
     fontWeight: 600,
     color: '#222',
     marginBottom: 10,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 4,
   },
 
   // Time Chips

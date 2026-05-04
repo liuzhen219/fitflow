@@ -2,6 +2,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useState } from 'react'
 import StarRating from '../components/StarRating'
 import { scheduleItems } from '../data/mock'
+import {
+  SearchIcon,
+  UserIcon,
+  BuildingIcon,
+  PhotoIcon,
+} from '../components/Icons'
 
 const coachTags = ['专业认真', '讲解清晰', '氛围舒适', '耐心细致', '效果明显']
 const venueTags = ['器械齐全', '环境干净', '交通便利', '服务周到', '空间宽敞']
@@ -38,7 +44,7 @@ export default function PostReview() {
           <div style={s.navPlaceholder} />
         </div>
         <div style={s.notFound}>
-          <div style={s.notFoundEmoji}>🔍</div>
+          <SearchIcon size={48} color="#c0c0c0" />
           <p style={s.notFoundText}>课程未找到</p>
           <div style={s.backBtn} onClick={() => nav(-1)}>返回</div>
         </div>
@@ -70,7 +76,10 @@ export default function PostReview() {
 
         {/* Coach Rating Section */}
         <div style={s.section}>
-          <div style={s.sectionTitle}>👩‍🏫 教练评价</div>
+          <div style={{ ...s.sectionTitle, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <UserIcon size={14} color="#E3617B" />
+            教练评价
+          </div>
           <div style={s.ratingRow}>
             <StarRating value={coachRating} onChange={setCoachRating} size={28} />
             {coachRating > 0 && (
@@ -99,7 +108,10 @@ export default function PostReview() {
         {/* Venue Rating Section */}
         {!item.isHomeService && (
           <div style={s.section}>
-            <div style={s.sectionTitle}>🏛️ 场馆评价</div>
+            <div style={{ ...s.sectionTitle, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <BuildingIcon size={14} color="#E3617B" />
+              场馆评价
+            </div>
             <div style={s.ratingRow}>
               <StarRating value={venueRating} onChange={setVenueRating} size={28} />
               {venueRating > 0 && (
@@ -128,7 +140,7 @@ export default function PostReview() {
 
         {/* Text Input Area */}
         <div style={s.section}>
-          <div style={s.sectionTitle}>✍️ 写点什么...</div>
+          <div style={s.sectionTitle}>写点什么...</div>
           <div
             style={s.textArea}
             contentEditable
@@ -144,11 +156,14 @@ export default function PostReview() {
 
         {/* Photo Upload */}
         <div style={s.section}>
-          <div style={s.sectionTitle}>📷 添加图片</div>
+          <div style={{ ...s.sectionTitle, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <PhotoIcon size={14} color="#E3617B" />
+            添加图片
+          </div>
           <div style={s.photoRow}>
             {[0, 1, 2].map((i) => (
               <div key={i} style={s.photoBox}>
-                <span style={s.photoEmoji}>📷</span>
+                <PhotoIcon size={22} color="#c0c0c0" />
               </div>
             ))}
           </div>
@@ -213,7 +228,6 @@ const s: Record<string, React.CSSProperties> = {
     gap: 12,
     padding: 20,
   },
-  notFoundEmoji: { fontSize: 48, lineHeight: 1 },
   notFoundText: { fontSize: 16, color: '#222', fontWeight: 500, margin: 0 },
   backBtn: {
     marginTop: 8,
@@ -348,11 +362,6 @@ const s: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
-  },
-  photoEmoji: {
-    fontSize: 22,
-    lineHeight: 1,
-    opacity: 0.5,
   },
 
   // Submit

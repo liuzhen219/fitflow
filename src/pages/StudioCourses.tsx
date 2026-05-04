@@ -48,7 +48,7 @@ export default function StudioCourses() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff', paddingBottom: 32 }}>
-      {/* Filter chips — Airbnb pill style */}
+      {/* Filter chips */}
       <div
         style={{
           display: 'flex',
@@ -81,7 +81,7 @@ export default function StudioCourses() {
         ))}
       </div>
 
-      {/* Course list — Airbnb divider-list style */}
+      {/* Course list */}
       <div style={{ padding: '0 16px' }}>
         {filtered.length > 0 ? (
           filtered.map((course) => (
@@ -101,7 +101,7 @@ export default function StudioCourses() {
             />
           ))
         ) : (
-          <EmptyState icon="📭" text="暂无符合条件的场馆课程" />
+          <EmptyState text="暂无符合条件的场馆课程" />
         )}
       </div>
 

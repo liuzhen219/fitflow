@@ -2,6 +2,16 @@ import { useNavigate, useParams } from 'react-router-dom'
 import StarRating from '../components/StarRating'
 import SectionHeader from '../components/SectionHeader'
 import { venues } from '../data/mock'
+import {
+  SearchIcon,
+  VerifiedIcon,
+  SettingsIcon,
+  SparkleIcon,
+  LocationIcon,
+  ClockIcon,
+  CalendarIcon,
+  CheckIcon,
+} from '../components/Icons'
 
 export default function VenueProfile() {
   const { id } = useParams<{ id: string }>()
@@ -12,7 +22,7 @@ export default function VenueProfile() {
     return (
       <div style={s.page}>
         <div style={s.notFound}>
-          <div style={s.notFoundEmoji}>🔍</div>
+          <SearchIcon size={48} color="#c0c0c0" />
           <p style={s.notFoundText}>场馆未找到</p>
           <div style={s.backBtn} onClick={() => nav(-1)}>
             返回
@@ -43,13 +53,14 @@ export default function VenueProfile() {
           <div style={s.navPlaceholder} />
         </div>
 
-        {/* Center (image background, no emoji) */}
+        {/* Center */}
         <div style={s.heroCenter} />
 
         {/* Verified badge */}
         {venue.verified && (
           <div style={s.verifiedBadge}>
-            ✅ 平台认证场馆
+            <VerifiedIcon size={14} color="#fff" />
+            {' '}平台认证场馆
           </div>
         )}
       </div>
@@ -69,20 +80,23 @@ export default function VenueProfile() {
 
         <div style={s.locationRow}>
           <span style={s.locationTag}>{venue.district}</span>
-          <span style={s.locationTag}>📍 {venue.distance}</span>
+          <span style={{ ...s.locationTag, display: 'flex', alignItems: 'center', gap: 2 }}>
+            <LocationIcon size={11} color="#E3617B" />
+            {' '}{venue.distance}
+          </span>
         </div>
 
         <div style={{ height: 14 }} />
 
         {/* Address */}
         <div style={s.infoRow}>
-          <span style={s.infoIcon}>📍</span>
+          <LocationIcon size={14} color="#6a6a6a" />
           <span style={s.infoText}>{venue.address}</span>
         </div>
 
         {/* Hours */}
         <div style={s.infoRow}>
-          <span style={s.infoIcon}>🕐</span>
+          <ClockIcon size={14} color="#6a6a6a" />
           <span style={s.infoText}>{venue.openHours}</span>
         </div>
 
@@ -94,7 +108,10 @@ export default function VenueProfile() {
         <div style={{ height: 20 }} />
 
         {/* Facilities */}
-        <SectionHeader title="🛠️ 场馆设施" />
+        <SectionHeader
+          title="场馆设施"
+          icon={<SettingsIcon size={16} color="#E3617B" />}
+        />
         <div style={s.tagRow}>
           {venue.facilities.map((fac, idx) => (
             <span key={idx} style={s.tagChip}>
@@ -106,11 +123,15 @@ export default function VenueProfile() {
         <div style={{ height: 18 }} />
 
         {/* Services */}
-        <SectionHeader title="✨ 提供服务" />
+        <SectionHeader
+          title="提供服务"
+          icon={<SparkleIcon size={16} color="#E3617B" />}
+        />
         <div style={s.tagRow}>
           {venue.services.map((svc, idx) => (
             <span key={idx} style={s.svcChip}>
-              ✅ {svc}
+              <CheckIcon size={12} color="#16A34A" />
+              {' '}{svc}
             </span>
           ))}
         </div>
@@ -119,7 +140,7 @@ export default function VenueProfile() {
 
         {/* Schedule label */}
         <div style={s.scheduleBox}>
-          <span style={s.scheduleIcon}>📅</span>
+          <CalendarIcon size={16} color="#E3617B" />
           <span style={s.scheduleText}>{venue.scheduleLabel}</span>
         </div>
 
@@ -143,10 +164,6 @@ const s: Record<string, React.CSSProperties> = {
     minHeight: '100vh',
     gap: 12,
     padding: 20,
-  },
-  notFoundEmoji: {
-    fontSize: 48,
-    lineHeight: 1,
   },
   notFoundText: {
     fontSize: 16,
@@ -211,10 +228,6 @@ const s: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     justifyContent: 'center',
   },
-  heroEmoji: {
-    fontSize: 56,
-    lineHeight: 1,
-  },
   verifiedBadge: {
     position: 'absolute',
     bottom: 12,
@@ -226,6 +239,9 @@ const s: Record<string, React.CSSProperties> = {
     color: '#FFFFFF',
     fontSize: 11,
     fontWeight: 500,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 4,
   },
 
   // Card
@@ -284,11 +300,6 @@ const s: Record<string, React.CSSProperties> = {
     gap: 8,
     padding: '6px 0',
   },
-  infoIcon: {
-    fontSize: 14,
-    lineHeight: 1.5,
-    flexShrink: 0,
-  },
   infoText: {
     fontSize: 13,
     color: '#222',
@@ -319,7 +330,9 @@ const s: Record<string, React.CSSProperties> = {
     fontWeight: 500,
   },
   svcChip: {
-    display: 'inline-block',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 4,
     padding: '6px 14px',
     borderRadius: 16,
     fontSize: 12,
@@ -336,10 +349,6 @@ const s: Record<string, React.CSSProperties> = {
     padding: '14px 16px',
     borderRadius: 12,
     background: 'linear-gradient(135deg, rgba(227,97,123,0.06), rgba(212,74,101,0.04))',
-  },
-  scheduleIcon: {
-    fontSize: 16,
-    lineHeight: 1,
   },
   scheduleText: {
     fontSize: 13,

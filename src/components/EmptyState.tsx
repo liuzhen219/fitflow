@@ -1,14 +1,15 @@
 import React from 'react'
+import { InboxIcon } from './Icons'
 
 interface EmptyStateProps {
-  icon?: string
+  icon?: React.ReactNode
   text: string
   actionText?: string
   onAction?: () => void
 }
 
 const EmptyState: React.FC<EmptyStateProps> = ({
-  icon = '📭',
+  icon,
   text,
   actionText,
   onAction,
@@ -24,7 +25,9 @@ const EmptyState: React.FC<EmptyStateProps> = ({
         textAlign: 'center',
       }}
     >
-      <div style={{ fontSize: 48, lineHeight: 1, marginBottom: 12 }}>{icon}</div>
+      <div style={{ marginBottom: 12 }}>
+        {icon || <InboxIcon size={48} color="#c0c0c0" />}
+      </div>
       <p
         style={{
           fontSize: 14,

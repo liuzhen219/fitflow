@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { SearchBar } from 'antd-mobile'
+import { FireIcon } from '../components/Icons'
 
 const hotSearches = [
   '核心床',
@@ -31,7 +32,10 @@ export default function Search() {
 
       {/* Hot Search Section */}
       <div style={s.section}>
-        <div style={s.sectionTitle}>🔥 热门搜索</div>
+        <div style={s.sectionTitle}>
+          <FireIcon size={14} color="#E3617B" />
+          {' '}热门搜索
+        </div>
         <div style={s.tagRow}>
           {hotSearches.map((tag) => (
             <span key={tag} style={s.tagChip}>
@@ -93,6 +97,9 @@ const s: Record<string, React.CSSProperties> = {
     fontWeight: 600,
     color: '#222',
     marginBottom: 12,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 4,
   },
   tagRow: {
     display: 'flex',

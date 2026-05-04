@@ -1,6 +1,15 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import StarRating from '../components/StarRating'
 import { courses } from '../data/mock'
+import {
+  SearchIcon,
+  ClockIcon,
+  UserIcon,
+  LocationIcon,
+  HomeServiceIcon,
+  OrdersIcon,
+  CheckIcon,
+} from '../components/Icons'
 
 export default function CourseDetail() {
   const { id } = useParams<{ id: string }>()
@@ -11,7 +20,7 @@ export default function CourseDetail() {
     return (
       <div style={s.page}>
         <div style={s.notFound}>
-          <div style={s.notFoundEmoji}>🔍</div>
+          <SearchIcon size={48} color="#c0c0c0" />
           <p style={s.notFoundText}>课程未找到</p>
           <div style={s.backBtn} onClick={() => nav(-1)}>
             返回
@@ -43,7 +52,7 @@ export default function CourseDetail() {
           <div style={s.navPlaceholder} />
         </div>
 
-        {/* Center (image background, no emoji) */}
+        {/* Center */}
         <div style={s.heroCenter} />
       </div>
 
@@ -76,23 +85,25 @@ export default function CourseDetail() {
         {/* Info Row */}
         <div style={s.infoRow}>
           <div style={s.infoItem}>
-            <span style={s.infoIcon}>⏱</span>
+            <ClockIcon size={14} color="#6a6a6a" />
             <span style={s.infoValue}>{course.duration}分钟</span>
           </div>
           <div style={s.infoItem}>
-            <span style={s.infoIcon}>👤</span>
+            <UserIcon size={14} color="#6a6a6a" />
             <span style={s.infoValue}>1v1私教</span>
           </div>
           <div style={s.infoItem}>
-            <span style={s.infoIcon}>
-              {course.isHomeService ? '🏠' : '📍'}
-            </span>
+            {course.isHomeService ? (
+              <HomeServiceIcon size={14} color="#6a6a6a" />
+            ) : (
+              <LocationIcon size={14} color="#6a6a6a" />
+            )}
             <span style={s.infoValue}>
               {course.isHomeService ? '上门服务' : course.venueName}
             </span>
           </div>
           <div style={s.infoItem}>
-            <span style={s.infoIcon}>📏</span>
+            <LocationIcon size={14} color="#6a6a6a" />
             <span style={s.infoValue}>{course.distance}</span>
           </div>
         </div>
@@ -100,7 +111,10 @@ export default function CourseDetail() {
         <div style={{ height: 20 }} />
 
         {/* Course Outline */}
-        <p style={s.sectionLabel}>📋 课程大纲</p>
+        <p style={s.sectionLabel}>
+          <OrdersIcon size={14} color="#E3617B" />
+          {' '}课程大纲
+        </p>
         <div style={s.outlineList}>
           {course.outline.map((step, idx) => (
             <div key={idx} style={s.outlineItem}>
@@ -113,7 +127,10 @@ export default function CourseDetail() {
         <div style={{ height: 18 }} />
 
         {/* Target Audience */}
-        <p style={s.sectionLabel}>🎯 适合人群</p>
+        <p style={s.sectionLabel}>
+          <UserIcon size={14} color="#E3617B" />
+          {' '}适合人群
+        </p>
         <div style={s.audienceRow}>
           {course.targetAudience.map((tag, idx) => (
             <span key={idx} style={s.audienceTag}>
@@ -127,15 +144,15 @@ export default function CourseDetail() {
         {/* Trust Guarantees */}
         <div style={s.trustBox}>
           <div style={s.trustItem}>
-            <span style={s.trustIcon}>✅</span>
+            <CheckIcon size={14} color="#16A34A" />
             <span style={s.trustText}>不满意退款</span>
           </div>
           <div style={s.trustItem}>
-            <span style={s.trustIcon}>✅</span>
+            <CheckIcon size={14} color="#16A34A" />
             <span style={s.trustText}>资质已核验</span>
           </div>
           <div style={s.trustItem}>
-            <span style={s.trustIcon}>✅</span>
+            <CheckIcon size={14} color="#16A34A" />
             <span style={s.trustText}>资金监管</span>
           </div>
         </div>
@@ -148,7 +165,8 @@ export default function CourseDetail() {
       <div style={s.fixedBar}>
         <div style={s.fixedLeft}>
           <p style={s.trustLabel}>
-            ✅ 不满意退款 · 资质已核验
+            <CheckIcon size={12} color="#16A34A" />
+            {' '}不满意退款 · 资质已核验
           </p>
         </div>
         <div
@@ -175,10 +193,6 @@ const s: Record<string, React.CSSProperties> = {
     minHeight: '100vh',
     gap: 12,
     padding: 20,
-  },
-  notFoundEmoji: {
-    fontSize: 48,
-    lineHeight: 1,
   },
   notFoundText: {
     fontSize: 16,
@@ -246,10 +260,6 @@ const s: Record<string, React.CSSProperties> = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  heroEmoji: {
-    fontSize: 48,
-    lineHeight: 1,
   },
 
   // Card
@@ -332,10 +342,6 @@ const s: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     gap: 4,
   },
-  infoIcon: {
-    fontSize: 12,
-    lineHeight: 1,
-  },
   infoValue: {
     fontSize: 12,
     color: '#222',
@@ -348,6 +354,9 @@ const s: Record<string, React.CSSProperties> = {
     color: '#222',
     margin: '0 0 10px',
     lineHeight: 1.3,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 4,
   },
 
   // Outline
@@ -411,10 +420,6 @@ const s: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     gap: 8,
   },
-  trustIcon: {
-    fontSize: 14,
-    lineHeight: 1,
-  },
   trustText: {
     fontSize: 12,
     color: '#222',
@@ -450,6 +455,9 @@ const s: Record<string, React.CSSProperties> = {
     color: '#6a6a6a',
     margin: 0,
     lineHeight: 1.3,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 2,
   },
   ctaBtn: {
     padding: '12px 28px',

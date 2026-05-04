@@ -1,4 +1,5 @@
 import React from 'react'
+import { LocationIcon, ClockIcon, HomeServiceIcon, DumbbellIcon } from './Icons'
 
 interface CourseCardProps {
   title: string
@@ -61,10 +62,13 @@ const CourseCard: React.FC<CourseCardProps> = ({
               alignItems: 'center',
               justifyContent: 'center',
               height: '100%',
-              fontSize: 36,
             }}
           >
-            {isHomeService ? '🏠' : '🧘'}
+            {isHomeService ? (
+              <HomeServiceIcon size={36} color="#fff" />
+            ) : (
+              <DumbbellIcon size={36} color="#fff" />
+            )}
           </div>
         )}
       </div>
@@ -107,9 +111,15 @@ const CourseCard: React.FC<CourseCardProps> = ({
               fontWeight: 500,
               color: '#6a6a6a',
               lineHeight: 1.29,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
             }}
           >
-            📍 {distance} · ⏱ {duration}分钟
+            <LocationIcon size={12} color="#6a6a6a" />
+            {' '}{distance}{' · '}
+            <ClockIcon size={12} color="#6a6a6a" />
+            {' '}{duration}分钟
           </div>
         </div>
         <div
@@ -119,8 +129,9 @@ const CourseCard: React.FC<CourseCardProps> = ({
             alignItems: 'baseline',
           }}
         >
-          <span style={{ fontSize: 13, fontWeight: 500, color: '#6a6a6a' }}>
-            ⏱ {time}
+          <span style={{ fontSize: 13, fontWeight: 500, color: '#6a6a6a', display: 'flex', alignItems: 'center', gap: 2 }}>
+            <ClockIcon size={12} color="#6a6a6a" />
+            {' '}{time}
           </span>
           <span style={{ fontSize: 18, fontWeight: 600, color: '#222' }}>
             <span className="num">¥{price}</span>

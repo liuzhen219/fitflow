@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface SceneCardProps {
-  icon: string
+  icon: React.ReactNode
   title: string
   subtitle: string
   count: string
@@ -35,7 +35,7 @@ const SceneCard: React.FC<SceneCardProps> = ({
       }}
       onClick={onClick}
     >
-      <div style={{ fontSize: 32, lineHeight: 1 }}>{icon}</div>
+      <div style={{ lineHeight: 1 }}>{icon}</div>
       <div>
         <h3
           style={{

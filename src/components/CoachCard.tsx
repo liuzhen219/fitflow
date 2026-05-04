@@ -1,4 +1,5 @@
 import React from 'react'
+import { StarFilledIcon } from './Icons'
 
 interface CoachCardProps {
   name: string
@@ -31,7 +32,7 @@ const CoachCard: React.FC<CoachCardProps> = ({
       flexShrink: 0,
     }}
   >
-    {/* Photo — 4:3 Airbnb style */}
+    {/* Photo */}
     <div
       style={{
         width: '100%',
@@ -63,7 +64,7 @@ const CoachCard: React.FC<CoachCardProps> = ({
         </div>
       )}
     </div>
-    {/* Text below image — Airbnb listing card pattern */}
+    {/* Text below image */}
     <div style={{ padding: '12px 0 0' }}>
       <div style={{ fontWeight: 600, fontSize: 15, lineHeight: 1.25, color: '#222' }}>
         {name}
@@ -85,9 +86,13 @@ const CoachCard: React.FC<CoachCardProps> = ({
           fontWeight: 500,
           color: '#6a6a6a',
           lineHeight: 1.29,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
         }}
       >
-        ⭐ {rating} · {classCount}节课
+        <StarFilledIcon size={12} color="#E3617B" />
+        {' '}{rating} · {classCount}节课
       </div>
       <div
         style={{

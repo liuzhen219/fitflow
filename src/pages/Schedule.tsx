@@ -84,7 +84,7 @@ export default function Schedule() {
 
         {/* Legend */}
         <div style={s.legend}>
-          <span style={s.legendDot}>●</span>
+          <div style={s.legendDot} />
           <span style={s.legendText}>有课 · 2节待上</span>
         </div>
       </div>
@@ -136,7 +136,6 @@ export default function Schedule() {
           />
         ) : (
           <EmptyState
-            icon="📭"
             text="暂无已完结课程"
           />
         )}
@@ -230,9 +229,11 @@ const s: Record<string, React.CSSProperties> = {
     borderTop: '1px solid #ddd',
   },
   legendDot: {
-    fontSize: 10,
-    color: '#E3617B',
-    lineHeight: 1,
+    width: 8,
+    height: 8,
+    borderRadius: '50%',
+    background: '#E3617B',
+    flexShrink: 0,
   },
   legendText: {
     fontSize: 11,

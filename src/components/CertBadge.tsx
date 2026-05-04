@@ -1,4 +1,5 @@
 import React from 'react'
+import { CheckIcon } from './Icons'
 
 interface CertBadgeProps {
   label: string
@@ -6,12 +7,12 @@ interface CertBadgeProps {
 }
 
 const CertBadge: React.FC<CertBadgeProps> = ({ label, verified = false }) => {
-  const prefix = verified ? '✅ ' : ''
-
   return (
     <span
       style={{
-        display: 'inline-block',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 4,
         padding: '6px 12px',
         borderRadius: 4,
         fontSize: 12,
@@ -22,7 +23,7 @@ const CertBadge: React.FC<CertBadgeProps> = ({ label, verified = false }) => {
         border: '1px solid #ddd',
       }}
     >
-      {prefix}
+      {verified && <CheckIcon size={12} color="#16A34A" />}
       {label}
     </span>
   )

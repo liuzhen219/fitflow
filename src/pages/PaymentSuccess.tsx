@@ -1,5 +1,13 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { courses, coaches, venues } from '../data/mock'
+import {
+  SearchIcon,
+  CheckIcon,
+  CalendarIcon,
+  OrdersIcon,
+  HomeServiceIcon,
+  QRIcon,
+} from '../components/Icons'
 
 export default function PaymentSuccess() {
   const { id } = useParams<{ id: string }>()
@@ -10,7 +18,7 @@ export default function PaymentSuccess() {
     return (
       <div style={s.page}>
         <div style={s.notFound}>
-          <div style={s.notFoundEmoji}>🔍</div>
+          <SearchIcon size={48} color="#c0c0c0" />
           <p style={s.notFoundText}>课程未找到</p>
           <div style={s.backBtn} onClick={() => nav(-1)}>返回</div>
         </div>
@@ -26,9 +34,9 @@ export default function PaymentSuccess() {
       {/* Success Check */}
       <div style={s.checkArea}>
         <div className="a-check" style={s.checkIcon}>
-          ✅
+          <CheckIcon size={56} color="#16A34A" />
         </div>
-        <h1 style={s.successTitle}>预约成功！</h1>
+        <h1 style={s.successTitle}>预约成功!</h1>
         <p style={s.subtitle}>课程开始前1小时可签到</p>
       </div>
 
@@ -46,7 +54,10 @@ export default function PaymentSuccess() {
 
       {/* Course Reminder Card */}
       <div style={s.reminderCard}>
-        <h3 style={s.reminderTitle}>📅 课程提醒</h3>
+        <h3 style={s.reminderTitle}>
+          <CalendarIcon size={16} color="#E3617B" />
+          {' '}课程提醒
+        </h3>
 
         <div style={s.reminderList}>
           <div style={s.reminderItem}>
@@ -60,7 +71,11 @@ export default function PaymentSuccess() {
           <div style={s.reminderItem}>
             <span style={s.reminderLabel}>场馆</span>
             <span style={s.reminderValue}>
-              {course.isHomeService ? '🏠 上门服务' : course.venueName}
+              {course.isHomeService ? (
+                <span><HomeServiceIcon size={12} color="#6a6a6a" /> 上门服务</span>
+              ) : (
+                course.venueName
+              )}
             </span>
           </div>
           <div style={s.reminderItem}>
@@ -84,7 +99,8 @@ export default function PaymentSuccess() {
           style={s.actionOutline}
           onClick={() => nav('/schedule')}
         >
-          📋 查看订单
+          <OrdersIcon size={14} color="#E3617B" />
+          {' '}查看订单
         </button>
         <button
           style={s.actionPrimary}
@@ -92,7 +108,8 @@ export default function PaymentSuccess() {
             // Add to calendar placeholder
           }}
         >
-          📅 添加到日历
+          <CalendarIcon size={14} color="#E3617B" />
+          {' '}添加到日历
         </button>
       </div>
 
@@ -126,7 +143,6 @@ const s: Record<string, React.CSSProperties> = {
     gap: 12,
     padding: 20,
   },
-  notFoundEmoji: { fontSize: 48, lineHeight: 1 },
   notFoundText: { fontSize: 16, color: '#222', fontWeight: 500, margin: 0 },
   backBtn: {
     marginTop: 8,
@@ -147,9 +163,8 @@ const s: Record<string, React.CSSProperties> = {
     marginTop: 20,
   },
   checkIcon: {
-    fontSize: 56,
-    lineHeight: 1,
     marginBottom: 16,
+    lineHeight: 1,
   },
   successTitle: {
     fontSize: 22,
@@ -182,10 +197,6 @@ const s: Record<string, React.CSSProperties> = {
     justifyContent: 'center',
     boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
   },
-  qrEmoji: {
-    fontSize: 48,
-    lineHeight: 1,
-  },
   qrHint: {
     fontSize: 11,
     color: '#6a6a6a',
@@ -209,6 +220,9 @@ const s: Record<string, React.CSSProperties> = {
     color: '#222',
     margin: '0 0 12px',
     lineHeight: 1.3,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 6,
   },
   reminderList: {
     display: 'flex',
@@ -256,6 +270,10 @@ const s: Record<string, React.CSSProperties> = {
     cursor: 'pointer',
     textAlign: 'center',
     lineHeight: 1.2,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
   },
   actionPrimary: {
     flex: 1,
@@ -269,6 +287,10 @@ const s: Record<string, React.CSSProperties> = {
     cursor: 'pointer',
     textAlign: 'center',
     lineHeight: 1.2,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 4,
   },
 
   // Back Home

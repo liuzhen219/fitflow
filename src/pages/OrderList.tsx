@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import EmptyState from '../components/EmptyState'
 import { scheduleItems } from '../data/mock'
+import { CalendarIcon, ClockIcon, OrdersIcon } from '../components/Icons'
 
 const statusFilters = ['全部', '待付款', '待上课', '已完成', '退款']
 
@@ -74,7 +75,7 @@ export default function OrderList() {
       <div style={s.listArea}>
         {filteredItems.length === 0 ? (
           <EmptyState
-            icon="📋"
+            icon={<OrdersIcon size={48} color="#c0c0c0" />}
             text="暂无订单记录"
             actionText="去约课"
             onAction={() => nav('/home')}
@@ -96,8 +97,14 @@ export default function OrderList() {
                   <span>{item.isHomeService ? '上门服务' : item.venueName}</span>
                 </div>
                 <div style={s.cardDate}>
-                  <span>📅 {item.date}</span>
-                  <span>⏱ {item.time}</span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <CalendarIcon size={12} color="#6a6a6a" />
+                    {' '}{item.date}
+                  </span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                    <ClockIcon size={12} color="#6a6a6a" />
+                    {' '}{item.time}
+                  </span>
                 </div>
               </div>
             )

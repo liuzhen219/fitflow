@@ -5,6 +5,21 @@ import ReviewCard from '../components/ReviewCard'
 import SectionHeader from '../components/SectionHeader'
 import StarRating from '../components/StarRating'
 import { coaches, reviews } from '../data/mock'
+import {
+  SearchIcon,
+  PlayIcon,
+  ShieldIcon,
+  VerifiedIcon,
+  SparkleIcon,
+  CommentIcon,
+  OrdersIcon,
+  BuildingIcon,
+  StarFilledIcon,
+  ClockIcon,
+  LocationIcon,
+  PhotoIcon,
+  HomeServiceIcon,
+} from '../components/Icons'
 
 export default function CoachProfile() {
   const { id } = useParams<{ id: string }>()
@@ -14,7 +29,7 @@ export default function CoachProfile() {
   if (!coach) {
     return (
       <div style={{ minHeight: '100vh', background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, padding: 20 }}>
-        <div style={{ fontSize: 48, lineHeight: 1 }}>🔍</div>
+        <SearchIcon size={48} color="#c0c0c0" />
         <p style={{ fontSize: 16, color: '#222', fontWeight: 500, margin: 0 }}>教练未找到</p>
         <div
           style={{ marginTop: 8, padding: '10px 28px', borderRadius: 8, background: '#E3617B', color: '#fff', fontSize: 14, fontWeight: 500, cursor: 'pointer' }}
@@ -41,7 +56,7 @@ export default function CoachProfile() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff' }}>
-      {/* Hero — full-bleed photo, min 280px, no text overlay */}
+      {/* Hero */}
       <div
         style={{
           height: 280,
@@ -108,7 +123,11 @@ export default function CoachProfile() {
             fontWeight: 500,
           }}
         >
-          {coach.hasVideo ? '▶  观看介绍视频 2:30' : '📷  查看教学照片'}
+          {coach.hasVideo ? (
+            <><PlayIcon size={12} color="#fff" /> 观看介绍视频 2:30</>
+          ) : (
+            <><PhotoIcon size={12} color="#fff" /> 查看教学照片</>
+          )}
         </div>
       </div>
 
@@ -217,7 +236,7 @@ export default function CoachProfile() {
 
         <div style={{ height: 16 }} />
 
-        {/* StatsRow — Airbnb card with hairline border */}
+        {/* StatsRow */}
         <StatsRow items={statsItems} />
 
         <div style={{ height: 20 }} />
@@ -231,9 +250,13 @@ export default function CoachProfile() {
               color: '#222',
               margin: '0 0 10px',
               lineHeight: 1.25,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
             }}
           >
-            🏅 资质认证
+            <ShieldIcon size={16} color="#E3617B" />
+            资质认证
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {coach.certifications.map((cert, idx) => (
@@ -254,9 +277,13 @@ export default function CoachProfile() {
               color: '#222',
               margin: '0 0 10px',
               lineHeight: 1.25,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
             }}
           >
-            ✨ 擅长领域
+            <SparkleIcon size={16} color="#E3617B" />
+            擅长领域
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {coach.specialties.slice(0, 3).map((spec, idx) => (
@@ -305,9 +332,13 @@ export default function CoachProfile() {
               color: '#222',
               margin: '0 0 10px',
               lineHeight: 1.25,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
             }}
           >
-            💬 个人简介
+            <CommentIcon size={16} color="#E3617B" />
+            个人简介
           </p>
           <p
             style={{
@@ -323,8 +354,11 @@ export default function CoachProfile() {
 
         <div style={{ height: 24 }} />
 
-        {/* Courses — Airbnb divider-list style */}
-        <SectionHeader title={`📋 可约课程 (${coach.courses.length})`} />
+        {/* Courses */}
+        <SectionHeader
+          title={`可约课程 (${coach.courses.length})`}
+          icon={<OrdersIcon size={16} color="#E3617B" />}
+        />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {coach.courses.map((course) => (
             <div
@@ -347,9 +381,16 @@ export default function CoachProfile() {
                     color: '#222',
                     margin: 0,
                     lineHeight: 1.25,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4,
                   }}
                 >
-                  {course.isHomeService ? '🏠 ' : '📍 '}
+                  {course.isHomeService ? (
+                    <HomeServiceIcon size={14} color="#E3617B" />
+                  ) : (
+                    <LocationIcon size={14} color="#E3617B" />
+                  )}
                   {course.name}
                 </p>
                 <p
@@ -358,9 +399,13 @@ export default function CoachProfile() {
                     color: '#6a6a6a',
                     margin: '4px 0 0',
                     lineHeight: 1.29,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 2,
                   }}
                 >
-                  ⏱ {course.duration}分钟
+                  <ClockIcon size={12} color="#6a6a6a" />
+                  {' '}{course.duration}分钟
                   {course.venue && ` · ${course.venue}`}
                   {course.isHomeService && ' · 上门服务'}
                 </p>
@@ -396,7 +441,8 @@ export default function CoachProfile() {
           <>
             <div style={{ height: 24 }} />
             <SectionHeader
-              title={`🏛️ 合作场馆 (${coach.partnerVenues.length}家)`}
+              title={`合作场馆 (${coach.partnerVenues.length}家)`}
+              icon={<BuildingIcon size={16} color="#E3617B" />}
             />
             <div
               style={{
@@ -424,7 +470,7 @@ export default function CoachProfile() {
                     gap: 4,
                   }}
                 >
-                  <div style={{ fontSize: 24, lineHeight: 1 }}>🏛️</div>
+                  <BuildingIcon size={24} color="#E3617B" />
                   <p
                     style={{
                       fontSize: 13,
@@ -456,8 +502,10 @@ export default function CoachProfile() {
         {/* Reviews */}
         <div style={{ height: 24 }} />
         <SectionHeader
-          title={`📝 学员评价 (${coachReviews.length})`}
+          title={`学员评价 (${coachReviews.length})`}
           moreText="查看全部"
+          icon={<CommentIcon size={16} color="#E3617B" />}
+          onMore={() => {}}
         />
         <div
           style={{
