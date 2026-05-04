@@ -1,103 +1,156 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { NavBar, Button, Image, Tag, Space } from 'antd-mobile'
-
-const courseData: Record<string, any> = {
-  '1': {
-    title: '核心床基础 · 脊柱灵活', coach: '林若溪', dur: '45 min', level: '初级',
-    tags: ['核心床', '脊柱健康', '基础'],
-    desc: '本节课程专注于脊柱的逐节活动，通过核心床的弹簧阻力，帮助你找到深层核心的发力感。适合普拉提初学者，无需任何基础。',
-    highlights: ['改善脊柱灵活性', '激活深层核心', '改善体态', '缓解腰背不适'],
-    price: '¥198',
-    time: '周一 / 周三 9:00 — 9:45',
-    location: 'FLOW 朝阳公园工作室',
-    color: 'linear-gradient(135deg, #E8DDD2, #D9CFC0)',
-  },
-  '2': {
-    title: '垫上普拉提 · 核心唤醒', coach: 'Serena Li', dur: '60 min', level: '中级',
-    tags: ['垫上', '核心', '全身'],
-    desc: '在经典垫上普拉提的基础上，融入现代功能训练理念。全程自重训练，不需要器械，专注于呼吸与动作的协调。',
-    highlights: ['强化核心肌群', '提升身体控制力', '改善协调性', '释放压力'],
-    price: '¥168',
-    time: '周二 / 周四 10:30 — 11:30',
-    location: 'FLOW 朝阳公园工作室',
-    color: 'linear-gradient(135deg, #DCDACC, #CDD0C0)',
-  },
-  '3': {
-    title: '流瑜伽 · 身体流动', coach: '王语晴', dur: '50 min', level: '初级',
-    tags: ['瑜伽', '流动', '柔韧'],
-    desc: '通过流畅的动作串联，配合深长的呼吸，在一呼一吸之间感受身体的温柔流动。强调动作与呼吸的同步。',
-    highlights: ['提升柔韧性', '放松身心', '改善呼吸', '缓解紧张'],
-    price: '¥148',
-    time: '每天 7:00 — 7:50',
-    location: 'FLOW 国贸工作室',
-    color: 'linear-gradient(135deg, #E0D8CC, #D5CBB8)',
-  },
-}
+import StarRating from '../components/StarRating'
+import { courses } from '../data/mock'
 
 export default function CourseDetail() {
-  const { id } = useParams()
+  const { id } = useParams<{ id: string }>()
   const nav = useNavigate()
-  const c = courseData[id || '1'] || courseData['1']
+  const course = courses.find((c) => c.id === Number(id))
+
+  if (!course) {
+    return (
+      <div style={s.page}>
+        <div style={s.notFound}>
+          <div style={s.notFoundEmoji}>🔍</div>
+          <p style={s.notFoundText}>课程未找到</p>
+          <div style={s.backBtn} onClick={() => nav(-1)}>
+            返回
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div style={s.page}>
-      <NavBar onBack={() => nav(-1)} style={s.nav}>{c.title}</NavBar>
+      {/* Hero */}
+      <div style={{ ...s.hero, background: course.imageGradient }}>
+        {/* NavBar */}
+        <div style={s.navBar}>
+          <div style={s.navBack} onClick={() => nav(-1)}>
+            ←
+          </div>
+          <div style={s.navTitle}>{course.title}</div>
+          <div style={s.navPlaceholder} />
+        </div>
 
-      <div style={{ ...s.hero, background: c.color }}>
-        <div style={s.heroContent}>
-          <span style={s.heroLevel}>{c.level}</span>
-          <h1 style={s.heroTitle}>{c.title}</h1>
-          <p style={s.heroCoach}>{c.coach} · {c.dur}</p>
-          <p style={s.heroPrice}>{c.price}<span style={s.heroPer}> / 节</span></p>
+        {/* Center emoji */}
+        <div style={s.heroCenter}>
+          <div style={s.heroEmoji}>
+            {course.isHomeService ? '🏠' : '🧘'}
+          </div>
         </div>
       </div>
 
-      <div style={s.body}>
-        {/* 标签 */}
-        <Space wrap style={{ marginBottom: 16 }}>
-          {c.tags.map((t: string) => (
-            <Tag key={t} round style={{ '--border-color': 'rgba(200,182,166,0.2)', color: 'var(--c-primary-deep)' } as any}>{t}</Tag>
+      {/* Info Card */}
+      <div style={s.card}>
+        {/* Title */}
+        <h1 style={s.courseTitle}>{course.title}</h1>
+
+        <div style={{ height: 14 }} />
+
+        {/* Coach Row */}
+        <div style={s.coachRow} onClick={() => nav(`/coach/${course.coachId}`)}>
+          <div style={s.coachAvatar}>
+            {course.coachName.charAt(0)}
+          </div>
+          <div style={s.coachInfo}>
+            <p style={s.coachName}>{course.coachName}</p>
+            <div style={s.coachRatingRow}>
+              <StarRating value={course.coachRating} size={12} />
+              <span style={s.coachRatingNum}>
+                {course.coachRating.toFixed(1)}
+              </span>
+            </div>
+          </div>
+          <span style={s.coachArrow}>›</span>
+        </div>
+
+        <div style={{ height: 16 }} />
+
+        {/* Info Row */}
+        <div style={s.infoRow}>
+          <div style={s.infoItem}>
+            <span style={s.infoIcon}>⏱</span>
+            <span style={s.infoValue}>{course.duration}分钟</span>
+          </div>
+          <div style={s.infoItem}>
+            <span style={s.infoIcon}>👤</span>
+            <span style={s.infoValue}>1v1私教</span>
+          </div>
+          <div style={s.infoItem}>
+            <span style={s.infoIcon}>
+              {course.isHomeService ? '🏠' : '📍'}
+            </span>
+            <span style={s.infoValue}>
+              {course.isHomeService ? '上门服务' : course.venueName}
+            </span>
+          </div>
+          <div style={s.infoItem}>
+            <span style={s.infoIcon}>📏</span>
+            <span style={s.infoValue}>{course.distance}</span>
+          </div>
+        </div>
+
+        <div style={{ height: 20 }} />
+
+        {/* Course Outline */}
+        <p style={s.sectionLabel}>📋 课程大纲</p>
+        <div style={s.outlineList}>
+          {course.outline.map((step, idx) => (
+            <div key={idx} style={s.outlineItem}>
+              <span style={s.outlineNum}>{idx + 1}</span>
+              <span style={s.outlineText}>{step}</span>
+            </div>
           ))}
-        </Space>
-
-        {/* 课程介绍 */}
-        <div style={s.block}>
-          <h3 style={s.blockTitle}>课程介绍</h3>
-          <p style={s.blockText}>{c.desc}</p>
         </div>
 
-        {/* 课程亮点 */}
-        <div style={s.block}>
-          <h3 style={s.blockTitle}>课程亮点</h3>
-          <div style={s.highlights}>
-            {c.highlights.map((h: string) => (
-              <div key={h} style={s.hlItem}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C8B6A6" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>{h}</span>
-              </div>
-            ))}
+        <div style={{ height: 18 }} />
+
+        {/* Target Audience */}
+        <p style={s.sectionLabel}>🎯 适合人群</p>
+        <div style={s.audienceRow}>
+          {course.targetAudience.map((tag, idx) => (
+            <span key={idx} style={s.audienceTag}>
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div style={{ height: 18 }} />
+
+        {/* Trust Guarantees */}
+        <div style={s.trustBox}>
+          <div style={s.trustItem}>
+            <span style={s.trustIcon}>✅</span>
+            <span style={s.trustText}>不满意退款</span>
+          </div>
+          <div style={s.trustItem}>
+            <span style={s.trustIcon}>✅</span>
+            <span style={s.trustText}>资质已核验</span>
+          </div>
+          <div style={s.trustItem}>
+            <span style={s.trustIcon}>✅</span>
+            <span style={s.trustText}>资金监管</span>
           </div>
         </div>
 
-        {/* 详情信息 */}
-        <div style={s.block}>
-          <h3 style={s.blockTitle}>上课信息</h3>
-          <div style={s.infoList}>
-            <div style={s.infoItem}><span style={s.infoLabel}>时间</span><span>{c.time}</span></div>
-            <div style={s.infoItem}><span style={s.infoLabel}>地点</span><span>{c.location}</span></div>
-            <div style={s.infoItem}><span style={s.infoLabel}>时长</span><span>{c.dur}</span></div>
-          </div>
-        </div>
+        {/* Bottom spacer for fixed bar */}
+        <div style={s.bottomSpacer} />
+      </div>
 
-        {/* CTA */}
-        <div style={s.cta}>
-          <div style={s.ctaPrice}>
-            <span style={s.ctaPriceNum}>{c.price}</span>
-            <span style={s.ctaPriceUnit}> / 节</span>
-          </div>
-          <Button block color="primary" size="large" onClick={() => nav(`/booking/${id}`)} style={s.btn}>
-            立即预约
-          </Button>
+      {/* Fixed Bottom Bar */}
+      <div style={s.fixedBar}>
+        <div style={s.fixedLeft}>
+          <p style={s.trustLabel}>
+            ✅ 不满意退款 · 资质已核验
+          </p>
+        </div>
+        <div
+          style={s.ctaBtn}
+          onClick={() => nav(`/booking/${course.id}`)}
+        >
+          立即预约 ¥{course.price}
         </div>
       </div>
     </div>
@@ -105,36 +158,298 @@ export default function CourseDetail() {
 }
 
 const s: Record<string, React.CSSProperties> = {
-  page: { minHeight: '100vh', background: 'var(--c-bg)' },
-  nav: { '--border-bottom': 'none' } as any,
-  hero: { height: 260, padding: '40px 24px 24px', display: 'flex', alignItems: 'flex-end', borderRadius: '0 0 32px 32px' },
-  heroContent: { color: 'var(--c-text)' },
-  heroLevel: { fontSize: 11, background: 'rgba(255,255,255,0.35)', padding: '4px 12px', borderRadius: 10, display: 'inline-block', marginBottom: 12 },
-  heroTitle: { fontSize: 26, fontWeight: 500, lineHeight: 1.3, marginBottom: 8 },
-  heroCoach: { fontSize: 14, color: 'var(--c-text-secondary)' },
-  heroPrice: { fontSize: 24, fontWeight: 600, color: 'var(--c-primary-deep)', marginTop: 14 },
-  heroPer: { fontSize: 14, fontWeight: 400, color: 'var(--c-text-secondary)' },
-  body: { padding: '20px 20px 120px' },
-  block: { marginBottom: 24 },
-  blockTitle: { fontSize: 17, fontWeight: 500, color: 'var(--c-text)', marginBottom: 10, letterSpacing: 0.5 },
-  blockText: { fontSize: 14, color: 'var(--c-text-secondary)', lineHeight: 1.8, fontWeight: 300 },
-  highlights: { display: 'flex', flexDirection: 'column', gap: 10 },
-  hlItem: { display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, color: 'var(--c-text-secondary)', fontWeight: 300 },
-  infoList: { background: 'var(--c-bg-card)', borderRadius: 16, overflow: 'hidden' },
-  infoItem: { display: 'flex', justifyContent: 'space-between', padding: '14px 16px', fontSize: 14, color: 'var(--c-text)', borderBottom: '1px solid rgba(200,182,166,0.08)' },
-  infoLabel: { color: 'var(--c-text-secondary)' },
-  cta: {
-    position: 'fixed', bottom: 0, left: 0, right: 0,
-    background: 'rgba(249,249,247,0.95)', backdropFilter: 'blur(16px)',
-    padding: '12px 20px calc(env(safe-area-inset-bottom, 0) + 12px)',
-    display: 'flex', alignItems: 'center', gap: 16,
-    borderTop: '1px solid rgba(200,182,166,0.1)',
+  page: {
+    minHeight: '100vh',
+    background: '#FFF5F0',
   },
-  ctaPrice: { flexShrink: 0 },
-  ctaPriceNum: { fontSize: 22, fontWeight: 600, color: 'var(--c-primary-deep)' },
-  ctaPriceUnit: { fontSize: 12, color: 'var(--c-text-secondary)' },
-  btn: {
-    '--color': '#C8B6A6', borderRadius: 28, height: 48, fontSize: 16,
-    fontWeight: 500, boxShadow: '0 6px 24px rgba(200,182,166,0.35)', border: 'none',
-  } as any,
+  notFound: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: '100vh',
+    gap: 12,
+    padding: 20,
+  },
+  notFoundEmoji: {
+    fontSize: 48,
+    lineHeight: 1,
+  },
+  notFoundText: {
+    fontSize: 16,
+    color: '#4A3B3C',
+    fontWeight: 500,
+    margin: 0,
+  },
+  backBtn: {
+    marginTop: 8,
+    padding: '10px 28px',
+    borderRadius: 24,
+    background: '#E8B4A2',
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: 600,
+    cursor: 'pointer',
+  },
+
+  // Hero
+  hero: {
+    height: 180,
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
+  },
+  navBar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '12px 16px',
+    paddingTop: 16,
+  },
+  navBack: {
+    width: 32,
+    height: 32,
+    borderRadius: '50%',
+    background: 'rgba(255,255,255,0.25)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 16,
+    color: '#FFFFFF',
+    cursor: 'pointer',
+    fontWeight: 700,
+    lineHeight: 1,
+  },
+  navTitle: {
+    fontSize: 15,
+    fontWeight: 600,
+    color: '#FFFFFF',
+    maxWidth: '60%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  navPlaceholder: {
+    width: 32,
+  },
+  heroCenter: {
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  heroEmoji: {
+    fontSize: 48,
+    lineHeight: 1,
+  },
+
+  // Card
+  card: {
+    background: '#FFFFFF',
+    borderRadius: '20px 20px 0 0',
+    marginTop: -16,
+    padding: '20px 16px 0',
+    position: 'relative',
+    zIndex: 1,
+  },
+
+  // Title
+  courseTitle: {
+    fontSize: 18,
+    fontWeight: 700,
+    color: '#4A3B3C',
+    margin: 0,
+    lineHeight: 1.3,
+  },
+
+  // Coach Row
+  coachRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 10,
+    padding: '10px 14px',
+    background: '#FFF5F0',
+    borderRadius: 12,
+    cursor: 'pointer',
+  },
+  coachAvatar: {
+    width: 36,
+    height: 36,
+    borderRadius: '50%',
+    background: 'linear-gradient(135deg, #E8B4A2, #D4A08A)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 14,
+    fontWeight: 700,
+    color: '#FFFFFF',
+    flexShrink: 0,
+  },
+  coachInfo: {
+    flex: 1,
+  },
+  coachName: {
+    fontSize: 13,
+    fontWeight: 600,
+    color: '#4A3B3C',
+    margin: 0,
+    lineHeight: 1.2,
+  },
+  coachRatingRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 4,
+    marginTop: 2,
+  },
+  coachRatingNum: {
+    fontSize: 11,
+    color: '#8B7E74',
+  },
+  coachArrow: {
+    fontSize: 20,
+    color: '#8B7E74',
+    fontWeight: 300,
+    lineHeight: 1,
+  },
+
+  // Info Row
+  infoRow: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '8px 16px',
+  },
+  infoItem: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 4,
+  },
+  infoIcon: {
+    fontSize: 12,
+    lineHeight: 1,
+  },
+  infoValue: {
+    fontSize: 12,
+    color: '#4A3B3C',
+  },
+
+  // Section
+  sectionLabel: {
+    fontSize: 14,
+    fontWeight: 600,
+    color: '#4A3B3C',
+    margin: '0 0 10px',
+    lineHeight: 1.3,
+  },
+
+  // Outline
+  outlineList: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 8,
+  },
+  outlineItem: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: 10,
+  },
+  outlineNum: {
+    width: 20,
+    height: 20,
+    borderRadius: '50%',
+    background: '#FFF5F0',
+    color: '#E8B4A2',
+    fontSize: 11,
+    fontWeight: 700,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+    lineHeight: 1,
+  },
+  outlineText: {
+    fontSize: 13,
+    color: '#4A3B3C',
+    lineHeight: 1.5,
+  },
+
+  // Audience
+  audienceRow: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  audienceTag: {
+    display: 'inline-block',
+    padding: '6px 14px',
+    borderRadius: 16,
+    fontSize: 12,
+    background: '#FFF5F0',
+    color: '#8B7E74',
+    fontWeight: 500,
+  },
+
+  // Trust
+  trustBox: {
+    background: '#FFF5F0',
+    borderRadius: 12,
+    padding: '12px 14px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 8,
+  },
+  trustItem: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+  },
+  trustIcon: {
+    fontSize: 14,
+    lineHeight: 1,
+  },
+  trustText: {
+    fontSize: 12,
+    color: '#4A3B3C',
+    fontWeight: 500,
+  },
+
+  // Bottom
+  bottomSpacer: {
+    height: 80,
+  },
+
+  // Fixed bar
+  fixedBar: {
+    position: 'fixed',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    background: '#FFFFFF',
+    padding: '12px 16px',
+    paddingBottom: 'calc(12px + env(safe-area-inset-bottom))',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 12,
+    borderTop: '1px solid #F0E8E0',
+    boxShadow: '0 -2px 12px rgba(0,0,0,0.04)',
+    zIndex: 10,
+  },
+  fixedLeft: {
+    flex: 1,
+  },
+  trustLabel: {
+    fontSize: 11,
+    color: '#8B7E74',
+    margin: 0,
+    lineHeight: 1.3,
+  },
+  ctaBtn: {
+    padding: '12px 28px',
+    borderRadius: 24,
+    background: 'linear-gradient(135deg, #E8B4A2, #D4A08A)',
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: 600,
+    cursor: 'pointer',
+    whiteSpace: 'nowrap',
+  },
 }
