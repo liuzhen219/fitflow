@@ -1,0 +1,226 @@
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
+import EmptyState from '../components/EmptyState'
+import { scheduleItems } from '../data/mock'
+
+const statusFilters = ['全部', '待付款', '待上课', '已完成', '退款']
+
+// Map status filter label to internal status value
+const statusMap: Record<string, string[]> = {
+  '全部': [],
+  '待付款': ['upcoming', 'confirmed'],
+  '待上课': ['upcoming', 'confirmed'],
+  '已完成': ['completed'],
+  '退款': ['cancelled'],
+}
+
+const statusDisplay: Record<string, { label: string; color: string }> = {
+  upcoming: { label: '待上课', color: '#E8B4A2' },
+  confirmed: { label: '待上课', color: '#E8B4A2' },
+  completed: { label: '已完成', color: '#7BC67E' },
+  cancelled: { label: '已退款', color: '#8B7E74' },
+}
+
+export default function OrderList() {
+  const nav = useNavigate()
+  const [activeFilter, setActiveFilter] = useState('全部')
+
+  const allowedStatuses = statusMap[activeFilter] || []
+  const filteredItems = allowedStatuses.length === 0
+    ? scheduleItems
+    : scheduleItems.filter((item) => allowedStatuses.includes(item.status))
+
+  // Map scheduleItem status to display for filter matching
+  const filterItems = statusFilters.map((f) => {
+    const mapped = statusMap[f]
+    if (!mapped || mapped.length === 0) {
+      return { label: f, count: scheduleItems.length }
+    }
+    return {
+      label: f,
+      count: scheduleItems.filter((item) => mapped.includes(item.status)).length,
+    }
+  })
+
+  return (
+    <div style={s.page}>
+      {/* NavBar */}
+      <div style={s.navBar}>
+        <div style={s.navBack} onClick={() => nav(-1)}>←</div>
+        <div style={s.navTitle}>我的订单</div>
+        <div style={s.navPlaceholder} />
+      </div>
+
+      {/* Status Filter Chips */}
+      <div style={s.filterRow}>
+        {filterItems.map((f) => {
+          const active = f.label === activeFilter
+          return (
+            <span
+              key={f.label}
+              style={{
+                ...s.filterChip,
+                ...(active ? s.filterChipActive : {}),
+              }}
+              onClick={() => setActiveFilter(f.label)}
+            >
+              {f.label}
+            </span>
+          )
+        })}
+      </div>
+
+      {/* Order Cards or EmptyState */}
+      <div style={s.listArea}>
+        {filteredItems.length === 0 ? (
+          <EmptyState
+            icon="📋"
+            text="暂无订单记录"
+            actionText="去约课"
+            onAction={() => nav('/home')}
+          />
+        ) : (
+          filteredItems.map((item) => {
+            const status = statusDisplay[item.status]
+            return (
+              <div key={item.id} style={s.orderCard}>
+                <div style={s.cardHeader}>
+                  <h3 style={s.courseName}>{item.courseName}</h3>
+                  <span style={{ ...s.statusBadge, color: status.color }}>
+                    {status.label}
+                  </span>
+                </div>
+                <div style={s.cardMeta}>
+                  <span>{item.coachName}</span>
+                  <span style={s.metaDot}>·</span>
+                  <span>{item.isHomeService ? '上门服务' : item.venueName}</span>
+                </div>
+                <div style={s.cardDate}>
+                  <span>📅 {item.date}</span>
+                  <span>⏱ {item.time}</span>
+                </div>
+              </div>
+            )
+          })
+        )}
+      </div>
+    </div>
+  )
+}
+
+const s: Record<string, React.CSSProperties> = {
+  page: {
+    minHeight: '100vh',
+    background: '#FFF5F0',
+  },
+
+  // NavBar
+  navBar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '12px 16px',
+    paddingTop: 16,
+  },
+  navBack: {
+    width: 32,
+    height: 32,
+    borderRadius: '50%',
+    background: 'rgba(232,180,162,0.2)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 16,
+    color: '#4A3B3C',
+    cursor: 'pointer',
+    fontWeight: 700,
+    lineHeight: 1,
+  },
+  navTitle: {
+    fontSize: 16,
+    fontWeight: 600,
+    color: '#4A3B3C',
+  },
+  navPlaceholder: { width: 32 },
+
+  // Filter Row
+  filterRow: {
+    display: 'flex',
+    gap: 8,
+    padding: '8px 16px 12px',
+    overflowX: 'auto',
+    whiteSpace: 'nowrap',
+  },
+  filterChip: {
+    display: 'inline-block',
+    padding: '6px 14px',
+    borderRadius: 16,
+    fontSize: 12,
+    fontWeight: 500,
+    background: '#FFFFFF',
+    color: '#8B7E74',
+    border: '1px solid #F0E8E0',
+    cursor: 'pointer',
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    userSelect: 'none',
+    lineHeight: 1.2,
+  },
+  filterChipActive: {
+    background: '#E8B4A2',
+    color: '#FFFFFF',
+    border: '1px solid #E8B4A2',
+  },
+
+  // List Area
+  listArea: {
+    padding: '0 12px 40px',
+  },
+
+  // Order Card
+  orderCard: {
+    background: '#FFFFFF',
+    borderRadius: 16,
+    padding: 14,
+    marginBottom: 10,
+    boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+  },
+  cardHeader: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    gap: 8,
+    marginBottom: 6,
+  },
+  courseName: {
+    fontSize: 14,
+    fontWeight: 700,
+    color: '#4A3B3C',
+    margin: 0,
+    lineHeight: 1.3,
+    flex: 1,
+  },
+  statusBadge: {
+    fontSize: 11,
+    fontWeight: 600,
+    flexShrink: 0,
+  },
+  cardMeta: {
+    fontSize: 11,
+    color: '#8B7E74',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 4,
+    marginBottom: 6,
+  },
+  metaDot: {
+    color: '#F0E8E0',
+  },
+  cardDate: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 12,
+    fontSize: 11,
+    color: '#8B7E74',
+  },
+}
