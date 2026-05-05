@@ -7,9 +7,9 @@
 
 /* Male theme — teal */
 :root[data-theme="male"] {
-  --c-accent: #2C8A9E;
-  --c-accent-deep: #1A6B7C;
-  --c-accent-soft: rgba(44,138,158,0.08);
+  --c-accent: #219EA5;
+  --c-accent-deep: #177D85;
+  --c-accent-soft: rgba(33,158,165,0.08);
 }
 
 :root {

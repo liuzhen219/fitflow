@@ -29,8 +29,8 @@ export default function Profile() {
     localStorage.setItem('fitflow_theme', next ? 'male' : 'female')
   }
 
-  const accent = isMale ? '#2C8A9E' : 'var(--c-accent)'
-  const accentDeep = isMale ? '#1A6B7C' : 'var(--c-accent-deep)'
+  const accent = isMale ? '#219EA5' : 'var(--c-accent)'
+  const accentDeep = isMale ? '#177D85' : 'var(--c-accent-deep)'
 
   const menuIconStyle = (size: number): React.CSSProperties => ({
     width: size,
@@ -115,7 +115,7 @@ export default function Profile() {
         <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
           {[
             { key: 'female', label: '♀ 女性', color: 'var(--c-accent)' },
-            { key: 'male', label: '♂ 男性', color: '#2C8A9E' },
+            { key: 'male', label: '♂ 男性', color: '#219EA5' },
           ].map((t) => {
             const active = t.key === 'male' ? isMale : !isMale
             return (

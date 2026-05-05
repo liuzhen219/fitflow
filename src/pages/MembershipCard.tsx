@@ -13,7 +13,7 @@ const cards = [
     id: 2, type: '季卡', name: 'FitFlow 季度体验卡',
     total: 30, used: 12, unit: '次',
     issueDate: '2026-04-01', expiryDate: '2026-06-30',
-    color: 'linear-gradient(135deg, #2C8A9E, #1A6B7C)',
+    color: 'linear-gradient(135deg, #219EA5, #177D85)',
     status: 'active',
   },
   {
