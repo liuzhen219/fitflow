@@ -144,7 +144,7 @@ export default function Schedule() {
               cancelDeadline={courses.find(c => c.title === item.courseName)?.cancelDeadline}
               onCheckIn={item.status === 'completed' ? () => nav(`/review/coach/${item.coachId}`) : () => setCheckinItem(item)}
               onViewDetail={() => setAddrItem(item)}
-              onCancel={item.status !== 'completed' && item.status !== 'pending' ? () => setCancelItem(item) : undefined}
+              onCancel={item.status !== 'completed' ? () => setCancelItem(item) : undefined}
             />
           ))
         ) : tab === 'upcoming' ? (
@@ -219,13 +219,11 @@ export default function Schedule() {
 
               {/* Policy */}
               <div style={{
-                padding: '12px 14px', borderRadius: 12, background: '#f0fdf4', border: '1px solid #dcfce7',
-                marginBottom: 16, textAlign: 'left', fontSize: 12, color: '#16A34A',
+                padding: '12px 14px', borderRadius: 12, background: cancelItem.status === 'pending' ? '#fefce8' : '#f0fdf4', border: cancelItem.status === 'pending' ? '1px solid #fef08a' : '1px solid #dcfce7',
+                marginBottom: 16, textAlign: 'left', fontSize: 12, color: cancelItem.status === 'pending' ? '#a16207' : '#16A34A',
               }}>
-                <div style={{ fontWeight: 600, marginBottom: 4 }}>✓ 取消规则</div>
-                {course?.cancelDeadline && <div>· {course.cancelDeadline}前可免费取消，全额退款</div>}
-                <div>· 超过截止时间取消，不退款</div>
-                <div>· 退款将在1-3个工作日原路返回</div>
+                <div style={{ fontWeight: 600, marginBottom: 4 }}>{cancelItem.status === 'pending' ? '取消规则' : '✓ 取消规则'}</div>
+                {cancelItem.status === 'pending' ? (<><div>· 未付款的订单可直接取消</div><div>· 取消后订单将被移除</div></>) : (<>{course?.cancelDeadline && <div>· {course.cancelDeadline}前可免费取消，全额退款</div>}<div>· 超过截止时间取消，不退款</div><div>· 退款将在1-3个工作日原路返回</div></>)}
               </div>
 
               <div style={{ display: 'flex', gap: 10 }}>
@@ -235,7 +233,7 @@ export default function Schedule() {
                 }}>再想想</div>
                 <div onClick={() => {
                   setCancelItem(null)
-                  Toast.show({ icon: 'success', content: '课程已取消，退款将原路返回' })
+                  Toast.show({ icon: 'success', content: cancelItem.status === 'pending' ? '订单已取消' : '课程已取消，退款将原路返回' })
                 }} style={{
                   flex: 1, padding: '14px', borderRadius: 12, textAlign: 'center',
                   background: '#c13515', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer',

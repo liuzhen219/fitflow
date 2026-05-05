@@ -152,6 +152,14 @@ const ClassCard: React.FC<ClassCardProps> = ({
               <button style={{ ...s.actionBtn, ...s.outlineBtn }} onClick={onViewDetail}>查看详情</button>
               <button style={{ ...s.actionBtn, ...s.primaryBtn }} onClick={onCheckIn}>✎ 去评价</button>
             </>
+          ) : status === 'pending' ? (
+            <>
+              <button style={{ ...s.actionBtn, ...s.outlineBtn }} onClick={onViewDetail}>查看地址</button>
+              {onCancel && (
+                <button style={{ ...s.actionBtn, ...s.dangerBtn }} onClick={onCancel}>取消订单</button>
+              )}
+              <button style={{ ...s.actionBtn, ...s.primaryBtn }} onClick={onCheckIn}>去付款</button>
+            </>
           ) : isHomeService ? (
             <>
               <button style={{ ...s.actionBtn, ...s.outlineBtn }} onClick={onViewDetail}>修改地址</button>
