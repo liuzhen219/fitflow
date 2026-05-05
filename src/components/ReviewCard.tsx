@@ -1,6 +1,8 @@
 import React from 'react'
 import StarRating from './StarRating'
 
+import { useNavigate } from 'react-router-dom'
+
 interface ReviewCardProps {
   userName: string
   userAvatar?: string
@@ -10,18 +12,20 @@ interface ReviewCardProps {
   images: string[]
   courseLabel: string
   classCount: number
+  onAvatarClick?: () => void
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({
-  userName,
-  userAvatar,
-  rating,
-  tags,
-  content,
-  images,
-  courseLabel,
-  classCount,
+  userName, userAvatar, rating, tags, content, images, courseLabel, classCount, onAvatarClick,
 }) => {
+  const nav = useNavigate()
+
+  const handleAvatarClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (onAvatarClick) { onAvatarClick() }
+    else { nav(`/user/${encodeURIComponent(userName)}`) }
+  }
+
   return (
     <div
       style={{
@@ -44,10 +48,13 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div
+            onClick={handleAvatarClick}
+            title={`查看 ${userName} 的主页`}
             style={{
               width: 36,
               height: 36,
               borderRadius: '50%',
+              cursor: 'pointer',
               background: '#f7f7f7',
               display: 'flex',
               alignItems: 'center',
@@ -86,7 +93,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
                 lineHeight: 1.25,
               }}
             >
-              {userName}
+              <span onClick={handleAvatarClick} style={{ cursor: 'pointer' }}>{userName}</span>
             </p>
             <p
               style={{
