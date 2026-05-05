@@ -1,11 +1,23 @@
 import { useNavigate } from 'react-router-dom'
 import VenueCard from '../components/VenueCard'
 import SectionHeader from '../components/SectionHeader'
+import { useMemo } from 'react'
 import { venues } from '../data/mock'
 import { BuildingIcon } from '../components/Icons'
 
 export default function Venues() {
   const nav = useNavigate()
+
+  const stats = useMemo(() => {
+    const districts = [...new Set(venues.map((v) => v.district))]
+    const avgRating = venues.reduce((s, v) => s + v.rating, 0) / venues.length
+    return {
+      count: `${venues.length}家`,
+      districts: `${districts.length}个区域`,
+      avgRating: avgRating.toFixed(1),
+    }
+  }, [])
+
   return (
     <div style={{ minHeight: '100vh', background: '#fff' }}>
       {/* Hero */}
@@ -41,9 +53,9 @@ export default function Venues() {
         margin: '12px 12px 0', background: '#fff', borderRadius: 14, border: '1px solid #ddd',
       }}>
         {[
-          { value: venues.length, label: '合作场馆' },
-          { value: '6区', label: '覆盖区域' },
-          { value: '4.8', label: '平均评分' },
+          { value: stats.count, label: '合作场馆' },
+          { value: stats.districts, label: '覆盖区域' },
+          { value: stats.avgRating, label: '场馆均分' },
         ].map((s) => (
           <div key={s.label} style={{ textAlign: 'center' }}>
             <div style={{ fontSize: 18, fontWeight: 700, color: '#E3617B' }}>{s.value}</div>
