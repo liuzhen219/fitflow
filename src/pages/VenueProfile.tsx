@@ -207,10 +207,23 @@ export default function VenueProfile() {
       {/* ====== Reviews ====== */}
       {venueReviews.length > 0 && (
         <div style={s.section}>
-          <SectionHeader
-            title={`学员评价 (${venueReviews.length}条)`}
-            icon={<StarFilledIcon size={16} color="#E3617B" />}
-          />
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+            <SectionHeader
+              title={`学员评价 (${venueReviews.length}条)`}
+              icon={<StarFilledIcon size={16} color="#E3617B" />}
+            />
+            {venueCoaches.length > 0 && (
+              <span
+                onClick={() => nav(`/review/coach/${venueCoaches[0].id}`)}
+                style={{
+                  padding: '8px 16px', borderRadius: 20, fontSize: 12, fontWeight: 600,
+                  background: '#E3617B', color: '#fff', cursor: 'pointer',
+                  whiteSpace: 'nowrap', flexShrink: 0, userSelect: 'none',
+                  marginTop: -1,
+                }}
+              >✎ 写评价</span>
+            )}
+          </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {venueReviews.map((r) => (
               <ReviewCard key={r.id} {...r} />
