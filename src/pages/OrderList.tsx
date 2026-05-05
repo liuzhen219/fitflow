@@ -47,7 +47,7 @@ export default function OrderList() {
     <div style={s.page}>
       {/* NavBar */}
       <div style={s.navBar}>
-        <div style={s.navBack} onClick={() => nav(-1)}>←</div>
+        <div style={s.navBack} onClick={() => nav(-1)}>‹</div>
         <div style={s.navTitle}>我的订单</div>
         <div style={s.navPlaceholder} />
       </div>
@@ -130,18 +130,20 @@ const s: Record<string, React.CSSProperties> = {
     paddingTop: 16,
   },
   navBack: {
-    width: 32,
-    height: 32,
+    width: 34,
+    height: 34,
     borderRadius: '50%',
-    background: 'rgba(227,97,123,0.08)',
+    background: 'rgba(0,0,0,0.35)',
+    backdropFilter: 'blur(8px)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 16,
-    color: '#222',
+    fontSize: 18,
+    color: '#fff',
     cursor: 'pointer',
-    fontWeight: 700,
+    fontWeight: 500,
     lineHeight: 1,
+    flexShrink: 0,
   },
   navTitle: {
     fontSize: 16,

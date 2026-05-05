@@ -17,7 +17,7 @@ export default function CheckIn() {
     return (
       <div style={s.page}>
         <div style={s.navBar}>
-          <div style={s.navBack} onClick={() => nav(-1)}>←</div>
+          <div style={s.navBack} onClick={() => nav(-1)}>‹</div>
           <div style={s.navTitle}>签到核销</div>
           <div style={s.navPlaceholder} />
         </div>
@@ -34,7 +34,7 @@ export default function CheckIn() {
     <div style={s.page}>
       {/* NavBar */}
       <div style={s.navBar}>
-        <div style={s.navBack} onClick={() => nav(-1)}>←</div>
+        <div style={s.navBack} onClick={() => nav(-1)}>‹</div>
         <div style={s.navTitle}>签到核销</div>
         <div style={s.navPlaceholder} />
       </div>
@@ -101,18 +101,20 @@ const s: Record<string, React.CSSProperties> = {
     width: '100%',
   },
   navBack: {
-    width: 32,
-    height: 32,
+    width: 34,
+    height: 34,
     borderRadius: '50%',
-    background: 'rgba(227,97,123,0.08)',
+    background: 'rgba(0,0,0,0.35)',
+    backdropFilter: 'blur(8px)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 16,
-    color: '#222',
+    fontSize: 18,
+    color: '#fff',
     cursor: 'pointer',
-    fontWeight: 700,
+    fontWeight: 500,
     lineHeight: 1,
+    flexShrink: 0,
   },
   navTitle: {
     fontSize: 16,

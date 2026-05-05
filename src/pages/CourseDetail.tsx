@@ -46,10 +46,15 @@ export default function CourseDetail() {
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         />
+        {/* Dark overlay for readability */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 25%, transparent 70%, rgba(0,0,0,0.5) 100%)',
+        }} />
         {/* NavBar */}
         <div style={s.navBar}>
           <div style={s.navBack} onClick={() => nav(-1)}>
-            ←
+            ‹
           </div>
           <div style={s.navTitle}>{course.title}</div>
           <div style={s.navPlaceholder} />
@@ -235,20 +240,24 @@ const s: Record<string, React.CSSProperties> = {
     justifyContent: 'space-between',
     padding: '12px 16px',
     paddingTop: 16,
+    position: 'relative',
+    zIndex: 1,
   },
   navBack: {
-    width: 32,
-    height: 32,
+    width: 34,
+    height: 34,
     borderRadius: '50%',
-    background: 'rgba(255,255,255,0.25)',
+    background: 'rgba(0,0,0,0.35)',
+    backdropFilter: 'blur(8px)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 16,
-    color: '#FFFFFF',
+    fontSize: 18,
+    color: '#fff',
     cursor: 'pointer',
-    fontWeight: 700,
+    fontWeight: 500,
     lineHeight: 1,
+    flexShrink: 0,
   },
   navTitle: {
     fontSize: 15,

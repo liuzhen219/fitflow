@@ -93,11 +93,12 @@ export default function Search() {
         background: '#fff', zIndex: 10, borderBottom: query ? '1px solid #f0f0f0' : 'none',
       }}>
         <div onClick={() => nav(-1)} style={{
-          width: 32, height: 32, borderRadius: '50%',
-          background: '#f7f7f7', display: 'flex', alignItems: 'center',
-          justifyContent: 'center', fontSize: 16, color: '#222',
-          cursor: 'pointer', fontWeight: 700, flexShrink: 0,
-        }}>←</div>
+          width: 34, height: 34, borderRadius: '50%',
+          background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(8px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 18, color: '#fff', cursor: 'pointer',
+          fontWeight: 500, lineHeight: 1, flexShrink: 0,
+        }}>‹</div>
         <div style={{ flex: 1 }}>
           <SearchBar
             placeholder="搜索教练、课程、场馆..."

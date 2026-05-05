@@ -51,7 +51,7 @@ export default function VenueProfile() {
         <div style={s.heroOverlay} />
         {/* NavBar */}
         <div style={s.navBar}>
-          <div style={s.navBack} onClick={() => nav(-1)}>←</div>
+          <div style={s.navBack} onClick={() => nav(-1)}>‹</div>
           <div style={{ flex: 1 }} />
         </div>
         {/* Hero text */}
@@ -248,14 +248,14 @@ const s: Record<string, React.CSSProperties> = {
   },
   heroOverlay: {
     position: 'absolute', inset: 0,
-    background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 60%)',
+    background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 25%, transparent 70%, rgba(0,0,0,0.5) 100%)',
   },
-  navBar: { display: 'flex', alignItems: 'center', padding: '12px 16px', zIndex: 2 },
+  navBar: { display: 'flex', alignItems: 'center', padding: '12px 16px', position: 'relative', zIndex: 2 },
   navBack: {
-    width: 32, height: 32, borderRadius: '50%',
-    background: 'rgba(255,255,255,0.25)', display: 'flex',
-    alignItems: 'center', justifyContent: 'center',
-    fontSize: 16, color: '#fff', cursor: 'pointer', fontWeight: 700,
+    width: 34, height: 34, borderRadius: '50%',
+    background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(8px)',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    fontSize: 18, color: '#fff', cursor: 'pointer', fontWeight: 500, lineHeight: 1, flexShrink: 0,
   },
   heroContent: { padding: '16px', zIndex: 2 },
   heroTitle: { fontSize: 24, fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.18 },

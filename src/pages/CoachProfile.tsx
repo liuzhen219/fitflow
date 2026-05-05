@@ -95,6 +95,11 @@ export default function CoachProfile() {
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
           />
         )}
+        {/* Dark overlay for readability */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 25%, transparent 70%, rgba(0,0,0,0.5) 100%)',
+        }} />
         {/* NavBar overlay */}
         <div
           style={{
@@ -103,26 +108,21 @@ export default function CoachProfile() {
             justifyContent: 'space-between',
             padding: '12px 16px',
             paddingTop: 16,
+            position: 'relative',
+            zIndex: 1,
           }}
         >
           <div
             onClick={() => nav(-1)}
             style={{
-              width: 32,
-              height: 32,
-              borderRadius: '50%',
-              background: 'rgba(255,255,255,0.25)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: 16,
-              color: '#fff',
-              cursor: 'pointer',
-              fontWeight: 700,
-              lineHeight: 1,
+              width: 34, height: 34, borderRadius: '50%',
+              background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(8px)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 18, color: '#fff', cursor: 'pointer',
+              fontWeight: 500, lineHeight: 1, flexShrink: 0,
             }}
           >
-            ←
+            ‹
           </div>
           <div style={{ fontSize: 15, fontWeight: 600, color: '#fff' }}>
             {coach.name}
