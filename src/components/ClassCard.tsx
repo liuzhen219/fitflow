@@ -7,18 +7,20 @@ interface ClassCardProps {
   isHomeService: boolean
   date: string
   time: string
-  status: 'upcoming' | 'confirmed' | 'completed'
+  status: 'pending' | 'upcoming' | 'confirmed' | 'completed'
   onCheckIn?: () => void
   onViewDetail?: () => void
 }
 
 const statusConfig: Record<string, { color: string; label: string; bg: string }> = {
+  pending: { color: '#D97706', label: '待付款', bg: '#FFFBEB' },
   upcoming: { color: '#E3617B', label: '待上课', bg: '#fff' },
   confirmed: { color: '#E3617B', label: '待确认', bg: '#fff' },
   completed: { color: '#7BC67E', label: '已完成', bg: '#F5FFF5' },
 }
 
 const borderColorMap: Record<string, string> = {
+  pending: '#D97706',
   upcoming: '#E3617B',
   confirmed: '#E3617B',
   completed: '#7BC67E',

@@ -6,16 +6,16 @@ import { CalendarIcon, ClockIcon, OrdersIcon } from '../components/Icons'
 
 const statusFilters = ['全部', '待付款', '待上课', '已完成', '退款']
 
-// Map status filter label to internal status value
 const statusMap: Record<string, string[]> = {
   '全部': [],
-  '待付款': ['upcoming', 'confirmed'],
+  '待付款': ['pending'],
   '待上课': ['upcoming', 'confirmed'],
   '已完成': ['completed'],
   '退款': ['cancelled'],
 }
 
 const statusDisplay: Record<string, { label: string; color: string }> = {
+  pending: { label: '待付款', color: '#D97706' },
   upcoming: { label: '待上课', color: '#E3617B' },
   confirmed: { label: '待上课', color: '#E3617B' },
   completed: { label: '已完成', color: '#7BC67E' },

@@ -123,7 +123,7 @@ export default function Schedule() {
               isHomeService={item.isHomeService}
               date={item.date}
               time={item.time}
-              status={item.status as 'upcoming' | 'confirmed' | 'completed'}
+              status={item.status as 'pending' | 'upcoming' | 'confirmed' | 'completed'}
               onCheckIn={item.status === 'completed' ? () => nav(`/review/coach/${item.coachId}`) : () => {}}
               onViewDetail={() => nav(`/course/${item.id}`)}
             />

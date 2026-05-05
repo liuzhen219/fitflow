@@ -100,7 +100,7 @@ export interface ScheduleItem {
   isHomeService: boolean
   date: string
   time: string
-  status: 'upcoming' | 'confirmed' | 'completed' | 'cancelled'
+  status: 'pending' | 'upcoming' | 'confirmed' | 'completed' | 'cancelled'
   hasCheckIn: boolean
 }
 
@@ -1156,6 +1156,17 @@ export const notifications: Notification[] = [
 ]
 
 export const scheduleItems: ScheduleItem[] = [
+  {
+    id: 0,
+    courseName: '塑形私教·全身燃脂',
+    coachId: 5, coachName: '周思琪',
+    venueName: '悦动空间',
+    isHomeService: false,
+    date: '2026-05-08',
+    time: '14:00 - 14:50',
+    status: 'pending',
+    hasCheckIn: false,
+  },
   {
     id: 1,
     courseName: '核心床私教·体态矫正',
