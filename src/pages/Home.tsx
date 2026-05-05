@@ -173,33 +173,6 @@ export default function Home() {
         })}
       </div>
 
-      {/* Featured Venues */}
-      <div style={{ padding: '0 0 24px' }}>
-        <div style={{ padding: '0 16px' }}>
-          <SectionHeader
-            title="精选场馆"
-            icon={<BuildingIcon size={16} color="#E3617B" />}
-            onMore={() => nav('/studio')}
-          />
-        </div>
-        <div style={{ display: 'flex', gap: 16, overflowX: 'auto', padding: '0 16px' }}>
-          {venues.map((v) => (
-            <VenueCard
-              key={v.id}
-              name={v.name}
-              district={v.district}
-              distance={v.distance}
-              rating={v.rating}
-              reviewCount={v.reviewCount}
-              imageUrl={v.heroImage}
-              facilities={v.facilities}
-              verified={v.verified}
-              onClick={() => nav(`/venue/${v.id}`)}
-            />
-          ))}
-        </div>
-      </div>
-
       {/* Offline Events */}
       <div style={{ padding: '0 0 24px' }}>
         <div style={{ padding: '0 16px' }}>
@@ -263,6 +236,33 @@ export default function Home() {
                 ['#e8d4c8', '#d4c0b0', '#e0ccc0'][c.id % 3]
               })`}
               onClick={() => nav(`/coach/${c.id}`)}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Featured Venues */}
+      <div style={{ padding: '0 0 24px' }}>
+        <div style={{ padding: '0 16px' }}>
+          <SectionHeader
+            title="精选场馆"
+            icon={<BuildingIcon size={16} color="#E3617B" />}
+            onMore={() => nav('/studio')}
+          />
+        </div>
+        <div style={{ display: 'flex', gap: 16, overflowX: 'auto', padding: '0 16px' }}>
+          {venues.map((v) => (
+            <VenueCard
+              key={v.id}
+              name={v.name}
+              district={v.district}
+              distance={v.distance}
+              rating={v.rating}
+              reviewCount={v.reviewCount}
+              imageUrl={v.heroImage}
+              facilities={v.facilities}
+              verified={v.verified}
+              onClick={() => nav(`/venue/${v.id}`)}
             />
           ))}
         </div>
