@@ -56,17 +56,13 @@ export default function CoachProfile() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff' }}>
-      {/* Hero */}
+      {/* Hero — full-bleed image with gradient fallback */}
       <div
         style={{
           height: 280,
-          backgroundImage: `url(${coach.heroImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
           position: 'relative',
           background: coach.heroImage
-            ? undefined
+            ? `url(${coach.heroImage}) center/cover no-repeat`
             : 'linear-gradient(135deg, #E3617B, #D44A65)',
         }}
       >
