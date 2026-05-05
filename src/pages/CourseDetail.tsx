@@ -32,15 +32,14 @@ export default function CourseDetail() {
 
   return (
     <div style={s.page}>
-      {/* Hero */}
+      {/* Hero — thumbnail with gradient fallback */}
       <div
         style={{
-          ...s.hero,
-          background: course.imageGradient,
-          backgroundImage: `url(${course.thumbnail}), ${course.imageGradient}`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          height: 180,
+          position: 'relative',
+          background: course.thumbnail
+            ? `url(${course.thumbnail}) center/cover no-repeat, ${course.imageGradient}`
+            : course.imageGradient,
         }}
       >
         {/* NavBar */}

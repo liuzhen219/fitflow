@@ -42,22 +42,35 @@ export default function HomeService() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff', paddingBottom: 32 }}>
-      {/* Page header */}
-      <div style={{ padding: '16px 16px 4px' }}>
-        <h1 style={{ fontSize: 22, fontWeight: 700, color: '#222', margin: 0, lineHeight: 1.18 }}>
-          上门私教
-        </h1>
-        <p style={{ fontSize: 13, color: '#6a6a6a', margin: '4px 0 0', lineHeight: 1.29 }}>
-          专业教练到你家 · 足不出户享受一对一私教
-        </p>
+      {/* Page hero */}
+      <div style={{
+        height: 160, margin: '0 16px', borderRadius: 16, overflow: 'hidden',
+        position: 'relative', display: 'flex', flexDirection: 'column',
+        justifyContent: 'flex-end', padding: '20px',
+        background: 'url(https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=300&fit=crop) center/cover no-repeat, linear-gradient(135deg, #222, #444)',
+      }}>
+        {/* Overlay */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 100%)',
+        }} />
+        {/* Text */}
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <h1 style={{ fontSize: 22, fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.18 }}>
+            上门私教
+          </h1>
+          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', margin: '4px 0 0', lineHeight: 1.29 }}>
+            专业教练到你家 · 足不出户享受一对一私教
+          </p>
+        </div>
       </div>
 
       {/* Filter chips — scrollable with fade hint */}
-      <div style={{ position: 'relative' }}>
+      <div style={{ position: 'relative', marginTop: 12 }}>
         <div
           style={{
             display: 'flex', gap: 8, overflowX: 'auto',
-            padding: '14px 16px', scrollbarWidth: 'none',
+            padding: '10px 16px 14px', scrollbarWidth: 'none',
             WebkitOverflowScrolling: 'touch',
             maskImage: 'linear-gradient(to right, #000 calc(100% - 40px), transparent 100%)',
             WebkitMaskImage: 'linear-gradient(to right, #000 calc(100% - 40px), transparent 100%)',

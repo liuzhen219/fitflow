@@ -34,14 +34,14 @@ export default function VenueProfile() {
 
   return (
     <div style={s.page}>
-      {/* Hero */}
+      {/* Hero — image with gradient fallback */}
       <div
         style={{
-          ...s.hero,
-          backgroundImage: `url(${venue.heroImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          height: 200,
+          position: 'relative',
+          background: venue.heroImage
+            ? `url(${venue.heroImage}) center/cover no-repeat`
+            : 'linear-gradient(135deg, #E3617B, #444)',
         }}
       >
         {/* NavBar */}
