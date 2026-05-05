@@ -1044,6 +1044,51 @@ export const reviews: Review[] = [
 
 /* ---------- Schedule Items ---------- */
 
+export interface Event {
+  id: number
+  title: string
+  type: string
+  date: string
+  time: string
+  venue: string
+  image: string
+  price: string
+  totalSpots: number
+  filledSpots: number
+  tags: string[]
+}
+
+export const events: Event[] = [
+  {
+    id: 1, title: '春日垫上普拉提 · 公园晨练', type: '户外',
+    date: '2026-05-17', time: '08:00 - 09:30',
+    venue: '徐汇滨江公园', image: 'https://picsum.photos/seed/event-outdoor/400/240',
+    price: '免费', totalSpots: 30, filledSpots: 18,
+    tags: ['户外', '垫上', '新手友好'],
+  },
+  {
+    id: 2, title: '产后恢复专题工作坊', type: '工作坊',
+    date: '2026-05-24', time: '14:00 - 16:30',
+    venue: '梵音普拉提馆', image: 'https://picsum.photos/seed/event-workshop/400/240',
+    price: '¥128', totalSpots: 20, filledSpots: 12,
+    tags: ['工作坊', '产后恢复', '限20人'],
+  },
+  {
+    id: 3, title: '普拉提社交之夜 · 教练面对面', type: '社交',
+    date: '2026-05-31', time: '19:00 - 21:00',
+    venue: 'ZenSpace', image: 'https://picsum.photos/seed/event-social/400/240',
+    price: '免费', totalSpots: 50, filledSpots: 35,
+    tags: ['社交', '教练交流', '轻食'],
+  },
+  {
+    id: 4, title: '核心床进阶技术分享', type: '工作坊',
+    date: '2026-06-07', time: '10:00 - 12:00',
+    venue: '悦动空间', image: 'https://picsum.photos/seed/event-tech/400/240',
+    price: '¥198', totalSpots: 15, filledSpots: 8,
+    tags: ['工作坊', '核心床', '进阶'],
+  },
+]
+
 export const scheduleItems: ScheduleItem[] = [
   {
     id: 1,

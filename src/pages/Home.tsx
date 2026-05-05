@@ -5,7 +5,8 @@ import SceneCard from '../components/SceneCard'
 import CoachCard from '../components/CoachCard'
 import CourseCard from '../components/CourseCard'
 import SectionHeader from '../components/SectionHeader'
-import { coaches, courses } from '../data/mock'
+import EventCard from '../components/EventCard'
+import { coaches, courses, events } from '../data/mock'
 import {
   LocationIcon,
   SearchIcon,
@@ -162,6 +163,36 @@ export default function Home() {
             </span>
           )
         })}
+      </div>
+
+      {/* Offline Events */}
+      <div style={{ padding: '0 0 24px' }}>
+        <div style={{ padding: '0 16px' }}>
+          <SectionHeader
+            title="线下活动"
+            icon={<SparkleIcon size={16} color="#E3617B" />}
+            moreText="全部活动"
+            onMore={() => {}}
+          />
+        </div>
+        <div style={{ display: 'flex', gap: 14, overflowX: 'auto', padding: '0 16px' }}>
+          {events.map((ev) => (
+            <EventCard
+              key={ev.id}
+              title={ev.title}
+              type={ev.type}
+              date={ev.date}
+              time={ev.time}
+              venue={ev.venue}
+              image={ev.image}
+              price={ev.price}
+              totalSpots={ev.totalSpots}
+              filledSpots={ev.filledSpots}
+              tags={ev.tags}
+              onClick={() => {}}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Featured Coaches */}
