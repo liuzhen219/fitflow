@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { Popup } from 'antd-mobile'
 import CoachCard from '../components/CoachCard'
 import CourseCard from '../components/CourseCard'
 import ReviewCard from '../components/ReviewCard'
@@ -40,6 +42,10 @@ export default function VenueProfile() {
     `https://picsum.photos/seed/venue-${venue.id}-2/400/300`,
     `https://picsum.photos/seed/venue-${venue.id}-3/400/300`,
   ]
+
+  // Photo viewer state
+  const [viewerVisible, setViewerVisible] = useState(false)
+  const [viewerIndex, setViewerIndex] = useState(0)
 
   return (
     <div style={s.page}>
@@ -99,7 +105,8 @@ export default function VenueProfile() {
         <SectionHeader title="场馆实拍" icon={<PhotoIcon size={16} color="#E3617B" />} />
         <div style={s.gallery}>
           {gallery.map((img, i) => (
-            <div key={i} style={s.galleryItem}>
+            <div key={i} style={{ ...s.galleryItem, cursor: 'pointer' }}
+              onClick={() => { setViewerIndex(i); setViewerVisible(true) }}>
               <img src={img} alt={`${venue.name} ${i + 1}`}
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -231,6 +238,58 @@ export default function VenueProfile() {
           </div>
         </div>
       )}
+
+      {/* ====== Photo Viewer ====== */}
+      <Popup
+        visible={viewerVisible}
+        onClose={() => setViewerVisible(false)}
+        onMaskClick={() => setViewerVisible(false)}
+        bodyStyle={{ background: '#000', minHeight: '100vh' }}
+      >
+        <div style={{ position: 'relative', width: '100%', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {/* Close */}
+          <div onClick={() => setViewerVisible(false)} style={{
+            position: 'absolute', top: 16, right: 16, zIndex: 10,
+            width: 36, height: 36, borderRadius: '50%',
+            background: 'rgba(0,0,0,0.5)', display: 'flex',
+            alignItems: 'center', justifyContent: 'center',
+            color: '#fff', fontSize: 16, cursor: 'pointer',
+          }}>✕</div>
+
+          {/* Counter */}
+          <div style={{
+            position: 'absolute', top: 20, left: '50%', transform: 'translateX(-50%)',
+            zIndex: 10, color: '#fff', fontSize: 13, fontWeight: 500,
+          }}>{viewerIndex + 1} / {gallery.length}</div>
+
+          {/* Prev */}
+          {viewerIndex > 0 && (
+            <div onClick={() => setViewerIndex(viewerIndex - 1)} style={{
+              position: 'absolute', left: 12, zIndex: 10,
+              width: 40, height: 40, borderRadius: '50%',
+              background: 'rgba(255,255,255,0.2)', display: 'flex',
+              alignItems: 'center', justifyContent: 'center',
+              color: '#fff', fontSize: 20, cursor: 'pointer',
+            }}>‹</div>
+          )}
+
+          {/* Image */}
+          <img src={gallery[viewerIndex]} alt=""
+            style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain' }}
+            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+
+          {/* Next */}
+          {viewerIndex < gallery.length - 1 && (
+            <div onClick={() => setViewerIndex(viewerIndex + 1)} style={{
+              position: 'absolute', right: 12, zIndex: 10,
+              width: 40, height: 40, borderRadius: '50%',
+              background: 'rgba(255,255,255,0.2)', display: 'flex',
+              alignItems: 'center', justifyContent: 'center',
+              color: '#fff', fontSize: 20, cursor: 'pointer',
+            }}>›</div>
+          )}
+        </div>
+      </Popup>
 
       {/* Spacer */}
       <div style={{ height: 100 }} />
