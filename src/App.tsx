@@ -35,6 +35,8 @@ import Venues from './pages/Venues'
 import MembershipCard from './pages/MembershipCard'
 import Support from './pages/Support'
 import Coupons from './pages/Coupons'
+import FollowedCoaches from './pages/FollowedCoaches'
+import FollowedVenues from './pages/FollowedVenues'
 
 const tabs = [
   { key: '/home', title: '首页', icon: (active: boolean) => <AppOutline fontSize={22} color={active ? 'var(--c-accent)' : '#6a6a6a'} /> },
@@ -106,6 +108,8 @@ export default function App() {
         <Route path="/membership" element={<MembershipCard />} />
         <Route path="/support" element={<Support />} />
         <Route path="/coupons" element={<Coupons />} />
+        <Route path="/followed-coaches" element={<FollowedCoaches />} />
+        <Route path="/followed-venues" element={<FollowedVenues />} />
       </Routes>
     </HashRouter>
   )

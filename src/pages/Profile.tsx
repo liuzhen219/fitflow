@@ -341,7 +341,7 @@ export default function Profile() {
             { icon: <ArchiveIcon size={18} color="var(--c-accent)" />, label: '训练档案', path: '/training' },
             { icon: <CommentIcon size={18} color="var(--c-accent)" />, label: '我的评价', value: '待评价 1条', highlight: true, path: '/orders' },
             { icon: <HeartIcon size={18} color="var(--c-accent)" />, label: '关注教练', value: `${userProfile.stats.followedCoaches}位`, path: '/homeservice' },
-            { icon: <BuildingIcon size={18} color="var(--c-accent)" />, label: '收藏场馆', value: '3家', path: '/studio' },
+            { icon: <BuildingIcon size={18} color="var(--c-accent)" />, label: '收藏场馆', value: '3家', path: '/followed-venues' },
           ].map((item, idx, arr) => (
             <div key={item.label}>
               <div
