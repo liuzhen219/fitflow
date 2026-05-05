@@ -172,7 +172,7 @@ export default function Home() {
             title="线下活动"
             icon={<SparkleIcon size={16} color="#E3617B" />}
             moreText="全部活动"
-            onMore={() => {}}
+            onMore={() => nav('/events')}
           />
         </div>
         <div style={{ display: 'flex', gap: 14, overflowX: 'auto', padding: '0 16px' }}>
@@ -189,7 +189,7 @@ export default function Home() {
               totalSpots={ev.totalSpots}
               filledSpots={ev.filledSpots}
               tags={ev.tags}
-              onClick={() => {}}
+              onClick={() => nav(`/event/${ev.id}`)}
             />
           ))}
         </div>

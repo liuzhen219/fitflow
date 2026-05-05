@@ -25,6 +25,8 @@ import CheckIn from './pages/CheckIn'
 import PostReview from './pages/PostReview'
 import Search from './pages/Search'
 import OrderList from './pages/OrderList'
+import Events from './pages/Events'
+import EventDetail from './pages/EventDetail'
 
 const tabs = [
   { key: '/home', title: '首页', icon: (active: boolean) => <AppOutline fontSize={22} color={active ? '#E3617B' : '#6a6a6a'} /> },
@@ -85,6 +87,8 @@ export default function App() {
         <Route path="/review/:id" element={<PostReview />} />
         <Route path="/search" element={<Search />} />
         <Route path="/orders" element={<OrderList />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/event/:id" element={<EventDetail />} />
       </Routes>
     </HashRouter>
   )

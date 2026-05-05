@@ -1051,41 +1051,85 @@ export interface Event {
   date: string
   time: string
   venue: string
+  venueId?: number
   image: string
   price: string
   totalSpots: number
   filledSpots: number
   tags: string[]
+  description: string
+  schedule: string[]
+  bringList: string[]
+  coach?: string
+  coachId?: number
 }
 
 export const events: Event[] = [
   {
     id: 1, title: '春日垫上普拉提 · 公园晨练', type: '户外',
     date: '2026-05-17', time: '08:00 - 09:30',
-    venue: '徐汇滨江公园', image: 'https://picsum.photos/seed/event-outdoor/400/240',
+    venue: '徐汇滨江公园', image: 'https://picsum.photos/seed/event-outdoor/800/400',
     price: '免费', totalSpots: 30, filledSpots: 18,
     tags: ['户外', '垫上', '新手友好'],
+    description: '初夏清晨，在滨江公园的草坪上开启一场唤醒身体的垫上普拉提之旅。由资深教练带领，在自然环境中感受呼吸与动作的流动，适合所有水平的练习者。结束后提供健康轻食早餐。',
+    schedule: ['07:45 签到集合', '08:00 呼吸唤醒与热身', '08:15 垫上普拉提核心序列', '08:50 双人互动练习', '09:10 放松与冥想', '09:30 自由交流与轻食'],
+    bringList: ['瑜伽垫', '运动服', '饮用水', '毛巾', '防晒用品'],
+    coach: '林悦然', coachId: 1,
   },
   {
     id: 2, title: '产后恢复专题工作坊', type: '工作坊',
     date: '2026-05-24', time: '14:00 - 16:30',
-    venue: '梵音普拉提馆', image: 'https://picsum.photos/seed/event-workshop/400/240',
+    venue: '梵音普拉提馆', venueId: 1, image: 'https://picsum.photos/seed/event-workshop/800/400',
     price: '¥128', totalSpots: 20, filledSpots: 12,
     tags: ['工作坊', '产后恢复', '限20人'],
+    description: '专为产后妈妈设计的恢复工作坊，涵盖腹直肌分离评估、盆底肌激活、核心力量重建三大模块。小班教学，每位学员都能获得个性化指导，安全科学地回归运动。',
+    schedule: ['13:45 签到与体测', '14:00 产后身体评估理论', '14:30 腹直肌分离修复训练', '15:10 盆底肌激活练习', '15:40 核心重建与日常指导', '16:10 Q&A与个性化方案'],
+    bringList: ['舒适运动服', '产后恢复评估报告（如有）'],
+    coach: '苏曼', coachId: 3,
   },
   {
     id: 3, title: '普拉提社交之夜 · 教练面对面', type: '社交',
     date: '2026-05-31', time: '19:00 - 21:00',
-    venue: 'ZenSpace', image: 'https://picsum.photos/seed/event-social/400/240',
+    venue: 'ZenSpace', venueId: 3, image: 'https://picsum.photos/seed/event-social/800/400',
     price: '免费', totalSpots: 50, filledSpots: 35,
     tags: ['社交', '教练交流', '轻食'],
+    description: '每月一次的普拉提社群聚会！4位明星教练将分享他们的训练理念和生活哲学。你可以近距离和教练交流，体验不同风格的迷你课程，结识志同道合的练习伙伴。现场提供健康轻食和饮品。',
+    schedule: ['18:45 入场签到', '19:00 开场介绍', '19:15 教练分享 (4位×10分钟)', '20:00 迷你体验课 (3个站点轮换)', '20:30 自由社交与轻食', '21:00 抽奖与合影'],
+    bringList: ['运动服（迷你课用）', '名片或社交账号（可选）'],
+    coach: '林悦然、苏曼、陈正阳、周思琪', coachId: 1,
   },
   {
     id: 4, title: '核心床进阶技术分享', type: '工作坊',
     date: '2026-06-07', time: '10:00 - 12:00',
-    venue: '悦动空间', image: 'https://picsum.photos/seed/event-tech/400/240',
+    venue: '悦动空间', venueId: 5, image: 'https://picsum.photos/seed/event-tech/800/400',
     price: '¥198', totalSpots: 15, filledSpots: 8,
     tags: ['工作坊', '核心床', '进阶'],
+    description: '面向有基础的练习者，深入讲解核心床的高级动作序列与教学技巧。适合想提升训练效果的学员和希望精进教学的教练。每位参与者都有充足的器械练习时间。',
+    schedule: ['09:45 签到', '10:00 核心床进阶理论', '10:30 高级动作分解练习 (一)', '11:00 高级动作分解练习 (二)', '11:30 组合序列与流动', '11:50 总结与证书颁发'],
+    bringList: ['防滑袜', '运动服', '笔记本（可选）'],
+    coach: '赵明哲', coachId: 4,
+  },
+  {
+    id: 5, title: '普拉提与冥想 · 城市静修日', type: '户外',
+    date: '2026-06-14', time: '09:00 - 16:00',
+    venue: '佘山森林公园', image: 'https://picsum.photos/seed/event-retreat/800/400',
+    price: '¥328', totalSpots: 25, filledSpots: 10,
+    tags: ['户外', '冥想', '一日静修'],
+    description: '逃离城市喧嚣，在佘山森林中度过一整天的身心静修。上午普拉提与呼吸练习，下午森林冥想与颂钵疗愈。含午餐素食便当和往返接送。',
+    schedule: ['08:30 市区集合出发', '09:30 森林普拉提', '11:00 呼吸法与冥想', '12:30 素食午餐', '14:00 颂钵音疗', '15:00 森林漫步与自由分享', '16:00 返程'],
+    bringList: ['运动服', '保暖外套', '瑜伽垫（统一提供也可自带）', '水杯'],
+    coach: '杨子萱', coachId: 8,
+  },
+  {
+    id: 6, title: '青少年体态矫正 · 暑期特训', type: '工作坊',
+    date: '2026-07-05', time: '09:30 - 11:30',
+    venue: '初心瑜伽普拉提', venueId: 6, image: 'https://picsum.photos/seed/event-teen/800/400',
+    price: '¥168', totalSpots: 16, filledSpots: 4,
+    tags: ['工作坊', '青少年', '体态矫正'],
+    description: '针对10-16岁青少年设计的体态矫正特训。通过普拉提训练改善圆肩、驼背、脊柱侧弯等问题，帮助青少年建立正确的身体姿态意识。家长可旁听。',
+    schedule: ['09:15 签到与体态评估', '09:30 体态认知教育', '09:50 核心激活与脊柱练习', '10:30 肩带稳定性训练', '11:00 趣味体态游戏', '11:20 家庭训练方案指导'],
+    bringList: ['运动服', '运动鞋', '水杯'],
+    coach: '王一鸣', coachId: 6,
   },
 ]
 
