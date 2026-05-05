@@ -170,7 +170,7 @@ export default function Profile() {
           }}
         >
           <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <OrdersIcon size={18} color="#6a6a6a" />
+            <OrdersIcon size={18} color="#E3617B" />
             我的订单
           </span>
           <span style={{ fontSize: 16, color: '#929292', fontWeight: 500 }}>
@@ -179,10 +179,10 @@ export default function Profile() {
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           {[
-            { icon: <WalletIcon size={24} color="#6a6a6a" />, label: '待付款' },
-            { icon: <CalendarIcon size={24} color="#6a6a6a" />, label: '待上课' },
-            { icon: <CheckIcon size={24} color="#6a6a6a" />, label: '已完成' },
-            { icon: <RefreshIcon size={24} color="#6a6a6a" />, label: '退款' },
+            { icon: <WalletIcon size={24} color="#E3617B" />, label: '待付款' },
+            { icon: <CalendarIcon size={24} color="#E3617B" />, label: '待上课' },
+            { icon: <CheckIcon size={24} color="#E3617B" />, label: '已完成' },
+            { icon: <RefreshIcon size={24} color="#E3617B" />, label: '退款' },
           ].map((item) => (
             <div
               key={item.label}
@@ -196,7 +196,7 @@ export default function Profile() {
               }}
             >
               <span style={{ lineHeight: 1 }}>{item.icon}</span>
-              <span style={{ fontSize: 12, color: '#6a6a6a' }}>
+              <span style={{ fontSize: 12, color: '#E3617B' }}>
                 {item.label}
               </span>
             </div>
@@ -217,9 +217,9 @@ export default function Profile() {
           }}
         >
           {[
-            { icon: <WalletIcon size={18} color="#6a6a6a" />, label: '储值卡', value: `¥${userProfile.balance}`, path: '/orders' },
-            { icon: <TicketIcon size={18} color="#6a6a6a" />, label: '优惠券', value: `${userProfile.coupons}张可用`, highlight: true, path: '/orders' },
-            { icon: <SupportIcon size={18} color="#6a6a6a" />, label: '客服帮助', path: '' },
+            { icon: <WalletIcon size={18} color="#E3617B" />, label: '储值卡', value: `¥${userProfile.balance}`, path: '/orders' },
+            { icon: <TicketIcon size={18} color="#E3617B" />, label: '优惠券', value: `${userProfile.coupons}张可用`, highlight: true, path: '/orders' },
+            { icon: <SupportIcon size={18} color="#E3617B" />, label: '客服帮助', path: '' },
           ].map((item, idx, arr) => (
             <div key={item.label}>
               <div
@@ -305,10 +305,10 @@ export default function Profile() {
           }}
         >
           {[
-            { icon: <ArchiveIcon size={18} color="#6a6a6a" />, label: '训练档案', path: '/training' },
-            { icon: <CommentIcon size={18} color="#6a6a6a" />, label: '我的评价', value: '待评价 1条', highlight: true, path: '/orders' },
-            { icon: <HeartIcon size={18} color="#6a6a6a" />, label: '关注教练', value: `${userProfile.stats.followedCoaches}位`, path: '/homeservice' },
-            { icon: <BuildingIcon size={18} color="#6a6a6a" />, label: '收藏场馆', value: '3家', path: '/studio' },
+            { icon: <ArchiveIcon size={18} color="#E3617B" />, label: '训练档案', path: '/training' },
+            { icon: <CommentIcon size={18} color="#E3617B" />, label: '我的评价', value: '待评价 1条', highlight: true, path: '/orders' },
+            { icon: <HeartIcon size={18} color="#E3617B" />, label: '关注教练', value: `${userProfile.stats.followedCoaches}位`, path: '/homeservice' },
+            { icon: <BuildingIcon size={18} color="#E3617B" />, label: '收藏场馆', value: '3家', path: '/studio' },
           ].map((item, idx, arr) => (
             <div key={item.label}>
               <div
@@ -394,8 +394,8 @@ export default function Profile() {
           }}
         >
           {[
-            { icon: <MapPinIcon size={18} color="#6a6a6a" />, label: '常用地址', path: '/orders' },
-            { icon: <SettingsIcon size={18} color="#6a6a6a" />, label: '设置', path: '/settings' },
+            { icon: <MapPinIcon size={18} color="#E3617B" />, label: '常用地址', path: '/orders' },
+            { icon: <SettingsIcon size={18} color="#E3617B" />, label: '设置', path: '/settings' },
           ].map((item, idx, arr) => (
             <div key={item.label}>
               <div
