@@ -558,7 +558,7 @@ export default function CoachProfile() {
             onMore={() => setShowAllReviews(!showAllReviews)}
           />
           <span
-            onClick={() => nav(`/review/${coach.id}`)}
+            onClick={() => nav(`/review/coach/${coach.id}`)}
             style={{
               padding: '8px 16px', borderRadius: 20, fontSize: 12, fontWeight: 600,
               background: '#E3617B', color: '#fff', cursor: 'pointer',

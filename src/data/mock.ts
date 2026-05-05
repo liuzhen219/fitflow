@@ -94,6 +94,7 @@ export interface Review {
 export interface ScheduleItem {
   id: number
   courseName: string
+  coachId: number
   coachName: string
   venueName: string
   isHomeService: boolean
@@ -1137,7 +1138,7 @@ export const scheduleItems: ScheduleItem[] = [
   {
     id: 1,
     courseName: '核心床私教·体态矫正',
-    coachName: '林悦然',
+    coachId: 1, coachName: '林悦然',
     venueName: '梵音普拉提馆',
     isHomeService: false,
     date: '2026-05-05',
@@ -1148,7 +1149,7 @@ export const scheduleItems: ScheduleItem[] = [
   {
     id: 2,
     courseName: '上门私教·产后恢复',
-    coachName: '林悦然',
+    coachId: 1, coachName: '林悦然',
     venueName: '',
     isHomeService: true,
     date: '2026-05-03',
@@ -1159,7 +1160,7 @@ export const scheduleItems: ScheduleItem[] = [
   {
     id: 3,
     courseName: '康复私教·腰部护理',
-    coachName: '陈正阳',
+    coachId: 2, coachName: '陈正阳',
     venueName: 'BodyLab',
     isHomeService: false,
     date: '2026-05-08',
@@ -1170,7 +1171,7 @@ export const scheduleItems: ScheduleItem[] = [
   {
     id: 4,
     courseName: '孕期私教·舒缓调理',
-    coachName: '苏曼',
+    coachId: 3, coachName: '苏曼',
     venueName: 'ZenSpace',
     isHomeService: false,
     date: '2026-05-11',
@@ -1181,7 +1182,7 @@ export const scheduleItems: ScheduleItem[] = [
   {
     id: 5,
     courseName: '脊柱侧弯矫正·私教',
-    coachName: '赵明哲',
+    coachId: 4, coachName: '赵明哲',
     venueName: '梵音普拉提馆',
     isHomeService: false,
     date: '2026-05-18',
@@ -1192,7 +1193,7 @@ export const scheduleItems: ScheduleItem[] = [
   {
     id: 6,
     courseName: '塑形私教·全身燃脂',
-    coachName: '周思琪',
+    coachId: 5, coachName: '周思琪',
     venueName: '悦动空间',
     isHomeService: false,
     date: '2026-05-23',
@@ -1203,7 +1204,7 @@ export const scheduleItems: ScheduleItem[] = [
   {
     id: 7,
     courseName: '小班课·脊柱保养',
-    coachName: '林悦然',
+    coachId: 1, coachName: '林悦然',
     venueName: '梵音普拉提馆',
     isHomeService: false,
     date: '2026-05-15',
@@ -1214,7 +1215,7 @@ export const scheduleItems: ScheduleItem[] = [
   {
     id: 8,
     courseName: '青少年体态矫正·私教',
-    coachName: '王一鸣',
+    coachId: 6, coachName: '王一鸣',
     venueName: 'BodyLab',
     isHomeService: false,
     date: '2026-05-20',
@@ -1225,7 +1226,7 @@ export const scheduleItems: ScheduleItem[] = [
   {
     id: 9,
     courseName: '上门康复·肩颈调理',
-    coachName: '陈正阳',
+    coachId: 2, coachName: '陈正阳',
     venueName: '',
     isHomeService: true,
     date: '2026-05-04',
@@ -1236,7 +1237,7 @@ export const scheduleItems: ScheduleItem[] = [
   {
     id: 10,
     courseName: '女性健康·盆底肌训练',
-    coachName: '苏曼',
+    coachId: 3, coachName: '苏曼',
     venueName: 'ZenSpace',
     isHomeService: false,
     date: '2026-05-06',
@@ -1247,7 +1248,7 @@ export const scheduleItems: ScheduleItem[] = [
   {
     id: 11,
     courseName: '筋膜放松·深层松解',
-    coachName: '刘凯文',
+    coachId: 7, coachName: '刘凯文',
     venueName: 'BodyLab',
     isHomeService: false,
     date: '2026-05-09',
@@ -1258,7 +1259,7 @@ export const scheduleItems: ScheduleItem[] = [
   {
     id: 12,
     courseName: '冥想与呼吸·身心平衡',
-    coachName: '杨子萱',
+    coachId: 8, coachName: '杨子萱',
     venueName: '初心瑜伽普拉提',
     isHomeService: false,
     date: '2026-05-13',

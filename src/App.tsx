@@ -86,6 +86,7 @@ export default function App() {
         <Route path="/payment-success/:id" element={<PaymentSuccess />} />
         <Route path="/checkin/:id" element={<CheckIn />} />
         <Route path="/review/:id" element={<PostReview />} />
+        <Route path="/review/coach/:id" element={<PostReview />} />
         <Route path="/search" element={<Search />} />
         <Route path="/orders" element={<OrderList />} />
         <Route path="/events" element={<Events />} />

@@ -1,12 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import StarRating from '../components/StarRating'
 import { scheduleItems } from '../data/mock'
 import {
-  SearchIcon,
-  UserIcon,
-  BuildingIcon,
-  PhotoIcon,
+  SearchIcon, UserIcon, BuildingIcon, PhotoIcon,
+  ClockIcon, LocationIcon, SparkleIcon,
 } from '../components/Icons'
 
 const coachTags = ['专业认真', '讲解清晰', '氛围舒适', '耐心细致', '效果明显']
@@ -15,373 +13,175 @@ const venueTags = ['器械齐全', '环境干净', '交通便利', '服务周到
 export default function PostReview() {
   const { id } = useParams<{ id: string }>()
   const nav = useNavigate()
-  const item = scheduleItems.find((s) => s.id === Number(id))
+
+  // Determine entry mode: from schedule item id or from coach id
+  const isCoachMode = window.location.hash.includes('/review/coach/')
+  const coachId = isCoachMode ? Number(id) : null
+  const scheduleItemId = isCoachMode ? null : Number(id)
+
+  // Completed courses for the user, filtered by coach if in coach mode
+  const userCompletedCourses = useMemo(() => {
+    const completed = scheduleItems.filter((s) => s.status === 'completed')
+    if (coachId) return completed.filter((s) => s.coachId === coachId)
+    // from schedule: find the specific item
+    const item = scheduleItems.find((s) => s.id === scheduleItemId)
+    // also get other courses by same coach
+    if (item) {
+      return completed.filter((s) => s.coachId === item.coachId)
+    }
+    return completed
+  }, [coachId, scheduleItemId])
+
+  const [selectedCourse, setSelectedCourse] = useState(
+    userCompletedCourses.length === 1 ? userCompletedCourses[0] : null
+  )
 
   const [coachRating, setCoachRating] = useState(0)
   const [venueRating, setVenueRating] = useState(0)
   const [selectedCoachTags, setSelectedCoachTags] = useState<string[]>([])
   const [selectedVenueTags, setSelectedVenueTags] = useState<string[]>([])
-  const [reviewText, setReviewText] = useState('')
 
-  const toggleTag = (
-    tag: string,
-    selected: string[],
-    setSelected: React.Dispatch<React.SetStateAction<string[]>>
-  ) => {
-    if (selected.includes(tag)) {
-      setSelected(selected.filter((t) => t !== tag))
-    } else {
-      setSelected([...selected, tag])
-    }
-  }
+  const toggleTag = (tag: string, selected: string[], setFn: (v: string[]) => void) =>
+    setFn(selected.includes(tag) ? selected.filter((t) => t !== tag) : [...selected, tag])
 
-  if (!item) {
+  if (userCompletedCourses.length === 0) {
     return (
-      <div style={s.page}>
-        <div style={s.navBar}>
-          <div style={s.navBack} onClick={() => nav(-1)}>‹</div>
-          <div style={s.navTitle}>课后评价</div>
-          <div style={s.navPlaceholder} />
-        </div>
-        <div style={s.notFound}>
-          <SearchIcon size={48} color="#c0c0c0" />
-          <p style={s.notFoundText}>课程未找到</p>
-          <div style={s.backBtn} onClick={() => nav(-1)}>返回</div>
-        </div>
+      <div style={{ minHeight: '100vh', background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, padding: 20 }}>
+        <SearchIcon size={48} color="#c0c0c0" />
+        <p style={{ fontSize: 16, color: '#222', fontWeight: 500, margin: 0 }}>暂无已完成课程</p>
+        <p style={{ fontSize: 13, color: '#6a6a6a', margin: 0, textAlign: 'center' }}>
+          你可以在上完课后再来评价教练
+        </p>
+        <div style={{ marginTop: 8, padding: '10px 28px', borderRadius: 24, background: '#E3617B', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }} onClick={() => nav(-1)}>返回</div>
       </div>
     )
   }
 
   return (
-    <div style={s.page}>
-      {/* NavBar */}
-      <div style={s.navBar}>
-        <div style={s.navBack} onClick={() => nav(-1)}>‹</div>
-        <div style={s.navTitle}>课后评价</div>
-        <div style={s.navPlaceholder} />
+    <div style={{ minHeight: '100vh', background: '#fff' }}>
+      {/* Header */}
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px',
+        borderBottom: '1px solid #f0f0f0', position: 'sticky', top: 0, background: '#fff', zIndex: 10,
+      }}>
+        <div onClick={() => nav(-1)} style={{
+          width: 34, height: 34, borderRadius: '50%', background: 'rgba(0,0,0,0.35)',
+          backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 18, color: '#fff', cursor: 'pointer', fontWeight: 500, lineHeight: 1, flexShrink: 0,
+        }}>‹</div>
+        <div>
+          <div style={{ fontSize: 16, fontWeight: 600, color: '#222' }}>评价教练</div>
+          <div style={{ fontSize: 12, color: '#6a6a6a' }}>
+            {selectedCourse ? selectedCourse.coachName : '选择课程'}
+          </div>
+        </div>
       </div>
 
-      <div style={s.scrollArea}>
-        {/* Course Info Summary */}
-        <div style={s.courseCard}>
-          <h2 style={s.courseName}>{item.courseName}</h2>
-          <div style={s.courseMeta}>
-            <span>{item.coachName}</span>
-            <span style={s.metaDot}>·</span>
-            <span>{item.isHomeService ? '上门服务' : item.venueName}</span>
-            <span style={s.metaDot}>·</span>
-            <span>{item.date}</span>
-          </div>
-        </div>
-
-        {/* Coach Rating Section */}
-        <div style={s.section}>
-          <div style={{ ...s.sectionTitle, display: 'flex', alignItems: 'center', gap: 6 }}>
-            <UserIcon size={14} color="#E3617B" />
-            教练评价
-          </div>
-          <div style={s.ratingRow}>
-            <StarRating value={coachRating} onChange={setCoachRating} size={28} />
-            {coachRating > 0 && (
-              <span style={s.ratingLabel}>{coachRating} 分</span>
-            )}
-          </div>
-          <div style={s.tagRow}>
-            {coachTags.map((tag) => {
-              const selected = selectedCoachTags.includes(tag)
-              return (
-                <span
-                  key={tag}
+      <div style={{ padding: '16px' }}>
+        {/* Course selector */}
+        {userCompletedCourses.length > 1 && (
+          <div style={{ marginBottom: 20 }}>
+            <p style={{ fontSize: 13, fontWeight: 600, color: '#222', margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: 4 }}>
+              <SparkleIcon size={14} color="#E3617B" /> 你上过{userCompletedCourses[0]?.coachName}的{userCompletedCourses.length}门课，请选择评价哪一门：
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {userCompletedCourses.map((c) => (
+                <div key={c.id} onClick={() => setSelectedCourse(c)}
                   style={{
-                    ...s.tagChip,
-                    ...(selected ? s.tagChipCoachActive : {}),
-                  }}
-                  onClick={() => toggleTag(tag, selectedCoachTags, setSelectedCoachTags)}
-                >
-                  {tag}
-                </span>
-              )
-            })}
-          </div>
-        </div>
-
-        {/* Venue Rating Section */}
-        {!item.isHomeService && (
-          <div style={s.section}>
-            <div style={{ ...s.sectionTitle, display: 'flex', alignItems: 'center', gap: 6 }}>
-              <BuildingIcon size={14} color="#E3617B" />
-              场馆评价
-            </div>
-            <div style={s.ratingRow}>
-              <StarRating value={venueRating} onChange={setVenueRating} size={28} />
-              {venueRating > 0 && (
-                <span style={s.ratingLabel}>{venueRating} 分</span>
-              )}
-            </div>
-            <div style={s.tagRow}>
-              {venueTags.map((tag) => {
-                const selected = selectedVenueTags.includes(tag)
-                return (
-                  <span
-                    key={tag}
-                    style={{
-                      ...s.tagChip,
-                      ...(selected ? s.tagChipVenueActive : {}),
-                    }}
-                    onClick={() => toggleTag(tag, selectedVenueTags, setSelectedVenueTags)}
-                  >
-                    {tag}
-                  </span>
-                )
-              })}
+                    padding: '12px 14px', borderRadius: 12, cursor: 'pointer',
+                    border: selectedCourse?.id === c.id ? '1.5px solid #E3617B' : '1px solid #ddd',
+                    background: selectedCourse?.id === c.id ? 'rgba(227,97,123,0.04)' : '#fafafa',
+                  }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: 14, fontWeight: selectedCourse?.id === c.id ? 600 : 500, color: '#222' }}>
+                      {c.courseName}
+                    </span>
+                    {selectedCourse?.id === c.id && (
+                      <span style={{ fontSize: 11, color: '#E3617B', fontWeight: 600 }}>已选择 ✓</span>
+                    )}
+                  </div>
+                  <div style={{ display: 'flex', gap: 8, marginTop: 4, fontSize: 12, color: '#6a6a6a' }}>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: 2 }}><ClockIcon size={11} color="#6a6a6a" />{c.date} · {c.time}</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: 2 }}><LocationIcon size={11} color="#6a6a6a" />{c.venueName}</span>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}
 
-        {/* Text Input Area */}
-        <div style={s.section}>
-          <div style={s.sectionTitle}>写点什么...</div>
-          <div
-            style={s.textArea}
-            contentEditable
-            suppressContentEditableWarning
-            onInput={(e) => {
-              setReviewText((e.target as HTMLDivElement).innerText)
-            }}
-          >
-            {reviewText === '' ? null : undefined}
-          </div>
-          <div style={s.charCount}>{reviewText.length}/500</div>
-        </div>
+        {selectedCourse && (
+          <>
+            {/* Course info */}
+            <div style={{
+              padding: '12px 14px', borderRadius: 12, background: '#fafafa',
+              border: '1px solid #f0f0f0', marginBottom: 20,
+            }}>
+              <p style={{ fontSize: 14, fontWeight: 600, color: '#222', margin: 0 }}>{selectedCourse.courseName}</p>
+              <p style={{ fontSize: 12, color: '#6a6a6a', margin: '4px 0 0' }}>
+                {selectedCourse.date} · {selectedCourse.coachName}
+              </p>
+            </div>
 
-        {/* Photo Upload */}
-        <div style={s.section}>
-          <div style={{ ...s.sectionTitle, display: 'flex', alignItems: 'center', gap: 6 }}>
-            <PhotoIcon size={14} color="#E3617B" />
-            添加图片
-          </div>
-          <div style={s.photoRow}>
-            {[0, 1, 2].map((i) => (
-              <div key={i} style={s.photoBox}>
-                <PhotoIcon size={22} color="#c0c0c0" />
+            {/* Coach Rating */}
+            <div style={{ marginBottom: 24 }}>
+              <p style={{ fontSize: 14, fontWeight: 600, color: '#222', margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <UserIcon size={14} color="#E3617B" /> 教练评价
+              </p>
+              <StarRating value={coachRating} onChange={setCoachRating} />
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>
+                {coachTags.map((t) => (
+                  <span key={t} onClick={() => toggleTag(t, selectedCoachTags, setSelectedCoachTags)} style={{
+                    padding: '6px 12px', borderRadius: 16, fontSize: 12, fontWeight: 500, cursor: 'pointer',
+                    background: selectedCoachTags.includes(t) ? '#E3617B' : '#f7f7f7',
+                    color: selectedCoachTags.includes(t) ? '#fff' : '#222',
+                  }}>{t}</span>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
 
-        {/* Submit Button */}
-        <div style={s.submitArea}>
-          <button style={s.submitBtn} onClick={() => nav(-1)}>
-            提交评价
-          </button>
-        </div>
+            {/* Venue Rating */}
+            <div style={{ marginBottom: 24 }}>
+              <p style={{ fontSize: 14, fontWeight: 600, color: '#222', margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <BuildingIcon size={14} color="#E3617B" /> 场馆评价
+              </p>
+              <StarRating value={venueRating} onChange={setVenueRating} />
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>
+                {venueTags.map((t) => (
+                  <span key={t} onClick={() => toggleTag(t, selectedVenueTags, setSelectedVenueTags)} style={{
+                    padding: '6px 12px', borderRadius: 16, fontSize: 12, fontWeight: 500, cursor: 'pointer',
+                    background: selectedVenueTags.includes(t) ? '#C4A882' : '#f7f7f7',
+                    color: selectedVenueTags.includes(t) ? '#fff' : '#222',
+                  }}>{t}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Text */}
+            <div style={{ marginBottom: 24 }}>
+              <p style={{ fontSize: 14, fontWeight: 600, color: '#222', margin: '0 0 8px' }}>✍️ 写点什么...</p>
+              <div style={{ background: '#f7f7f7', borderRadius: 12, padding: 12, minHeight: 80, fontSize: 13, color: '#929292' }} contentEditable>
+                分享你的上课感受，帮助其他学员做出选择～
+              </div>
+              <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
+                {[1, 2, 3].map((i) => (
+                  <div key={i} style={{ width: 60, height: 60, background: '#f7f7f7', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1.5px dashed #ddd' }}>
+                    <PhotoIcon size={22} color="#c0c0c0" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Submit */}
+            <button onClick={() => nav(-1)} style={{
+              width: '100%', padding: '14px 0', borderRadius: 8, border: 'none',
+              background: '#E3617B', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer',
+            }}>
+              提交评价
+            </button>
+          </>
+        )}
       </div>
     </div>
   )
-}
-
-const s: Record<string, React.CSSProperties> = {
-  page: {
-    minHeight: '100vh',
-    background: '#fff',
-  },
-  scrollArea: {
-    padding: '0 12px 40px',
-  },
-
-  // NavBar
-  navBar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '12px 16px',
-    paddingTop: 16,
-  },
-  navBack: {
-    width: 34,
-    height: 34,
-    borderRadius: '50%',
-    background: 'rgba(0,0,0,0.35)',
-    backdropFilter: 'blur(8px)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 18,
-    color: '#fff',
-    cursor: 'pointer',
-    fontWeight: 500,
-    lineHeight: 1,
-    flexShrink: 0,
-  },
-  navTitle: {
-    fontSize: 16,
-    fontWeight: 600,
-    color: '#222',
-  },
-  navPlaceholder: { width: 32 },
-
-  // Not Found
-  notFound: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: '80vh',
-    gap: 12,
-    padding: 20,
-  },
-  notFoundText: { fontSize: 16, color: '#222', fontWeight: 500, margin: 0 },
-  backBtn: {
-    marginTop: 8,
-    padding: '10px 28px',
-    borderRadius: 24,
-    background: '#E3617B',
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: 600,
-    cursor: 'pointer',
-  },
-
-  // Course Card
-  courseCard: {
-    marginTop: 8,
-    padding: 16,
-    background: '#FFFFFF',
-    borderRadius: 16,
-    boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
-  },
-  courseName: {
-    fontSize: 15,
-    fontWeight: 700,
-    color: '#222',
-    margin: '0 0 6px 0',
-    lineHeight: 1.3,
-  },
-  courseMeta: {
-    fontSize: 12,
-    color: '#6a6a6a',
-    display: 'flex',
-    alignItems: 'center',
-    gap: 4,
-    flexWrap: 'wrap',
-  },
-  metaDot: {
-    color: '#ddd',
-  },
-
-  // Section
-  section: {
-    marginTop: 16,
-    padding: 16,
-    background: '#FFFFFF',
-    borderRadius: 16,
-    boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
-  },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: 600,
-    color: '#222',
-    marginBottom: 10,
-  },
-
-  // Rating
-  ratingRow: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 10,
-  },
-  ratingLabel: {
-    fontSize: 12,
-    color: '#E3617B',
-    fontWeight: 600,
-  },
-
-  // Tag Chips
-  tagRow: {
-    display: 'flex',
-    gap: 8,
-    flexWrap: 'wrap',
-  },
-  tagChip: {
-    padding: '6px 14px',
-    borderRadius: 16,
-    fontSize: 12,
-    fontWeight: 500,
-    background: '#FFFFFF',
-    color: '#6a6a6a',
-    border: '1px solid #ddd',
-    cursor: 'pointer',
-    lineHeight: 1.2,
-    whiteSpace: 'nowrap',
-    userSelect: 'none',
-  },
-  tagChipCoachActive: {
-    background: '#E3617B',
-    color: '#FFFFFF',
-    border: '1px solid #E3617B',
-  },
-  tagChipVenueActive: {
-    background: '#E3617B',
-    color: '#FFFFFF',
-    border: '1px solid #E3617B',
-  },
-
-  // Text Area
-  textArea: {
-    width: '100%',
-    minHeight: 80,
-    background: '#FFFFFF',
-    borderRadius: 12,
-    border: '1px solid #ddd',
-    padding: 12,
-    fontSize: 12,
-    color: '#222',
-    outline: 'none',
-    lineHeight: 1.6,
-    overflowY: 'auto',
-    whiteSpace: 'pre-wrap',
-    wordBreak: 'break-word',
-  },
-  charCount: {
-    textAlign: 'right',
-    fontSize: 11,
-    color: '#929292',
-    marginTop: 6,
-  },
-
-  // Photo Upload
-  photoRow: {
-    display: 'flex',
-    gap: 10,
-  },
-  photoBox: {
-    width: 60,
-    height: 60,
-    borderRadius: 10,
-    border: '1.5px dashed #ddd',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-  },
-
-  // Submit
-  submitArea: {
-    marginTop: 24,
-    marginBottom: 40,
-  },
-  submitBtn: {
-    width: '100%',
-    padding: '14px 0',
-    borderRadius: 24,
-    background: '#E3617B',
-    color: '#FFFFFF',
-    fontSize: 15,
-    fontWeight: 700,
-    border: 'none',
-    cursor: 'pointer',
-    textAlign: 'center',
-    lineHeight: 1.2,
-  },
 }
