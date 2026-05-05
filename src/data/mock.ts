@@ -1134,6 +1134,27 @@ export const events: Event[] = [
   },
 ]
 
+export interface Notification {
+  id: number
+  type: 'course' | 'system' | 'activity' | 'review'
+  title: string
+  content: string
+  time: string
+  read: boolean
+  link?: string
+}
+
+export const notifications: Notification[] = [
+  { id: 1, type: 'course', title: '课程提醒', content: '明天 10:00 有「核心床私教·体态矫正」课程，教练林悦然，地点梵音普拉提馆。', time: '10分钟前', read: false, link: '/schedule' },
+  { id: 2, type: 'review', title: '评价邀请', content: '你刚完成了林悦然教练的核心床私教课，去给教练一个评价吧！', time: '1小时前', read: false, link: '/review/coach/1' },
+  { id: 3, type: 'activity', title: '活动报名确认', content: '你已成功报名「普拉提社交之夜 · 教练面对面」，5月31日 19:00 在 ZenSpace，别忘了哦～', time: '2小时前', read: false, link: '/event/3' },
+  { id: 4, type: 'system', title: '优惠券到账', content: '恭喜获得 ¥30 新人优惠券，预约任意课程满 ¥300 可用。', time: '昨天', read: true },
+  { id: 5, type: 'course', title: '预约确认', content: '「康复私教·腰部护理」预约成功，6月10日 16:00 陈正阳教练在 BodyLab 等你。', time: '昨天', read: true, link: '/schedule' },
+  { id: 6, type: 'activity', title: '新活动上线', content: '「青少年体态矫正·暑期特训」开始报名啦！针对10-16岁青少年，7月5日开课。', time: '2天前', read: true, link: '/event/6' },
+  { id: 7, type: 'system', title: '系统通知', content: 'FitFlow 版本更新：新增线下活动模块、约课时段选择、支付流程优化。', time: '3天前', read: true },
+  { id: 8, type: 'review', title: '有人评价了你', content: '你的评价「耐心细致，专业负责」获得了 3 个赞。', time: '5天前', read: true },
+]
+
 export const scheduleItems: ScheduleItem[] = [
   {
     id: 1,

@@ -6,16 +6,10 @@ import CoachCard from '../components/CoachCard'
 import CourseCard from '../components/CourseCard'
 import SectionHeader from '../components/SectionHeader'
 import EventCard from '../components/EventCard'
-import { coaches, courses, events } from '../data/mock'
+import { coaches, courses, events, notifications } from '../data/mock'
 import {
-  LocationIcon,
-  SearchIcon,
-  BuildingIcon,
-  HomeServiceIcon,
-  StarFilledIcon,
-  SparkleIcon,
-  FireIcon,
-  CheckIcon,
+  LocationIcon, SearchIcon, BuildingIcon, HomeServiceIcon,
+  StarFilledIcon, SparkleIcon, FireIcon, CheckIcon,
 } from '../components/Icons'
 
 const hotTags = ['普拉提核心床', '产后恢复', '体态矫正', '脊柱健康', '孕期普拉提']
@@ -64,21 +58,34 @@ export default function Home() {
     <div style={{ minHeight: '100vh', background: '#fff', paddingBottom: 32 }}>
       {/* Location + Search Pill */}
       <div style={{ padding: '16px 16px 12px' }}>
-        {/* Location chip — tappable */}
-        <div
-          onClick={() => setLocationVisible(true)}
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 10,
-            padding: '8px 14px', borderRadius: 24, border: '1px solid #ddd',
-            cursor: 'pointer', userSelect: 'none', background: '#fff',
-            transition: 'box-shadow 0.15s',
-          }}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = 'rgba(0,0,0,0.06) 0 2px 8px 0' }}
-          onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = 'none' }}
-        >
-          <LocationIcon size={15} color="#E3617B" />
-          <span style={{ fontSize: 14, fontWeight: 600, color: '#222' }}>{currentCity.name} · {currentDistrict}</span>
-          <span style={{ fontSize: 12, color: '#6a6a6a', transform: 'rotate(90deg)', display: 'inline-flex' }}>›</span>
+        {/* Location row with bell */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+          {/* Location chip */}
+          <div
+            onClick={() => setLocationVisible(true)}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              padding: '8px 14px', borderRadius: 24, border: '1px solid #ddd',
+              cursor: 'pointer', userSelect: 'none', background: '#fff',
+              transition: 'box-shadow 0.15s',
+            }}
+          >
+            <LocationIcon size={15} color="#E3617B" />
+            <span style={{ fontSize: 14, fontWeight: 600, color: '#222' }}>{currentCity.name} · {currentDistrict}</span>
+            <span style={{ fontSize: 12, color: '#6a6a6a', transform: 'rotate(90deg)', display: 'inline-flex' }}>›</span>
+          </div>
+
+          {/* Notification bell */}
+          <div onClick={() => nav('/notifications')} style={{ position: 'relative', cursor: 'pointer' }}>
+            <span style={{ fontSize: 22 }}>🔔</span>
+            {notifications.filter(n => !n.read).length > 0 && (
+              <span style={{
+                position: 'absolute', top: -2, right: -4,
+                width: 8, height: 8, borderRadius: '50%', background: '#E3617B',
+                border: '1.5px solid #fff',
+              }} />
+            )}
+          </div>
         </div>
         <div
           onClick={() => nav('/search')}
