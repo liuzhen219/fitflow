@@ -136,7 +136,16 @@ const ClassCard: React.FC<ClassCardProps> = ({
         <p style={s.coachVenue}>{coachName} · {venueName}</p>
         <p style={s.dateTime}>{date} · {time}</p>
         <div style={s.actions}>
-          {isHomeService ? (
+          {status === 'completed' ? (
+            <>
+              <button style={{ ...s.actionBtn, ...s.outlineBtn }} onClick={onViewDetail}>
+                查看详情
+              </button>
+              <button style={{ ...s.actionBtn, ...s.primaryBtn }} onClick={onCheckIn}>
+                ✎ 去评价
+              </button>
+            </>
+          ) : isHomeService ? (
             <>
               <button style={{ ...s.actionBtn, ...s.outlineBtn }} onClick={onViewDetail}>
                 修改地址
@@ -150,15 +159,7 @@ const ClassCard: React.FC<ClassCardProps> = ({
               <button style={{ ...s.actionBtn, ...s.outlineBtn }} onClick={onViewDetail}>
                 查看地址
               </button>
-              <button
-                style={{
-                  ...s.actionBtn,
-                  ...s.primaryBtn,
-                  ...(status === 'completed' ? { opacity: 0.5 } : {}),
-                }}
-                onClick={onCheckIn}
-                disabled={status === 'completed'}
-              >
+              <button style={{ ...s.actionBtn, ...s.primaryBtn }} onClick={onCheckIn}>
                 签到核销
               </button>
             </>

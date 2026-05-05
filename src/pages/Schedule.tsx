@@ -124,8 +124,8 @@ export default function Schedule() {
               date={item.date}
               time={item.time}
               status={item.status as 'upcoming' | 'confirmed' | 'completed'}
-              onCheckIn={() => {}}
-              onViewDetail={() => {}}
+              onCheckIn={item.status === 'completed' ? () => nav(`/review/${item.id}`) : () => {}}
+              onViewDetail={() => nav(`/course/${item.id}`)}
             />
           ))
         ) : tab === 'upcoming' ? (

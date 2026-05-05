@@ -550,12 +550,23 @@ export default function CoachProfile() {
 
         {/* Reviews */}
         <div style={{ height: 24 }} />
-        <SectionHeader
-          title={`学员评价 (${coachReviews.length})`}
-          moreText={showAllReviews ? '收起' : '查看全部'}
-          icon={<CommentIcon size={16} color="#E3617B" />}
-          onMore={() => setShowAllReviews(!showAllReviews)}
-        />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+          <SectionHeader
+            title={`学员评价 (${coachReviews.length})`}
+            moreText={showAllReviews ? '收起' : '查看全部'}
+            icon={<CommentIcon size={16} color="#E3617B" />}
+            onMore={() => setShowAllReviews(!showAllReviews)}
+          />
+          <span
+            onClick={() => nav(`/review/${coach.id}`)}
+            style={{
+              padding: '8px 16px', borderRadius: 20, fontSize: 12, fontWeight: 600,
+              background: '#E3617B', color: '#fff', cursor: 'pointer',
+              whiteSpace: 'nowrap', flexShrink: 0, userSelect: 'none',
+              marginTop: -1,
+            }}
+          >✎ 写评价</span>
+        </div>
 
         {/* Rating summary bars */}
         <div style={{ display: 'flex', gap: 14, marginBottom: 16, padding: '14px 0', borderBottom: '1px solid #f0f0f0' }}>
