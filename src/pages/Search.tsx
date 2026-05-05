@@ -133,7 +133,7 @@ export default function Search() {
                   清除记录
                 </span>
               </div>
-              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: 8, overflowX: 'auto', scrollbarWidth: 'none' }}>
                 {history.map(h => (
                   <span
                     key={h}
@@ -161,7 +161,7 @@ export default function Search() {
             <div style={{ fontSize: 14, fontWeight: 600, color: '#222', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 4 }}>
               <FireIcon size={14} color="var(--c-accent)" /> 热门搜索
             </div>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: 8, overflowX: 'auto', scrollbarWidth: 'none' }}>
               {hotSearches.map(tag => (
                 <span
                   key={tag}
