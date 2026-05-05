@@ -40,9 +40,12 @@ export default function CourseDetail() {
           background: course.imageGradient,
         }}
       >
-        {course.thumbnail && (
-          <img src={course.thumbnail} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-        )}
+        <img
+          src={course.thumbnail || ''}
+          alt=""
+          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+        />
         {/* NavBar */}
         <div style={s.navBar}>
           <div style={s.navBack} onClick={() => nav(-1)}>
@@ -67,7 +70,7 @@ export default function CourseDetail() {
         <div style={s.coachRow} onClick={() => nav(`/coach/${course.coachId}`)}>
           <div style={{ ...s.coachAvatar, overflow: 'hidden' }}>
             {coach?.avatar ? (
-              <img src={coach.avatar} alt={coach.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={coach.avatar} alt={coach.name} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             ) : (
               course.coachName.charAt(0)
             )}

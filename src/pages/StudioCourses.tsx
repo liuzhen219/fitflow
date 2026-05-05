@@ -70,6 +70,7 @@ export default function StudioCourses() {
         <img
           src="https://images.unsplash.com/photo-1599901868904-6f95f09e0a1c?w=800&h=300&fit=crop"
           alt=""
+          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         />
         {/* Overlay */}

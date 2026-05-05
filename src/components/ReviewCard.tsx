@@ -64,6 +64,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
               <img
                 src={userAvatar}
                 alt={userName}
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                 style={{
                   objectFit: 'cover',
                   width: 36,
@@ -153,6 +154,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({
               key={idx}
               src={img}
               alt=""
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
               style={{
                 width: 56,
                 height: 56,

@@ -64,6 +64,7 @@ export default function Profile() {
         >
           {userProfile.avatar ? (
             <img src={userProfile.avatar} alt={userProfile.name}
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
               style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           ) : (
             <div style={{

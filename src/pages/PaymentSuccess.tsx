@@ -46,6 +46,7 @@ export default function PaymentSuccess() {
           <img
             src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://fitflow.app/checkin/12345"
             alt="签到二维码"
+            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
             style={{ width: 140, height: 140, borderRadius: 12 }}
           />
         </div>

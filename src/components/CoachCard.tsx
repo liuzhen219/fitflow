@@ -47,6 +47,7 @@ const CoachCard: React.FC<CoachCardProps> = ({
         <img
           src={imageUrl}
           alt={name}
+          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
       ) : (

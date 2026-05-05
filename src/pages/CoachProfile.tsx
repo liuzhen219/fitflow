@@ -598,6 +598,7 @@ export default function CoachProfile() {
             background: '#000', minHeight: 400,
           }}>
             <img src={selectedPhoto} alt="教学照片"
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
               style={{ width: '100%', maxHeight: '70vh', objectFit: 'contain' }} />
             <div
               onClick={() => setSelectedPhoto(null)}

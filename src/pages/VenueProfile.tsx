@@ -42,7 +42,7 @@ export default function VenueProfile() {
         }}
       >
         {venue.heroImage && (
-          <img src={venue.heroImage} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+          <img src={venue.heroImage} alt="" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
         )}
         {/* NavBar */}
         <div style={s.navBar}>
