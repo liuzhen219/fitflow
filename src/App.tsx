@@ -28,6 +28,8 @@ import OrderList from './pages/OrderList'
 import Events from './pages/Events'
 import EventDetail from './pages/EventDetail'
 import UserProfile from './pages/UserProfile'
+import Settings from './pages/Settings'
+import TrainingArchive from './pages/TrainingArchive'
 
 const tabs = [
   { key: '/home', title: '首页', icon: (active: boolean) => <AppOutline fontSize={22} color={active ? '#E3617B' : '#6a6a6a'} /> },
@@ -92,6 +94,8 @@ export default function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/user/:name" element={<UserProfile />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/training" element={<TrainingArchive />} />
       </Routes>
     </HashRouter>
   )

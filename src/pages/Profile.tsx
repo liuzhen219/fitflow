@@ -217,23 +217,19 @@ export default function Profile() {
           }}
         >
           {[
-            { icon: <WalletIcon size={18} color="#6a6a6a" />, label: '储值卡', value: `¥${userProfile.balance}` },
-            {
-              icon: <TicketIcon size={18} color="#6a6a6a" />,
-              label: '优惠券',
-              value: `${userProfile.coupons}张可用`,
-              highlight: true,
-            },
-            { icon: <SupportIcon size={18} color="#6a6a6a" />, label: '客服帮助' },
+            { icon: <WalletIcon size={18} color="#6a6a6a" />, label: '储值卡', value: `¥${userProfile.balance}`, path: '/orders' },
+            { icon: <TicketIcon size={18} color="#6a6a6a" />, label: '优惠券', value: `${userProfile.coupons}张可用`, highlight: true, path: '/orders' },
+            { icon: <SupportIcon size={18} color="#6a6a6a" />, label: '客服帮助', path: '' },
           ].map((item, idx, arr) => (
             <div key={item.label}>
               <div
+                onClick={() => item.path && nav(item.path)}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: '14px 16px',
-                  cursor: 'pointer',
+                  cursor: item.path ? 'pointer' : 'default',
                 }}
               >
                 <div
@@ -309,28 +305,20 @@ export default function Profile() {
           }}
         >
           {[
-            { icon: <ArchiveIcon size={18} color="#6a6a6a" />, label: '训练档案' },
-            {
-              icon: <CommentIcon size={18} color="#6a6a6a" />,
-              label: '我的评价',
-              value: '待评价 1条',
-              highlight: true,
-            },
-            {
-              icon: <HeartIcon size={18} color="#6a6a6a" />,
-              label: '关注教练',
-              value: `${userProfile.stats.followedCoaches}位`,
-            },
-            { icon: <BuildingIcon size={18} color="#6a6a6a" />, label: '收藏场馆', value: '3家' },
+            { icon: <ArchiveIcon size={18} color="#6a6a6a" />, label: '训练档案', path: '/training' },
+            { icon: <CommentIcon size={18} color="#6a6a6a" />, label: '我的评价', value: '待评价 1条', highlight: true, path: '/orders' },
+            { icon: <HeartIcon size={18} color="#6a6a6a" />, label: '关注教练', value: `${userProfile.stats.followedCoaches}位`, path: '/homeservice' },
+            { icon: <BuildingIcon size={18} color="#6a6a6a" />, label: '收藏场馆', value: '3家', path: '/studio' },
           ].map((item, idx, arr) => (
             <div key={item.label}>
               <div
+                onClick={() => item.path && nav(item.path)}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: '14px 16px',
-                  cursor: 'pointer',
+                  cursor: item.path ? 'pointer' : 'default',
                 }}
               >
                 <div
@@ -406,17 +394,18 @@ export default function Profile() {
           }}
         >
           {[
-            { icon: <MapPinIcon size={18} color="#6a6a6a" />, label: '常用地址' },
-            { icon: <SettingsIcon size={18} color="#6a6a6a" />, label: '设置' },
+            { icon: <MapPinIcon size={18} color="#6a6a6a" />, label: '常用地址', path: '/orders' },
+            { icon: <SettingsIcon size={18} color="#6a6a6a" />, label: '设置', path: '/settings' },
           ].map((item, idx, arr) => (
             <div key={item.label}>
               <div
+                onClick={() => item.path && nav(item.path)}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   padding: '14px 16px',
-                  cursor: 'pointer',
+                  cursor: item.path ? 'pointer' : 'default',
                 }}
               >
                 <div
