@@ -69,6 +69,23 @@ export default function CoachProfile() {
     coachCourseNames.includes(r.courseLabel)
   )
 
+  // Rating distribution
+  const ratingDist = [5, 4, 3, 2, 1].map((star) => ({
+    star,
+    count: coachReviews.filter((r) => r.rating === star).length,
+    pct: coachReviews.length > 0
+      ? Math.round((coachReviews.filter((r) => r.rating === star).length / coachReviews.length) * 100)
+      : 0,
+  }))
+
+  // Review state
+  const [reviewFilter, setReviewFilter] = useState<number | null>(null)
+  const [showAllReviews, setShowAllReviews] = useState(false)
+  const filteredReviews = reviewFilter
+    ? coachReviews.filter((r) => r.rating === reviewFilter)
+    : coachReviews
+  const displayedReviews = showAllReviews ? filteredReviews : filteredReviews.slice(0, 3)
+
   const statsItems = [
     { value: `${coach.totalClasses.toLocaleString()}+`, label: '累计课时' },
     { value: coach.totalStudents.toString(), label: '服务学员' },
@@ -535,18 +552,43 @@ export default function CoachProfile() {
         <div style={{ height: 24 }} />
         <SectionHeader
           title={`学员评价 (${coachReviews.length})`}
-          moreText="查看全部"
+          moreText={showAllReviews ? '收起' : '查看全部'}
           icon={<CommentIcon size={16} color="#E3617B" />}
-          onMore={() => {}}
+          onMore={() => setShowAllReviews(!showAllReviews)}
         />
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 12,
-          }}
-        >
-          {coachReviews.map((review) => (
+
+        {/* Rating summary bars */}
+        <div style={{ display: 'flex', gap: 14, marginBottom: 16, padding: '14px 0', borderBottom: '1px solid #f0f0f0' }}>
+          {/* Average score big number */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minWidth: 56 }}>
+            <span style={{ fontSize: 32, fontWeight: 700, color: '#E3617B', lineHeight: 1 }}>{coach.rating.toFixed(1)}</span>
+            <span style={{ fontSize: 11, color: '#6a6a6a', marginTop: 2 }}>{coachReviews.length}条评价</span>
+          </div>
+          {/* Bar chart */}
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 3, justifyContent: 'center' }}>
+            {ratingDist.map((d) => (
+              <div key={d.star} onClick={() => setReviewFilter(reviewFilter === d.star ? null : d.star)}
+                style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', userSelect: 'none' }}>
+                <span style={{ fontSize: 11, color: reviewFilter === d.star ? '#E3617B' : '#6a6a6a', fontWeight: reviewFilter === d.star ? 600 : 500, width: 22, textAlign: 'right' }}>{d.star}星</span>
+                <div style={{ flex: 1, height: 6, borderRadius: 3, background: '#f0f0f0', overflow: 'hidden' }}>
+                  <div style={{ height: '100%', borderRadius: 3, background: reviewFilter === d.star ? '#E3617B' : '#ddd', width: `${d.pct}%`, transition: 'width 0.3s ease, background 0.15s' }} />
+                </div>
+                <span style={{ fontSize: 11, color: reviewFilter === d.star ? '#E3617B' : '#929292', fontWeight: reviewFilter === d.star ? 600 : 500, width: 20 }}>{d.count}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Filter active indicator */}
+        {reviewFilter && (
+          <div style={{ marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ fontSize: 12, color: '#E3617B', fontWeight: 500 }}>筛选：{reviewFilter}星</span>
+            <span onClick={() => setReviewFilter(null)} style={{ fontSize: 11, color: '#6a6a6a', cursor: 'pointer' }}>✕ 清除</span>
+          </div>
+        )}
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {displayedReviews.length > 0 ? displayedReviews.map((review) => (
             <ReviewCard
               key={review.id}
               userName={review.userName}
@@ -558,8 +600,20 @@ export default function CoachProfile() {
               courseLabel={review.courseLabel}
               classCount={review.classCount}
             />
-          ))}
+          )) : (
+            <p style={{ fontSize: 13, color: '#929292', textAlign: 'center', padding: 20 }}>暂无{reviewFilter}星评价</p>
+          )}
         </div>
+
+        {/* Show more / collapse indicator */}
+        {filteredReviews.length > 3 && !reviewFilter && (
+          <div onClick={() => setShowAllReviews(!showAllReviews)} style={{
+            textAlign: 'center', padding: '12px 0', fontSize: 13, fontWeight: 500,
+            color: '#E3617B', cursor: 'pointer',
+          }}>
+            {showAllReviews ? '收起 ▲' : `查看全部 ${filteredReviews.length} 条评价 ▼`}
+          </div>
+        )}
 
         {/* Bottom spacer for fixed CTA */}
         <div style={{ height: 80 }} />
