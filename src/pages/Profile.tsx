@@ -427,7 +427,7 @@ export default function Profile() {
           }}
         >
           {[
-            { icon: <MapPinIcon size={18} color="var(--c-accent)" />, label: '常用地址', path: '/orders' },
+            { icon: <MapPinIcon size={18} color="var(--c-accent)" />, label: '常用地址', path: '/addresses' },
             { icon: <SettingsIcon size={18} color="var(--c-accent)" />, label: '设置', path: '/settings' },
           ].map((item, idx, arr) => (
             <div key={item.label}>
