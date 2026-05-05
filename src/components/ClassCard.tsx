@@ -7,9 +7,11 @@ interface ClassCardProps {
   isHomeService: boolean
   date: string
   time: string
+  cancelDeadline?: string
   status: 'pending' | 'upcoming' | 'confirmed' | 'completed'
   onCheckIn?: () => void
   onViewDetail?: () => void
+  onCancel?: () => void
 }
 
 const statusConfig: Record<string, { color: string; label: string; bg: string }> = {
@@ -104,6 +106,11 @@ const s: Record<string, React.CSSProperties> = {
     background: 'var(--c-accent)',
     color: '#FFFFFF',
   },
+  dangerBtn: {
+    background: '#fff',
+    color: '#c13515',
+    border: '1px solid rgba(193,53,21,0.3)',
+  },
   outlineBtn: {
     background: '#FFFFFF',
     color: 'var(--c-accent)',
@@ -112,15 +119,8 @@ const s: Record<string, React.CSSProperties> = {
 }
 
 const ClassCard: React.FC<ClassCardProps> = ({
-  courseName,
-  coachName,
-  venueName,
-  isHomeService,
-  date,
-  time,
-  status,
-  onCheckIn,
-  onViewDetail,
+  courseName, coachName, venueName, isHomeService,
+  date, time, cancelDeadline, status, onCheckIn, onViewDetail, onCancel,
 }) => {
   const sc = statusConfig[status] || statusConfig.upcoming
   const borderColor = borderColorMap[status] || 'var(--c-accent)'
@@ -137,33 +137,36 @@ const ClassCard: React.FC<ClassCardProps> = ({
         </div>
         <p style={s.coachVenue}>{coachName} · {venueName}</p>
         <p style={s.dateTime}>{date} · {time}</p>
+
+        {/* Cancellation policy */}
+        {cancelDeadline && (status === 'upcoming' || status === 'confirmed') && (
+          <p style={{ fontSize: 11, color: '#16A34A', margin: '4px 0 0', display: 'flex', alignItems: 'center', gap: 3 }}>
+            <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#16A34A', flexShrink: 0 }} />
+            可免费取消 · {cancelDeadline}截止
+          </p>
+        )}
+
         <div style={s.actions}>
           {status === 'completed' ? (
             <>
-              <button style={{ ...s.actionBtn, ...s.outlineBtn }} onClick={onViewDetail}>
-                查看详情
-              </button>
-              <button style={{ ...s.actionBtn, ...s.primaryBtn }} onClick={onCheckIn}>
-                ✎ 去评价
-              </button>
+              <button style={{ ...s.actionBtn, ...s.outlineBtn }} onClick={onViewDetail}>查看详情</button>
+              <button style={{ ...s.actionBtn, ...s.primaryBtn }} onClick={onCheckIn}>✎ 去评价</button>
             </>
           ) : isHomeService ? (
             <>
-              <button style={{ ...s.actionBtn, ...s.outlineBtn }} onClick={onViewDetail}>
-                修改地址
-              </button>
-              <button style={{ ...s.actionBtn, ...s.primaryBtn }} onClick={onCheckIn}>
-                联系教练
-              </button>
+              <button style={{ ...s.actionBtn, ...s.outlineBtn }} onClick={onViewDetail}>修改地址</button>
+              <button style={{ ...s.actionBtn, ...s.primaryBtn }} onClick={onCheckIn}>联系教练</button>
+              {onCancel && (
+                <button style={{ ...s.actionBtn, ...s.dangerBtn }} onClick={onCancel}>取消课程</button>
+              )}
             </>
           ) : (
             <>
-              <button style={{ ...s.actionBtn, ...s.outlineBtn }} onClick={onViewDetail}>
-                查看地址
-              </button>
-              <button style={{ ...s.actionBtn, ...s.primaryBtn }} onClick={onCheckIn}>
-                签到核销
-              </button>
+              <button style={{ ...s.actionBtn, ...s.outlineBtn }} onClick={onViewDetail}>查看地址</button>
+              {onCancel && (
+                <button style={{ ...s.actionBtn, ...s.dangerBtn }} onClick={onCancel}>取消课程</button>
+              )}
+              <button style={{ ...s.actionBtn, ...s.primaryBtn }} onClick={onCheckIn}>签到核销</button>
             </>
           )}
         </div>

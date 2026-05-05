@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react'
 import { Popup, Toast } from 'antd-mobile'
 import ClassCard from '../components/ClassCard'
 import EmptyState from '../components/EmptyState'
-import { scheduleItems, venues } from '../data/mock'
+import { scheduleItems, venues, courses } from '../data/mock'
 import { LocationIcon, BuildingIcon, MapPinIcon, ClockIcon } from '../components/Icons'
 
 const DAY_HEADERS = ['日', '一', '二', '三', '四', '五', '六']
@@ -16,6 +16,7 @@ export default function Schedule() {
   const [addrItem, setAddrItem] = useState<typeof scheduleItems[0] | null>(null)
   const [checkinItem, setCheckinItem] = useState<typeof scheduleItems[0] | null>(null)
   const [isPaying, setIsPaying] = useState(false)
+  const [cancelItem, setCancelItem] = useState<typeof scheduleItems[0] | null>(null)
 
   const upcomingItems = useMemo(
     () => scheduleItems.filter((s) => s.status !== 'completed'),
@@ -140,8 +141,10 @@ export default function Schedule() {
               date={item.date}
               time={item.time}
               status={item.status as 'pending' | 'upcoming' | 'confirmed' | 'completed'}
+              cancelDeadline={courses.find(c => c.title === item.courseName)?.cancelDeadline}
               onCheckIn={item.status === 'completed' ? () => nav(`/review/coach/${item.coachId}`) : () => setCheckinItem(item)}
               onViewDetail={() => setAddrItem(item)}
+              onCancel={item.status !== 'completed' && item.status !== 'pending' ? () => setCancelItem(item) : undefined}
             />
           ))
         ) : tab === 'upcoming' ? (
@@ -195,6 +198,49 @@ export default function Schedule() {
                   <p style={{ marginTop: 8 }}>{addrItem.isHomeService ? '上门服务，无需前往场馆' : '暂无场馆详细信息'}</p>
                 </div>
               )}
+            </div>
+          )
+        })()}
+      </Popup>
+
+      {/* ====== Cancel Popup ====== */}
+      <Popup
+        visible={!!cancelItem}
+        onClose={() => setCancelItem(null)}
+        onMaskClick={() => setCancelItem(null)}
+        bodyStyle={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, background: '#fff' }}
+      >
+        {cancelItem && (() => {
+          const course = courses.find(c => c.title === cancelItem.courseName)
+          return (
+            <div style={{ padding: '24px 16px 30px', textAlign: 'center' }}>
+              <div style={{ fontSize: 18, fontWeight: 600, color: '#222', marginBottom: 4 }}>确认取消课程？</div>
+              <div style={{ fontSize: 14, color: '#6a6a6a', marginBottom: 20 }}>{cancelItem.courseName}</div>
+
+              {/* Policy */}
+              <div style={{
+                padding: '12px 14px', borderRadius: 12, background: '#f0fdf4', border: '1px solid #dcfce7',
+                marginBottom: 16, textAlign: 'left', fontSize: 12, color: '#16A34A',
+              }}>
+                <div style={{ fontWeight: 600, marginBottom: 4 }}>✓ 取消规则</div>
+                {course?.cancelDeadline && <div>· {course.cancelDeadline}前可免费取消，全额退款</div>}
+                <div>· 超过截止时间取消，不退款</div>
+                <div>· 退款将在1-3个工作日原路返回</div>
+              </div>
+
+              <div style={{ display: 'flex', gap: 10 }}>
+                <div onClick={() => setCancelItem(null)} style={{
+                  flex: 1, padding: '14px', borderRadius: 12, textAlign: 'center',
+                  background: '#f7f7f7', color: '#6a6a6a', fontSize: 14, fontWeight: 600, cursor: 'pointer',
+                }}>再想想</div>
+                <div onClick={() => {
+                  setCancelItem(null)
+                  Toast.show({ icon: 'success', content: '课程已取消，退款将原路返回' })
+                }} style={{
+                  flex: 1, padding: '14px', borderRadius: 12, textAlign: 'center',
+                  background: '#c13515', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer',
+                }}>确认取消</div>
+              </div>
             </div>
           )
         })()}
