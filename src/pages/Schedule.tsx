@@ -16,6 +16,7 @@ export default function Schedule() {
   const [tab, setTab] = useState<'upcoming' | 'completed'>('upcoming')
   const [addrItem, setAddrItem] = useState<typeof scheduleItems[0] | null>(null)
   const [checkinItem, setCheckinItem] = useState<typeof scheduleItems[0] | null>(null)
+  const [isPaying, setIsPaying] = useState(false)
 
   const upcomingItems = useMemo(
     () => scheduleItems.filter((s) => s.status !== 'completed'),
@@ -188,36 +189,74 @@ export default function Schedule() {
         })()}
       </Popup>
 
-      {/* ====== Check-in Popup ====== */}
+      {/* ====== Check-in / Payment Popup ====== */}
       <Popup
         visible={!!checkinItem}
-        onClose={() => setCheckinItem(null)}
-        onMaskClick={() => setCheckinItem(null)}
+        onClose={() => { if (!isPaying) setCheckinItem(null) }}
+        onMaskClick={() => { if (!isPaying) setCheckinItem(null) }}
         bodyStyle={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, background: '#fff' }}
       >
         {checkinItem && (
-          <div style={{ padding: '28px 20px', textAlign: 'center' }}>
-            <div style={{ fontSize: 18, fontWeight: 600, color: '#222', marginBottom: 2 }}>签到核销</div>
-            <div style={{ fontSize: 13, color: '#6a6a6a', marginBottom: 16 }}>{checkinItem.courseName}</div>
-            <div style={{
-              width: 160, height: 160, margin: '0 auto 16px', borderRadius: 16,
-              background: '#f7f7f7', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 64,
-            }}>📱</div>
-            <div style={{ fontSize: 12, color: '#6a6a6a', marginBottom: 16 }}>出示此码给场馆工作人员扫码签到</div>
-            <div style={{
-              padding: '10px 14px', borderRadius: 12, background: '#fafafa', border: '1px solid #eee',
-              fontSize: 12, color: '#6a6a6a', textAlign: 'left', marginBottom: 16,
-            }}>
-              <div>📍 {checkinItem.venueName}</div>
-              <div>📅 {checkinItem.date} · {checkinItem.time}</div>
-              <div>👤 {checkinItem.coachName}</div>
+          isPaying ? (
+            /* Processing */
+            <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+              <div style={{
+                width: 56, height: 56, borderRadius: '50%', margin: '0 auto 16px',
+                border: '3px solid #f0f0f0', borderTopColor: '#E3617B',
+                animation: 'spin 0.8s linear infinite',
+              }} />
+              <div style={{ fontSize: 16, fontWeight: 600, color: '#222', marginBottom: 4 }}>支付处理中...</div>
+              <div style={{ fontSize: 13, color: '#6a6a6a' }}>请稍候，正在确认付款</div>
+              <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
             </div>
-            <div onClick={() => { setCheckinItem(null); Toast.show({ icon: 'success', content: '签到成功！' }) }}
-              style={{ padding: '14px', borderRadius: 12, background: '#E3617B', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
-              确认签到
+          ) : checkinItem.status === 'pending' ? (
+            /* Payment step */
+            <div style={{ padding: '24px 16px 30px' }}>
+              <div style={{ textAlign: 'center', marginBottom: 20 }}>
+                <div style={{ fontSize: 11, fontWeight: 600, color: '#D97706', background: '#FFFBEB', display: 'inline-block', padding: '4px 12px', borderRadius: 12, marginBottom: 8 }}>待付款</div>
+                <div style={{ fontSize: 18, fontWeight: 600, color: '#222', marginBottom: 2 }}>完成支付后签到</div>
+                <div style={{ fontSize: 13, color: '#6a6a6a' }}>该课程尚未付款，请先完成支付</div>
+              </div>
+              {/* Order info */}
+              <div style={{ padding: '12px 14px', borderRadius: 12, background: '#fafafa', border: '1px solid #eee', marginBottom: 16 }}>
+                <div style={{ fontSize: 14, fontWeight: 600, color: '#222', marginBottom: 6 }}>{checkinItem.courseName}</div>
+                <div style={{ fontSize: 12, color: '#6a6a6a' }}>{checkinItem.coachName} · {checkinItem.venueName}</div>
+                <div style={{ fontSize: 12, color: '#6a6a6a' }}>{checkinItem.date} · {checkinItem.time}</div>
+              </div>
+              <div style={{ textAlign: 'center', marginBottom: 12 }}>
+                <span style={{ fontSize: 28, fontWeight: 700, color: '#E3617B' }}>¥420</span>
+              </div>
+              <div
+                onClick={() => { setIsPaying(true); setTimeout(() => { setIsPaying(false); setCheckinItem(null); Toast.show({ icon: 'success', content: '支付成功，可签到签到！' }) }, 1500) }}
+                style={{ padding: '14px', borderRadius: 12, background: '#E3617B', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer', textAlign: 'center' }}>
+                立即支付 ¥420
+              </div>
             </div>
-          </div>
+          ) : (
+            /* Check-in step */
+            <div style={{ padding: '28px 20px', textAlign: 'center' }}>
+              <div style={{ fontSize: 18, fontWeight: 600, color: '#222', marginBottom: 2 }}>签到核销</div>
+              <div style={{ fontSize: 13, color: '#6a6a6a', marginBottom: 16 }}>{checkinItem.courseName}</div>
+              <div style={{
+                width: 160, height: 160, margin: '0 auto 16px', borderRadius: 16,
+                background: '#f7f7f7', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 64,
+              }}>📱</div>
+              <div style={{ fontSize: 12, color: '#6a6a6a', marginBottom: 16 }}>出示此码给场馆工作人员扫码签到</div>
+              <div style={{
+                padding: '10px 14px', borderRadius: 12, background: '#fafafa', border: '1px solid #eee',
+                fontSize: 12, color: '#6a6a6a', textAlign: 'left', marginBottom: 16,
+              }}>
+                <div>📍 {checkinItem.venueName}</div>
+                <div>📅 {checkinItem.date} · {checkinItem.time}</div>
+                <div>👤 {checkinItem.coachName}</div>
+              </div>
+              <div onClick={() => { setCheckinItem(null); Toast.show({ icon: 'success', content: '签到成功！' }) }}
+                style={{ padding: '14px', borderRadius: 12, background: '#E3617B', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
+                确认签到
+              </div>
+            </div>
+          )
         )}
       </Popup>
     </div>
