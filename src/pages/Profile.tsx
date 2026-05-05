@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { userProfile } from '../data/mock'
 import {
@@ -19,6 +20,17 @@ import {
 
 export default function Profile() {
   const nav = useNavigate()
+  const [isMale, setIsMale] = useState(() => document.documentElement.getAttribute('data-theme') === 'male')
+
+  const toggleTheme = () => {
+    const next = !isMale
+    setIsMale(next)
+    document.documentElement.setAttribute('data-theme', next ? 'male' : '')
+    localStorage.setItem('fitflow_theme', next ? 'male' : 'female')
+  }
+
+  const accent = isMale ? '#2C8A9E' : '#E3617B'
+  const accentDeep = isMale ? '#1A6B7C' : '#D44A65'
 
   const menuIconStyle = (size: number): React.CSSProperties => ({
     width: size,
@@ -31,7 +43,7 @@ export default function Profile() {
       {/* Header */}
       <div
         style={{
-          background: 'linear-gradient(135deg, #E3617B, #D44A65)',
+          background: `linear-gradient(135deg, ${accent}, ${accentDeep})`,
           padding: '30px 16px 24px',
           position: 'relative',
           display: 'flex',
@@ -98,6 +110,27 @@ export default function Profile() {
           <span style={{ color: 'rgba(255,255,255,0.4)' }}>·</span>
           <span>{userProfile.membership}</span>
         </div>
+
+        {/* Theme toggle */}
+        <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
+          {[
+            { key: 'female', label: '♀ 女性', color: '#E3617B' },
+            { key: 'male', label: '♂ 男性', color: '#2C8A9E' },
+          ].map((t) => {
+            const active = t.key === 'male' ? isMale : !isMale
+            return (
+              <span key={t.key} onClick={() => { if (t.key === 'male' && !isMale) toggleTheme(); if (t.key === 'female' && isMale) toggleTheme() }}
+                style={{
+                  padding: '5px 12px', borderRadius: 16, fontSize: 11, fontWeight: 600,
+                  cursor: 'pointer', userSelect: 'none', transition: 'all 0.15s',
+                  background: active ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.08)',
+                  color: '#fff', border: active ? '1.5px solid rgba(255,255,255,0.5)' : '1.5px solid transparent',
+                }}>
+                {t.label}
+              </span>
+            )
+          })}
+        </div>
       </div>
 
       {/* Stats Cards (floating up) */}
@@ -133,7 +166,7 @@ export default function Profile() {
               style={{
                 fontSize: 20,
                 fontWeight: 600,
-                color: '#E3617B',
+                color: accent,
                 lineHeight: 1.18,
               }}
             >
@@ -196,7 +229,7 @@ export default function Profile() {
               }}
             >
               <span style={{ lineHeight: 1 }}>{item.icon}</span>
-              <span style={{ fontSize: 12, color: '#E3617B' }}>
+              <span style={{ fontSize: 12, color: accent }}>
                 {item.label}
               </span>
             </div>
@@ -263,7 +296,7 @@ export default function Profile() {
                     <span
                       style={{
                         fontSize: 13,
-                        color: item.highlight ? '#E3617B' : '#6a6a6a',
+                        color: item.highlight ? accent : '#6a6a6a',
                         fontWeight: item.highlight ? 500 : 400,
                       }}
                     >
@@ -352,7 +385,7 @@ export default function Profile() {
                     <span
                       style={{
                         fontSize: 13,
-                        color: item.highlight ? '#E3617B' : '#6a6a6a',
+                        color: item.highlight ? accent : '#6a6a6a',
                         fontWeight: item.highlight ? 500 : 400,
                       }}
                     >

@@ -1,7 +1,18 @@
 :root {
-  /* Brand */
+  /* Brand — female (coral) */
   --c-accent: #E3617B;
   --c-accent-deep: #D44A65;
+  --c-accent-soft: rgba(227,97,123,0.08);
+}
+
+/* Male theme — teal */
+:root[data-theme="male"] {
+  --c-accent: #2C8A9E;
+  --c-accent-deep: #1A6B7C;
+  --c-accent-soft: rgba(44,138,158,0.08);
+}
+
+:root {
 
   /* Surface */
   --c-bg: #ffffff;
