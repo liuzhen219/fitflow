@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { useState, useMemo } from 'react'
+import { Popup, Toast } from 'antd-mobile'
 import ClassCard from '../components/ClassCard'
 import EmptyState from '../components/EmptyState'
-import { scheduleItems } from '../data/mock'
+import { scheduleItems, venues } from '../data/mock'
+import { LocationIcon, BuildingIcon, MapPinIcon, ClockIcon } from '../components/Icons'
 
 const DAY_HEADERS = ['日', '一', '二', '三', '四', '五', '六']
 const HIGHLIGHTED_DAYS = [9, 21]
@@ -12,6 +14,8 @@ const MONTH = 5
 export default function Schedule() {
   const nav = useNavigate()
   const [tab, setTab] = useState<'upcoming' | 'completed'>('upcoming')
+  const [addrItem, setAddrItem] = useState<typeof scheduleItems[0] | null>(null)
+  const [checkinItem, setCheckinItem] = useState<typeof scheduleItems[0] | null>(null)
 
   const upcomingItems = useMemo(
     () => scheduleItems.filter((s) => s.status !== 'completed'),
@@ -124,8 +128,8 @@ export default function Schedule() {
               date={item.date}
               time={item.time}
               status={item.status as 'pending' | 'upcoming' | 'confirmed' | 'completed'}
-              onCheckIn={item.status === 'completed' ? () => nav(`/review/coach/${item.coachId}`) : () => {}}
-              onViewDetail={() => nav(`/course/${item.id}`)}
+              onCheckIn={item.status === 'completed' ? () => nav(`/review/coach/${item.coachId}`) : () => setCheckinItem(item)}
+              onViewDetail={() => setAddrItem(item)}
             />
           ))
         ) : tab === 'upcoming' ? (
@@ -140,6 +144,82 @@ export default function Schedule() {
           />
         )}
       </div>
+
+      {/* ====== Address Popup ====== */}
+      <Popup
+        visible={!!addrItem}
+        onClose={() => setAddrItem(null)}
+        onMaskClick={() => setAddrItem(null)}
+        bodyStyle={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, background: '#fff' }}
+      >
+        {addrItem && (() => {
+          const v = venues.find((x) => x.name === addrItem.venueName)
+          return (
+            <div style={{ padding: '20px 16px 30px' }}>
+              <div style={{ fontSize: 18, fontWeight: 600, color: '#222', marginBottom: 4 }}>
+                {addrItem.venueName || '上课地点'}
+              </div>
+              <div style={{ fontSize: 13, color: '#6a6a6a', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 4 }}>
+                <ClockIcon size={13} color="#6a6a6a" /> {addrItem.date} · {addrItem.time}
+              </div>
+              {v ? (
+                <>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '14px', background: '#fafafa', borderRadius: 12, border: '1px solid #eee', marginBottom: 14 }}>
+                    <MapPinIcon size={18} color="#E3617B" />
+                    <div>
+                      <div style={{ fontSize: 14, fontWeight: 600, color: '#222' }}>{v.address}</div>
+                      <div style={{ fontSize: 12, color: '#6a6a6a', marginTop: 4 }}>{v.district} · 距你 {v.distance}</div>
+                      <div style={{ fontSize: 12, color: '#6a6a6a' }}>营业时间：{v.openHours}</div>
+                    </div>
+                  </div>
+                  <div onClick={() => { setAddrItem(null); nav(`/venue/${v.id}`) }}
+                    style={{ textAlign: 'center', padding: '12px', borderRadius: 12, background: '#E3617B', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
+                    <BuildingIcon size={14} color="#fff" /> 进入场馆主页
+                  </div>
+                </>
+              ) : (
+                <div style={{ padding: '30px 0', textAlign: 'center', color: '#6a6a6a', fontSize: 14 }}>
+                  <MapPinIcon size={32} color="#ddd" />
+                  <p style={{ marginTop: 8 }}>{addrItem.isHomeService ? '上门服务，无需前往场馆' : '暂无场馆详细信息'}</p>
+                </div>
+              )}
+            </div>
+          )
+        })()}
+      </Popup>
+
+      {/* ====== Check-in Popup ====== */}
+      <Popup
+        visible={!!checkinItem}
+        onClose={() => setCheckinItem(null)}
+        onMaskClick={() => setCheckinItem(null)}
+        bodyStyle={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, background: '#fff' }}
+      >
+        {checkinItem && (
+          <div style={{ padding: '28px 20px', textAlign: 'center' }}>
+            <div style={{ fontSize: 18, fontWeight: 600, color: '#222', marginBottom: 2 }}>签到核销</div>
+            <div style={{ fontSize: 13, color: '#6a6a6a', marginBottom: 16 }}>{checkinItem.courseName}</div>
+            <div style={{
+              width: 160, height: 160, margin: '0 auto 16px', borderRadius: 16,
+              background: '#f7f7f7', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 64,
+            }}>📱</div>
+            <div style={{ fontSize: 12, color: '#6a6a6a', marginBottom: 16 }}>出示此码给场馆工作人员扫码签到</div>
+            <div style={{
+              padding: '10px 14px', borderRadius: 12, background: '#fafafa', border: '1px solid #eee',
+              fontSize: 12, color: '#6a6a6a', textAlign: 'left', marginBottom: 16,
+            }}>
+              <div>📍 {checkinItem.venueName}</div>
+              <div>📅 {checkinItem.date} · {checkinItem.time}</div>
+              <div>👤 {checkinItem.coachName}</div>
+            </div>
+            <div onClick={() => { setCheckinItem(null); Toast.show({ icon: 'success', content: '签到成功！' }) }}
+              style={{ padding: '14px', borderRadius: 12, background: '#E3617B', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
+              确认签到
+            </div>
+          </div>
+        )}
+      </Popup>
     </div>
   )
 }
