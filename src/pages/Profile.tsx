@@ -57,17 +57,22 @@ export default function Profile() {
         {/* Avatar */}
         <div
           style={{
-            width: 64,
-            height: 64,
-            borderRadius: '50%',
-            background: 'rgba(255,255,255,0.25)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginBottom: 10,
+            width: 64, height: 64, borderRadius: '50%',
+            marginBottom: 10, overflow: 'hidden',
+            border: '2px solid rgba(255,255,255,0.4)',
           }}
         >
-          <UserIcon size={28} color="#fff" />
+          {userProfile.avatar ? (
+            <img src={userProfile.avatar} alt={userProfile.name}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ) : (
+            <div style={{
+              width: '100%', height: '100%', background: 'rgba(255,255,255,0.25)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <UserIcon size={28} color="#fff" />
+            </div>
+          )}
         </div>
         <h2
           style={{

@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import StarRating from '../components/StarRating'
-import { courses } from '../data/mock'
+import { courses, coaches } from '../data/mock'
 import {
   SearchIcon,
   ClockIcon,
@@ -15,6 +15,7 @@ export default function CourseDetail() {
   const { id } = useParams<{ id: string }>()
   const nav = useNavigate()
   const course = courses.find((c) => c.id === Number(id))
+  const coach = coaches.find((c) => c.id === course?.coachId)
 
   if (!course) {
     return (
@@ -64,8 +65,12 @@ export default function CourseDetail() {
 
         {/* Coach Row */}
         <div style={s.coachRow} onClick={() => nav(`/coach/${course.coachId}`)}>
-          <div style={s.coachAvatar}>
-            {course.coachName.charAt(0)}
+          <div style={{ ...s.coachAvatar, overflow: 'hidden' }}>
+            {coach?.avatar ? (
+              <img src={coach.avatar} alt={coach.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            ) : (
+              course.coachName.charAt(0)
+            )}
           </div>
           <div style={s.coachInfo}>
             <p style={s.coachName}>{course.coachName}</p>

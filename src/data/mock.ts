@@ -107,6 +107,7 @@ export const userProfile = {
   name: '李女士',
   phone: '138****6789',
   membership: '普通会员',
+  avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face',
   stats: {
     totalClasses: 38,
     totalMinutes: 1860,
