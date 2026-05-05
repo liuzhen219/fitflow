@@ -1,11 +1,19 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useMemo } from 'react'
+import { Popup, Toast } from 'antd-mobile'
 import StarRating from '../components/StarRating'
 import PriceBreakdown from '../components/PriceBreakdown'
 import { courses, venues } from '../data/mock'
 import {
-  SearchIcon, HomeServiceIcon, LocationIcon, ClockIcon,
+  SearchIcon, HomeServiceIcon, LocationIcon, ClockIcon, CheckIcon,
 } from '../components/Icons'
+
+const paymentMethods = [
+  { key: 'wechat', label: '微信支付', icon: '💚', tag: '推荐' },
+  { key: 'alipay', label: '支付宝', icon: '💙' },
+  { key: 'balance', label: '平台余额', icon: '💰', extra: '余额 ¥0' },
+  { key: 'card', label: '银行卡', icon: '💳' },
+]
 
 // Generate next N days from today
 function getNextDays(count: number) {
@@ -38,8 +46,11 @@ export default function BookingConfirm() {
 
   const days = useMemo(() => getNextDays(14), [])
 
-  const [selectedDay, setSelectedDay] = useState(1) // default to tomorrow
+  const [selectedDay, setSelectedDay] = useState(1)
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
+  const [showPaySheet, setShowPaySheet] = useState(false)
+  const [payMethod, setPayMethod] = useState('wechat')
+  const [isPaying, setIsPaying] = useState(false)
 
   if (!course) {
     return (
@@ -181,11 +192,96 @@ export default function BookingConfirm() {
         </div>
         <button
           style={{ ...s.payBtn, opacity: selectedTime ? 1 : 0.4 }}
-          onClick={() => selectedTime && nav(`/payment-success/${course.id}`)}
+          onClick={() => selectedTime && setShowPaySheet(true)}
           disabled={!selectedTime}
         >
           确认支付 ¥{course.price}
         </button>
+
+        {/* ====== Payment Sheet ====== */}
+        <Popup
+          visible={showPaySheet}
+          onClose={() => { if (!isPaying) setShowPaySheet(false) }}
+          onMaskClick={() => { if (!isPaying) setShowPaySheet(false) }}
+          bodyStyle={{
+            borderTopLeftRadius: 20, borderTopRightRadius: 20,
+            background: '#fff', minHeight: '55vh',
+          }}
+        >
+          {isPaying ? (
+            /* Processing */
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '55vh', gap: 16 }}>
+              <div style={{
+                width: 64, height: 64, borderRadius: '50%',
+                border: '3px solid #f0f0f0', borderTopColor: '#E3617B',
+                animation: 'spin 0.8s linear infinite',
+              }} />
+              <p style={{ fontSize: 16, fontWeight: 600, color: '#222', margin: 0 }}>支付处理中...</p>
+              <p style={{ fontSize: 13, color: '#6a6a6a', margin: 0 }}>请稍候，正在确认你的预约</p>
+              <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+            </div>
+          ) : (
+            <>
+              {/* Sheet Header */}
+              <div style={{ padding: '20px 16px 12px', borderBottom: '1px solid #f0f0f0', textAlign: 'center' }}>
+                <div style={{ fontSize: 18, fontWeight: 600, color: '#222', marginBottom: 2 }}>确认支付</div>
+                <div style={{ fontSize: 28, fontWeight: 700, color: '#E3617B' }}>
+                  <span className="num">¥{course.price}</span>
+                </div>
+              </div>
+
+              {/* Order Brief */}
+              <div style={{ padding: '14px 16px', borderBottom: '1px solid #f0f0f0' }}>
+                <div style={{ fontSize: 13, fontWeight: 500, color: '#222', marginBottom: 4 }}>{course.title}</div>
+                <div style={{ fontSize: 12, color: '#6a6a6a' }}>
+                  {course.coachName} · {selectedTime && `${days[selectedDay].label}${days[selectedDay].weekday} ${selectedTime}`} · {course.duration}分钟
+                </div>
+              </div>
+
+              {/* Payment Methods */}
+              <div style={{ padding: '12px 16px' }}>
+                <div style={{ fontSize: 13, fontWeight: 600, color: '#6a6a6a', marginBottom: 10 }}>选择支付方式</div>
+                {paymentMethods.map((m) => (
+                  <div key={m.key}
+                    onClick={() => setPayMethod(m.key)}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 10,
+                      padding: '14px 12px', borderRadius: 12, marginBottom: 6, cursor: 'pointer',
+                      background: payMethod === m.key ? 'rgba(227,97,123,0.04)' : '#fafafa',
+                      border: payMethod === m.key ? '1.5px solid #E3617B' : '1px solid #eee',
+                    }}>
+                    <span style={{ fontSize: 22 }}>{m.icon}</span>
+                    <span style={{ flex: 1, fontSize: 14, fontWeight: 500, color: '#222' }}>{m.label}</span>
+                    {m.tag && <span style={{ fontSize: 10, fontWeight: 600, color: '#E3617B', background: 'rgba(227,97,123,0.08)', padding: '2px 8px', borderRadius: 8 }}>{m.tag}</span>}
+                    {m.extra && <span style={{ fontSize: 11, color: '#929292' }}>{m.extra}</span>}
+                    {payMethod === m.key && <CheckIcon size={16} color="#E3617B" />}
+                  </div>
+                ))}
+              </div>
+
+              {/* Pay Button */}
+              <div style={{ padding: '12px 16px 20px' }}>
+                <div
+                  onClick={() => {
+                    setIsPaying(true)
+                    setTimeout(() => {
+                      setShowPaySheet(false)
+                      setIsPaying(false)
+                      Toast.show({ icon: 'success', content: '支付成功' })
+                      nav(`/payment-success/${course.id}`)
+                    }, 1500)
+                  }}
+                  style={{
+                    width: '100%', padding: '15px 0', borderRadius: 12,
+                    background: '#E3617B', color: '#fff', textAlign: 'center',
+                    fontSize: 16, fontWeight: 600, cursor: 'pointer',
+                  }}>
+                  立即支付 ¥{course.price}
+                </div>
+              </div>
+            </>
+          )}
+        </Popup>
       </div>
     </div>
   )
