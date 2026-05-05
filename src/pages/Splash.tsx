@@ -6,7 +6,22 @@ export default function Splash() {
   return (
     <div style={s.page}>
       {/* Background image layer */}
-      <div style={s.bgImage} />
+      <img
+        src="https://picsum.photos/seed/Splash-0/800/1200"
+        alt=""
+        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          opacity: 0.08,
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
+      />
       {/* Content */}
       <div style={s.content}>
         {/* Logo */}
@@ -100,20 +115,6 @@ const s: Record<string, React.CSSProperties> = {
     background: '#fff',
     position: 'relative',
     overflow: 'hidden',
-  },
-  bgImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundImage:
-      'url(https://picsum.photos/seed/Splash-0/800/1200',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    opacity: 0.08,
-    zIndex: 0,
   },
   content: {
     position: 'relative',

@@ -219,8 +219,18 @@ export default function Search() {
                 >
                   <div style={{
                     width: 48, height: 48, borderRadius: '50%', flexShrink: 0,
-                    background: c.avatar ? `url(${c.avatar}) center/cover no-repeat` : '#f5e0d8',
-                  }} />
+                    position: 'relative', overflow: 'hidden',
+                    background: '#f5e0d8',
+                  }}>
+                    {c.avatar && (
+                      <img
+                        src={c.avatar}
+                        alt=""
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    )}
+                  </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 15, fontWeight: 600, color: '#222' }}>{c.name}</div>
                     <div style={{ fontSize: 12, color: '#6a6a6a', marginTop: 2 }}>
@@ -257,11 +267,18 @@ export default function Search() {
                 >
                   <div style={{
                     width: 48, height: 48, borderRadius: 10, flexShrink: 0,
-                    background: c.thumbnail
-                      ? `url(${c.thumbnail}) center/cover no-repeat`
-                      : c.imageGradient,
+                    position: 'relative', overflow: 'hidden',
+                    background: c.imageGradient,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
+                    {c.thumbnail && (
+                      <img
+                        src={c.thumbnail}
+                        alt=""
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    )}
                     {c.isHomeService && !c.thumbnail && <HomeServiceIcon size={20} color="#fff" />}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
@@ -297,10 +314,18 @@ export default function Search() {
                 >
                   <div style={{
                     width: 48, height: 48, borderRadius: 10, flexShrink: 0,
-                    background: v.heroImage
-                      ? `url(${v.heroImage}) center/cover no-repeat`
-                      : 'linear-gradient(135deg, #f5e0d8, #e8d4c8)',
-                  }} />
+                    position: 'relative', overflow: 'hidden',
+                    background: 'linear-gradient(135deg, #f5e0d8, #e8d4c8)',
+                  }}>
+                    {v.heroImage && (
+                      <img
+                        src={v.heroImage}
+                        alt=""
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    )}
+                  </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 15, fontWeight: 600, color: '#222', display: 'flex', alignItems: 'center', gap: 4 }}>
                       {v.name}

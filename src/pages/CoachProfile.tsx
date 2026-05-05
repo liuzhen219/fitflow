@@ -83,11 +83,18 @@ export default function CoachProfile() {
         style={{
           height: 280,
           position: 'relative',
-          background: coach.heroImage
-            ? `url(${coach.heroImage}) center/cover no-repeat`
-            : 'linear-gradient(135deg, #E3617B, #D44A65)',
+          overflow: 'hidden',
+          background: 'linear-gradient(135deg, #E3617B, #D44A65)',
         }}
       >
+        {coach.heroImage && (
+          <img
+            src={coach.heroImage}
+            alt=""
+            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        )}
         {/* NavBar overlay */}
         <div
           style={{
@@ -490,11 +497,18 @@ export default function CoachProfile() {
                   {/* Venue thumbnail */}
                   <div style={{
                     width: '100%', height: 90,
-                    background: venue.heroImage
-                      ? `url(${venue.heroImage}) center/cover no-repeat`
-                      : 'linear-gradient(135deg, #f5e0d8, #e8d4c8)',
+                    position: 'relative', overflow: 'hidden',
+                    background: 'linear-gradient(135deg, #f5e0d8, #e8d4c8)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
+                    {venue.heroImage && (
+                      <img
+                        src={venue.heroImage}
+                        alt=""
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    )}
                     {!venue.heroImage && <BuildingIcon size={28} color="#fff" />}
                   </div>
                   {/* Venue info */}
@@ -624,10 +638,16 @@ export default function CoachProfile() {
             <div style={{
               width: '100%', maxWidth: 340, height: 220,
               borderRadius: 16, position: 'relative', overflow: 'hidden',
-              background: coach.heroImage
-                ? `url(${coach.heroImage}) center/cover no-repeat`
-                : 'linear-gradient(135deg, #E3617B, #D44A65)',
+              background: 'linear-gradient(135deg, #E3617B, #D44A65)',
             }}>
+              {coach.heroImage && (
+                <img
+                  src={coach.heroImage}
+                  alt=""
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              )}
               {/* Dark overlay */}
               <div style={{
                 position: 'absolute', inset: 0,
@@ -673,10 +693,18 @@ export default function CoachProfile() {
                     borderRadius: 10,
                     overflow: 'hidden',
                     cursor: 'pointer',
-                    background: `url(${photo}) center/cover no-repeat`,
+                    position: 'relative',
+                    background: 'linear-gradient(135deg, #f5e0d8, #e8d4c8)',
                     ...(i === 0 ? { gridColumn: 'span 2', gridRow: 'span 2', aspectRatio: 'auto' } : {}),
                   }}
-                />
+                >
+                  <img
+                    src={photo}
+                    alt=""
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                </div>
               ))}
             </div>
             <p style={{

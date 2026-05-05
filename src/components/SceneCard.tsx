@@ -25,11 +25,16 @@ const SceneCard: React.FC<SceneCardProps> = ({
     {/* Background image with gradient overlay */}
     {imageUrl && (
       <>
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: `url(${imageUrl}) center/cover no-repeat`,
-          transition: 'transform 0.4s ease',
-        }} />
+        <img
+          src={imageUrl}
+          alt=""
+          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%', objectFit: 'cover',
+            transition: 'transform 0.4s ease',
+          }}
+        />
         <div style={{
           position: 'absolute', inset: 0,
           background: 'linear-gradient(135deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 100%)',

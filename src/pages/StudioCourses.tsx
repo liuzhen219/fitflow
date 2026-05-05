@@ -146,11 +146,18 @@ export default function StudioCourses() {
                   {/* Thumbnail */}
                   <div style={{
                     width: 56, height: 56, borderRadius: 12, flexShrink: 0,
-                    background: venue?.heroImage
-                      ? `url(${venue.heroImage}) center/cover no-repeat`
-                      : 'linear-gradient(135deg, #f5e0d8, #e8d4c8)',
+                    position: 'relative', overflow: 'hidden',
+                    background: 'linear-gradient(135deg, #f5e0d8, #e8d4c8)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
+                    {venue?.heroImage && (
+                      <img
+                        src={venue.heroImage}
+                        alt=""
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+                        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                      />
+                    )}
                     {!venue?.heroImage && <BuildingIcon size={22} color="#fff" />}
                   </div>
 
