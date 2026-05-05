@@ -35,13 +35,13 @@ export default function CourseDetail() {
       {/* Hero — thumbnail with gradient fallback */}
       <div
         style={{
-          height: 180,
-          position: 'relative',
-          background: course.thumbnail
-            ? `url(${course.thumbnail}) center/cover no-repeat, ${course.imageGradient}`
-            : course.imageGradient,
+          height: 180, position: 'relative', overflow: 'hidden',
+          background: course.imageGradient,
         }}
       >
+        {course.thumbnail && (
+          <img src={course.thumbnail} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+        )}
         {/* NavBar */}
         <div style={s.navBar}>
           <div style={s.navBack} onClick={() => nav(-1)}>

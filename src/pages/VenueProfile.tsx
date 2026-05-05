@@ -37,13 +37,13 @@ export default function VenueProfile() {
       {/* Hero — image with gradient fallback */}
       <div
         style={{
-          height: 200,
-          position: 'relative',
-          background: venue.heroImage
-            ? `url(${venue.heroImage}) center/cover no-repeat`
-            : 'linear-gradient(135deg, #E3617B, #444)',
+          height: 200, position: 'relative', overflow: 'hidden',
+          background: 'linear-gradient(135deg, #E3617B, #444)',
         }}
       >
+        {venue.heroImage && (
+          <img src={venue.heroImage} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+        )}
         {/* NavBar */}
         <div style={s.navBar}>
           <div style={s.navBack} onClick={() => nav(-1)}>

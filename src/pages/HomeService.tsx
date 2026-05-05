@@ -42,13 +42,19 @@ export default function HomeService() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff', paddingBottom: 32 }}>
-      {/* Page hero */}
+      {/* Page hero — image with gradient fallback */}
       <div style={{
         height: 160, margin: '0 16px', borderRadius: 16, overflow: 'hidden',
         position: 'relative', display: 'flex', flexDirection: 'column',
         justifyContent: 'flex-end', padding: '20px',
-        background: 'url(https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=300&fit=crop) center/cover no-repeat, linear-gradient(135deg, #222, #444)',
+        background: 'linear-gradient(135deg, #222, #444)',
       }}>
+        {/* Hero image */}
+        <img
+          src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=300&fit=crop"
+          alt=""
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+        />
         {/* Overlay */}
         <div style={{
           position: 'absolute', inset: 0,
