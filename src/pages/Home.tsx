@@ -267,6 +267,7 @@ export default function Home() {
                 key={c.id}
                 title={c.title}
                 coachName={c.coachName}
+              coachRating={c.coachRating}
                 venueName={c.venueName}
                 distance={c.distance}
                 duration={c.duration}

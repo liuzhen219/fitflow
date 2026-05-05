@@ -1,9 +1,10 @@
 import React from 'react'
-import { LocationIcon, ClockIcon, HomeServiceIcon, DumbbellIcon } from './Icons'
+import { LocationIcon, ClockIcon, HomeServiceIcon, DumbbellIcon, StarFilledIcon } from './Icons'
 
 interface CourseCardProps {
   title: string
   coachName: string
+  coachRating?: number
   venueName: string
   distance: string
   duration: number
@@ -18,6 +19,7 @@ interface CourseCardProps {
 const CourseCard: React.FC<CourseCardProps> = ({
   title,
   coachName,
+  coachRating,
   venueName,
   distance,
   duration,
@@ -104,6 +106,11 @@ const CourseCard: React.FC<CourseCardProps> = ({
             }}
           >
             {coachName}
+            {coachRating !== undefined && (
+              <span style={{ color: '#E3617B', fontWeight: 600, marginLeft: 2 }}>
+                <StarFilledIcon size={11} color="#E3617B" /> {coachRating.toFixed(1)}
+              </span>
+            )}
             {venueName ? ` · ${venueName}` : ''}
           </div>
           <div

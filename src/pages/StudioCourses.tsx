@@ -212,6 +212,7 @@ export default function StudioCourses() {
                       key={course.id}
                       title={course.title}
                       coachName={course.coachName}
+              coachRating={course.coachRating}
                       venueName={course.venueName}
                       distance={course.distance}
                       duration={course.duration}
