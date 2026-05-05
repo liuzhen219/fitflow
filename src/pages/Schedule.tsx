@@ -7,7 +7,6 @@ import { scheduleItems, venues } from '../data/mock'
 import { LocationIcon, BuildingIcon, MapPinIcon, ClockIcon } from '../components/Icons'
 
 const DAY_HEADERS = ['日', '一', '二', '三', '四', '五', '六']
-const HIGHLIGHTED_DAYS = [9, 21]
 const YEAR = 2026
 const MONTH = 5
 
@@ -26,6 +25,18 @@ export default function Schedule() {
     () => scheduleItems.filter((s) => s.status === 'completed'),
     [],
   )
+
+  // Dynamically compute highlighted days from schedule data
+  const highlightedDays = useMemo(() => {
+    const days = new Set<number>()
+    upcomingItems.forEach((s) => {
+      const d = new Date(s.date)
+      if (d.getFullYear() === YEAR && d.getMonth() + 1 === MONTH) {
+        days.add(d.getDate())
+      }
+    })
+    return days
+  }, [upcomingItems])
 
   // Build calendar grid for May 2026
   const calendarData = useMemo(() => {
@@ -77,7 +88,7 @@ export default function Schedule() {
             {week.map((d, di) => (
               <div key={di} style={s.calendarCell}>
                 {d !== null &&
-                  (HIGHLIGHTED_DAYS.includes(d) ? (
+                  (highlightedDays.has(d) ? (
                     <span style={s.highlightedDay}>{d}</span>
                   ) : (
                     <span style={s.normalDay}>{d}</span>
@@ -90,7 +101,7 @@ export default function Schedule() {
         {/* Legend */}
         <div style={s.legend}>
           <div style={s.legendDot} />
-          <span style={s.legendText}>有课 · 2节待上</span>
+          <span style={s.legendText}>有课 · {upcomingItems.length}节待上</span>
         </div>
       </div>
 
