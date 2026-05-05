@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import EmptyState from '../components/EmptyState'
 import { scheduleItems } from '../data/mock'
 import { CalendarIcon, ClockIcon, OrdersIcon, FireIcon } from '../components/Icons'
@@ -22,9 +22,19 @@ const statusDisplay: Record<string, { label: string; color: string }> = {
   cancelled: { label: '已退款', color: '#6a6a6a' },
 }
 
+function getInitialFilter(): string {
+  const hash = window.location.hash
+  const match = hash.match(/[?&]status=([^&]+)/)
+  if (match) {
+    const s = decodeURIComponent(match[1])
+    if (statusFilters.includes(s)) return s
+  }
+  return '全部'
+}
+
 export default function OrderList() {
   const nav = useNavigate()
-  const [activeFilter, setActiveFilter] = useState('全部')
+  const [activeFilter, setActiveFilter] = useState(getInitialFilter)
 
   const allowedStatuses = statusMap[activeFilter] || []
   const filteredItems = allowedStatuses.length === 0

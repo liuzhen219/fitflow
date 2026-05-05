@@ -212,14 +212,14 @@ export default function Profile() {
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           {[
-            { icon: <WalletIcon size={24} color="var(--c-accent)" />, label: '待付款' },
-            { icon: <CalendarIcon size={24} color="var(--c-accent)" />, label: '待上课' },
-            { icon: <CheckIcon size={24} color="var(--c-accent)" />, label: '已完成' },
-            { icon: <RefreshIcon size={24} color="var(--c-accent)" />, label: '退款' },
+            { icon: <WalletIcon size={24} color="var(--c-accent)" />, label: '待付款', path: '/orders?status=待付款' },
+            { icon: <CalendarIcon size={24} color="var(--c-accent)" />, label: '待上课', path: '/orders?status=待上课' },
+            { icon: <CheckIcon size={24} color="var(--c-accent)" />, label: '已完成', path: '/orders?status=已完成' },
+            { icon: <RefreshIcon size={24} color="var(--c-accent)" />, label: '退款', path: '/orders?status=退款' },
           ].map((item) => (
             <div
               key={item.label}
-              onClick={() => nav('/orders')}
+              onClick={() => nav(item.path)}
               style={{
                 display: 'flex',
                 flexDirection: 'column',
