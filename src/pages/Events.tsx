@@ -36,12 +36,13 @@ export default function Events() {
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 100%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 25%, transparent 70%, rgba(0,0,0,0.5) 100%)',
         }} />
-        <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(255,255,255,0.25)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, color: '#fff',
-            cursor: 'pointer', fontWeight: 700 }} onClick={() => nav(-1)}>←</div>
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'rgba(0,0,0,0.35)',
+            backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 18, color: '#fff', cursor: 'pointer', fontWeight: 500, lineHeight: 1,
+          }} onClick={() => nav(-1)}>‹</div>
         </div>
         <div style={{ position: 'relative', zIndex: 1 }}>
           <h1 style={{ fontSize: 22, fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.18 }}>线下活动</h1>
