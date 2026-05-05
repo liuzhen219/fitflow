@@ -68,7 +68,7 @@ export default function StudioCourses() {
       }}>
         {/* Hero image */}
         <img
-          src="https://images.unsplash.com/photo-1599901868904-6f95f09e0a1c?w=800&h=300&fit=crop"
+          src="https://picsum.photos/seed/StudioCourses-0/800/300"
           alt=""
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}

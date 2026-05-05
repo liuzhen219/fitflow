@@ -108,7 +108,7 @@ const s: Record<string, React.CSSProperties> = {
     right: 0,
     bottom: 0,
     backgroundImage:
-      'url(https://images.unsplash.com/photo-1545389336-cf090694435e?w=800&h=1200&fit=crop)',
+      'url(https://picsum.photos/seed/Splash-0/800/1200',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',

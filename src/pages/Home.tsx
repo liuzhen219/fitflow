@@ -108,7 +108,7 @@ export default function Home() {
           subtitle="到店体验 · 专业器械"
           count="6家场馆可选"
           gradient="linear-gradient(145deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2))"
-          imageUrl="https://images.unsplash.com/photo-1599901868904-6f95f09e0a1c?w=600&h=400&fit=crop"
+          imageUrl="https://picsum.photos/seed/Home-0/600/400"
           onClick={() => nav('/studio')}
         />
         <SceneCard
@@ -117,7 +117,7 @@ export default function Home() {
           subtitle="在家练 · 专属指导"
           count="8位教练可约"
           gradient="linear-gradient(145deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2))"
-          imageUrl="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop"
+          imageUrl="https://picsum.photos/seed/Home-1/600/400"
           onClick={() => nav('/homeservice')}
         />
       </div>

@@ -25,12 +25,12 @@ import {
 
 // Sample teaching photos for the gallery
 const galleryPhotos = [
-  'https://images.unsplash.com/photo-1518611012118-6960729ce99a?w=600&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1575057913256-f0c15f37d64e?w=600&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&h=600&fit=crop',
+  'https://picsum.photos/seed/CoachProfile-0/600/600',
+  'https://picsum.photos/seed/CoachProfile-1/600/600',
+  'https://picsum.photos/seed/CoachProfile-2/600/600',
+  'https://picsum.photos/seed/CoachProfile-3/600/600',
+  'https://picsum.photos/seed/CoachProfile-4/600/600',
+  'https://picsum.photos/seed/CoachProfile-5/600/600',
 ]
 
 export default function CoachProfile() {

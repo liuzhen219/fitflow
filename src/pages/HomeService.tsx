@@ -51,7 +51,7 @@ export default function HomeService() {
       }}>
         {/* Hero image */}
         <img
-          src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=300&fit=crop"
+          src="https://picsum.photos/seed/HomeService-0/800/300"
           alt=""
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
