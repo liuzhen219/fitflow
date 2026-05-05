@@ -103,19 +103,21 @@ export default function Home() {
       {/* Scene Cards */}
       <div style={{ padding: '0 16px 16px', display: 'flex', gap: 12 }}>
         <SceneCard
-          icon={<BuildingIcon size={32} color="#fff" />}
+          icon={<BuildingIcon size={28} color="#fff" />}
           title="场馆课程"
           subtitle="到店体验 · 专业器械"
-          count="32家场馆可选"
-          gradient="linear-gradient(145deg, #E3617B, #D44A65)"
+          count="6家场馆可选"
+          gradient="linear-gradient(145deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2))"
+          imageUrl="https://images.unsplash.com/photo-1599901868904-6f95f09e0a1c?w=600&h=400&fit=crop"
           onClick={() => nav('/studio')}
         />
         <SceneCard
-          icon={<HomeServiceIcon size={32} color="#fff" />}
+          icon={<HomeServiceIcon size={28} color="#fff" />}
           title="上门私教"
           subtitle="在家练 · 专属指导"
-          count="48位教练可约"
-          gradient="linear-gradient(145deg, #222, #444)"
+          count="8位教练可约"
+          gradient="linear-gradient(145deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2))"
+          imageUrl="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop"
           onClick={() => nav('/homeservice')}
         />
       </div>
