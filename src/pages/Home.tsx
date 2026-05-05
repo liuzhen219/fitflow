@@ -247,7 +247,7 @@ export default function Home() {
           <SectionHeader
             title="精选场馆"
             icon={<BuildingIcon size={16} color="#E3617B" />}
-            onMore={() => nav('/studio')}
+            onMore={() => nav('/venues')}
           />
         </div>
         <div style={{ display: 'flex', gap: 16, overflowX: 'auto', padding: '0 16px' }}>
