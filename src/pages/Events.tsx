@@ -38,12 +38,14 @@ export default function Events() {
           position: 'absolute', inset: 0,
           background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 25%, transparent 70%, rgba(0,0,0,0.5) 100%)',
         }} />
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'rgba(0,0,0,0.35)',
-            backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 20, color: '#fff', cursor: 'pointer', fontWeight: 400, lineHeight: '34px', flexShrink: 0,
-          }} onClick={() => nav(-1)}>‹</div>
-        </div>
+        {/* Back button — absolute at top */}
+        <div onClick={() => nav(-1)} style={{
+          position: 'absolute', top: 14, left: 16, zIndex: 2,
+          width: 34, height: 34, borderRadius: '50%', background: 'rgba(0,0,0,0.35)',
+          backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 20, color: '#fff', cursor: 'pointer', fontWeight: 400, lineHeight: '34px', flexShrink: 0,
+        }}>‹</div>
+        {/* Title */}
         <div style={{ position: 'relative', zIndex: 1 }}>
           <h1 style={{ fontSize: 22, fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.18 }}>线下活动</h1>
           <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', margin: '4px 0 0' }}>

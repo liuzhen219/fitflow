@@ -35,15 +35,16 @@ export default function VenueProfile() {
   const venueCourseNames = venueCourses.map((c) => c.title)
   const venueReviews = reviews.filter((r) => venueCourseNames.includes(r.courseLabel))
 
-  // Gallery photos: heroImage + 3 extras
+  // Gallery: video + photos
   const gallery = [
-    venue.heroImage,
-    `https://picsum.photos/seed/venue-${venue.id}-1/400/300`,
-    `https://picsum.photos/seed/venue-${venue.id}-2/400/300`,
-    `https://picsum.photos/seed/venue-${venue.id}-3/400/300`,
+    { type: 'video' as const, src: 'https://www.w3schools.com/html/mov_bbb.mp4', poster: venue.heroImage },
+    { type: 'image' as const, src: venue.heroImage },
+    { type: 'image' as const, src: `https://picsum.photos/seed/venue-${venue.id}-1/400/300` },
+    { type: 'image' as const, src: `https://picsum.photos/seed/venue-${venue.id}-2/400/300` },
+    { type: 'image' as const, src: `https://picsum.photos/seed/venue-${venue.id}-3/400/300` },
   ]
 
-  // Photo viewer state
+  // Media viewer state
   const [viewerVisible, setViewerVisible] = useState(false)
   const [viewerIndex, setViewerIndex] = useState(0)
 
@@ -51,7 +52,7 @@ export default function VenueProfile() {
     <div style={s.page}>
       {/* ====== Hero ====== */}
       <div style={s.hero}>
-        <img src={venue.heroImage || gallery[1]} alt=""
+        <img src={venue.heroImage || gallery[1].src} alt=""
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
           style={s.heroImg} />
         <div style={s.heroOverlay} />
@@ -104,12 +105,36 @@ export default function VenueProfile() {
       <div style={s.section}>
         <SectionHeader title="场馆实拍" icon={<PhotoIcon size={16} color="#E3617B" />} />
         <div style={s.gallery}>
-          {gallery.map((img, i) => (
-            <div key={i} style={{ ...s.galleryItem, cursor: 'pointer' }}
+          {gallery.map((item, i) => (
+            <div key={i} style={{ ...s.galleryItem, cursor: 'pointer', position: 'relative' }}
               onClick={() => { setViewerIndex(i); setViewerVisible(true) }}>
-              <img src={img} alt={`${venue.name} ${i + 1}`}
+              <img src={item.type === 'video' ? item.poster : item.src}
+                alt={`${venue.name} ${i + 1}`}
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {item.type === 'video' && (
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  background: 'rgba(0,0,0,0.2)',
+                }}>
+                  <div style={{
+                    width: 40, height: 40, borderRadius: '50%',
+                    background: 'rgba(255,255,255,0.9)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    <span style={{ color: '#E3617B', fontSize: 16, marginLeft: 2 }}>▶</span>
+                  </div>
+                </div>
+              )}
+              <span style={{
+                position: 'absolute', bottom: 6, right: 6,
+                padding: '2px 6px', borderRadius: 4,
+                background: 'rgba(0,0,0,0.5)', color: '#fff',
+                fontSize: 10, fontWeight: 500,
+              }}>
+                {item.type === 'video' ? '视频' : ''}
+              </span>
             </div>
           ))}
         </div>
@@ -260,7 +285,9 @@ export default function VenueProfile() {
           <div style={{
             position: 'absolute', top: 20, left: '50%', transform: 'translateX(-50%)',
             zIndex: 10, color: '#fff', fontSize: 13, fontWeight: 500,
-          }}>{viewerIndex + 1} / {gallery.length}</div>
+          }}>
+            {gallery[viewerIndex].type === 'video' ? '视频' : `${viewerIndex + 1} / ${gallery.length - 1}`}
+          </div>
 
           {/* Prev */}
           {viewerIndex > 0 && (
@@ -273,10 +300,16 @@ export default function VenueProfile() {
             }}>‹</div>
           )}
 
-          {/* Image */}
-          <img src={gallery[viewerIndex]} alt=""
-            style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain' }}
-            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+          {/* Video or Image */}
+          {gallery[viewerIndex].type === 'video' ? (
+            <video src={gallery[viewerIndex].src} controls autoPlay
+              poster={gallery[viewerIndex].poster}
+              style={{ maxWidth: '100%', maxHeight: '80vh', borderRadius: 8 }} />
+          ) : (
+            <img src={gallery[viewerIndex].src} alt=""
+              style={{ maxWidth: '100%', maxHeight: '90vh', objectFit: 'contain' }}
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+          )}
 
           {/* Next */}
           {viewerIndex < gallery.length - 1 && (
