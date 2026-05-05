@@ -6,7 +6,8 @@ import CoachCard from '../components/CoachCard'
 import CourseCard from '../components/CourseCard'
 import SectionHeader from '../components/SectionHeader'
 import EventCard from '../components/EventCard'
-import { coaches, courses, events, notifications } from '../data/mock'
+import VenueCard from '../components/VenueCard'
+import { coaches, courses, events, notifications, venues } from '../data/mock'
 import {
   LocationIcon, SearchIcon, BuildingIcon, HomeServiceIcon,
   StarFilledIcon, SparkleIcon, FireIcon, CheckIcon,
@@ -170,6 +171,33 @@ export default function Home() {
             </span>
           )
         })}
+      </div>
+
+      {/* Featured Venues */}
+      <div style={{ padding: '0 0 24px' }}>
+        <div style={{ padding: '0 16px' }}>
+          <SectionHeader
+            title="精选场馆"
+            icon={<BuildingIcon size={16} color="#E3617B" />}
+            onMore={() => nav('/studio')}
+          />
+        </div>
+        <div style={{ display: 'flex', gap: 16, overflowX: 'auto', padding: '0 16px' }}>
+          {venues.map((v) => (
+            <VenueCard
+              key={v.id}
+              name={v.name}
+              district={v.district}
+              distance={v.distance}
+              rating={v.rating}
+              reviewCount={v.reviewCount}
+              imageUrl={v.heroImage}
+              facilities={v.facilities}
+              verified={v.verified}
+              onClick={() => nav(`/venue/${v.id}`)}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Offline Events */}
