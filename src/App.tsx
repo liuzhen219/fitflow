@@ -34,11 +34,11 @@ import Notifications from './pages/Notifications'
 import Venues from './pages/Venues'
 
 const tabs = [
-  { key: '/home', title: '首页', icon: (active: boolean) => <AppOutline fontSize={22} color={active ? '#E3617B' : '#6a6a6a'} /> },
-  { key: '/studio', title: '场馆课程', icon: (active: boolean) => <BuildingIcon size={22} color={active ? '#E3617B' : '#6a6a6a'} /> },
-  { key: '/homeservice', title: '上门服务', icon: (active: boolean) => <HomeServiceIcon size={22} color={active ? '#E3617B' : '#6a6a6a'} /> },
-  { key: '/schedule', title: '约课', icon: (active: boolean) => <CalendarIcon size={22} color={active ? '#E3617B' : '#6a6a6a'} /> },
-  { key: '/profile', title: '我的', icon: (active: boolean) => <UserIcon size={22} color={active ? '#E3617B' : '#6a6a6a'} /> },
+  { key: '/home', title: '首页', icon: (active: boolean) => <AppOutline fontSize={22} color={active ? 'var(--c-accent)' : '#6a6a6a'} /> },
+  { key: '/studio', title: '场馆课程', icon: (active: boolean) => <BuildingIcon size={22} color={active ? 'var(--c-accent)' : '#6a6a6a'} /> },
+  { key: '/homeservice', title: '上门服务', icon: (active: boolean) => <HomeServiceIcon size={22} color={active ? 'var(--c-accent)' : '#6a6a6a'} /> },
+  { key: '/schedule', title: '约课', icon: (active: boolean) => <CalendarIcon size={22} color={active ? 'var(--c-accent)' : '#6a6a6a'} /> },
+  { key: '/profile', title: '我的', icon: (active: boolean) => <UserIcon size={22} color={active ? 'var(--c-accent)' : '#6a6a6a'} /> },
 ]
 
 function TabLayout() {

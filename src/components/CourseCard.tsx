@@ -112,14 +112,14 @@ const CourseCard: React.FC<CourseCardProps> = ({
                       <path d="M12 2l3.1 6.3L22 9.3l-5 4.9 1.2 7-6.2-3.3-6.2 3.3L7 14.2l-5-4.9 6.9-1L12 2z"/>
                     </svg>
                     {/* Filled portion */}
-                    <svg viewBox="0 0 24 24" width={14} height={14} fill="#E3617B" stroke="none"
+                    <svg viewBox="0 0 24 24" width={14} height={14} fill="var(--c-accent)" stroke="none"
                       style={{ position: 'absolute', top: 0, left: 0, clipPath: `inset(0 ${(1 - fill) * 100}% 0 0)` }}>
                       <path d="M12 2l3.1 6.3L22 9.3l-5 4.9 1.2 7-6.2-3.3-6.2 3.3L7 14.2l-5-4.9 6.9-1L12 2z"/>
                     </svg>
                   </div>
                 )
               })}
-              <span style={{ fontSize: 12, fontWeight: 600, color: '#E3617B' }}>{coachRating.toFixed(1)}</span>
+              <span style={{ fontSize: 12, fontWeight: 600, color: 'var(--c-accent)' }}>{coachRating.toFixed(1)}</span>
             </div>
           )}
           <div
@@ -150,7 +150,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
             <ClockIcon size={12} color="#6a6a6a" />
             {' '}{time}
           </span>
-          <span style={{ fontSize: 18, fontWeight: 600, color: '#E3617B' }}>
+          <span style={{ fontSize: 18, fontWeight: 600, color: 'var(--c-accent)' }}>
             <span className="num">¥{price}</span>
           </span>
         </div>

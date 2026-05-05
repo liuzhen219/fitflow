@@ -177,7 +177,7 @@ export default function Schedule() {
               {v ? (
                 <>
                   <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '14px', background: '#fafafa', borderRadius: 12, border: '1px solid #eee', marginBottom: 14 }}>
-                    <MapPinIcon size={18} color="#E3617B" />
+                    <MapPinIcon size={18} color="var(--c-accent)" />
                     <div>
                       <div style={{ fontSize: 14, fontWeight: 600, color: '#222' }}>{v.address}</div>
                       <div style={{ fontSize: 12, color: '#6a6a6a', marginTop: 4 }}>{v.district} · 距你 {v.distance}</div>
@@ -185,7 +185,7 @@ export default function Schedule() {
                     </div>
                   </div>
                   <div onClick={() => { setAddrItem(null); nav(`/venue/${v.id}`) }}
-                    style={{ textAlign: 'center', padding: '12px', borderRadius: 12, background: '#E3617B', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
+                    style={{ textAlign: 'center', padding: '12px', borderRadius: 12, background: 'var(--c-accent)', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
                     <BuildingIcon size={14} color="#fff" /> 进入场馆主页
                   </div>
                 </>
@@ -213,7 +213,7 @@ export default function Schedule() {
             <div style={{ textAlign: 'center', padding: '60px 20px' }}>
               <div style={{
                 width: 56, height: 56, borderRadius: '50%', margin: '0 auto 16px',
-                border: '3px solid #f0f0f0', borderTopColor: '#E3617B',
+                border: '3px solid #f0f0f0', borderTopColor: 'var(--c-accent)',
                 animation: 'spin 0.8s linear infinite',
               }} />
               <div style={{ fontSize: 16, fontWeight: 600, color: '#222', marginBottom: 4 }}>支付处理中...</div>
@@ -235,7 +235,7 @@ export default function Schedule() {
                 <div style={{ fontSize: 12, color: '#6a6a6a' }}>{checkinItem.date} · {checkinItem.time}</div>
               </div>
               <div style={{ textAlign: 'center', marginBottom: 12 }}>
-                <span style={{ fontSize: 28, fontWeight: 700, color: '#E3617B' }}>¥420</span>
+                <span style={{ fontSize: 28, fontWeight: 700, color: 'var(--c-accent)' }}>¥420</span>
               </div>
               <div
                 onClick={() => {
@@ -247,7 +247,7 @@ export default function Schedule() {
                     setCheckinItem({ ...checkinItem, status: 'upcoming' })
                   }, 1500)
                 }}
-                style={{ padding: '14px', borderRadius: 12, background: '#E3617B', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer', textAlign: 'center' }}>
+                style={{ padding: '14px', borderRadius: 12, background: 'var(--c-accent)', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer', textAlign: 'center' }}>
                 立即支付 ¥420
               </div>
             </div>
@@ -271,7 +271,7 @@ export default function Schedule() {
                 <div>👤 {checkinItem.coachName}</div>
               </div>
               <div onClick={() => { setCheckinItem(null); Toast.show({ icon: 'success', content: '签到成功！' }) }}
-                style={{ padding: '14px', borderRadius: 12, background: '#E3617B', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
+                style={{ padding: '14px', borderRadius: 12, background: 'var(--c-accent)', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer' }}>
                 确认签到
               </div>
             </div>
@@ -349,7 +349,7 @@ const s: Record<string, React.CSSProperties> = {
     width: 24,
     height: 24,
     borderRadius: '50%',
-    background: '#E3617B',
+    background: 'var(--c-accent)',
     color: '#FFFFFF',
     fontSize: 12,
     fontWeight: 600,
@@ -370,7 +370,7 @@ const s: Record<string, React.CSSProperties> = {
     width: 8,
     height: 8,
     borderRadius: '50%',
-    background: '#E3617B',
+    background: 'var(--c-accent)',
     flexShrink: 0,
   },
   legendText: {
@@ -398,7 +398,7 @@ const s: Record<string, React.CSSProperties> = {
     background: 'transparent',
   },
   tabActive: {
-    color: '#E3617B',
+    color: 'var(--c-accent)',
     fontWeight: 600,
     borderBottom: '2px solid #E3617B',
     background: 'transparent',

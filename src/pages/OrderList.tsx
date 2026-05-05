@@ -16,8 +16,8 @@ const statusMap: Record<string, string[]> = {
 
 const statusDisplay: Record<string, { label: string; color: string }> = {
   pending: { label: '待付款', color: '#D97706' },
-  upcoming: { label: '待上课', color: '#E3617B' },
-  confirmed: { label: '待上课', color: '#E3617B' },
+  upcoming: { label: '待上课', color: 'var(--c-accent)' },
+  confirmed: { label: '待上课', color: 'var(--c-accent)' },
   completed: { label: '已完成', color: '#7BC67E' },
   cancelled: { label: '已退款', color: '#6a6a6a' },
 }
@@ -176,7 +176,7 @@ const s: Record<string, React.CSSProperties> = {
     lineHeight: 1.2,
   },
   filterChipActive: {
-    background: '#E3617B',
+    background: 'var(--c-accent)',
     color: '#FFFFFF',
     border: '1px solid #E3617B',
   },

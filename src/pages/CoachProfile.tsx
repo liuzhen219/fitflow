@@ -54,7 +54,7 @@ export default function CoachProfile() {
         <SearchIcon size={48} color="#c0c0c0" />
         <p style={{ fontSize: 16, color: '#222', fontWeight: 500, margin: 0 }}>教练未找到</p>
         <div
-          style={{ marginTop: 8, padding: '10px 28px', borderRadius: 8, background: '#E3617B', color: '#fff', fontSize: 14, fontWeight: 500, cursor: 'pointer' }}
+          style={{ marginTop: 8, padding: '10px 28px', borderRadius: 8, background: 'var(--c-accent)', color: '#fff', fontSize: 14, fontWeight: 500, cursor: 'pointer' }}
           onClick={() => nav(-1)}
         >
           返回
@@ -218,8 +218,8 @@ export default function CoachProfile() {
               <span
                 style={{
                   fontSize: 12,
-                  color: '#E3617B',
-                  background: 'rgba(227,97,123,0.08)',
+                  color: 'var(--c-accent)',
+                  background: 'var(--c-accent-soft)',
                   padding: '4px 10px',
                   borderRadius: 4,
                   fontWeight: 500,
@@ -258,7 +258,7 @@ export default function CoachProfile() {
                 style={{
                   fontSize: 24,
                   fontWeight: 600,
-                  color: '#E3617B',
+                  color: 'var(--c-accent)',
                   lineHeight: 1,
                 }}
               >
@@ -300,7 +300,7 @@ export default function CoachProfile() {
               gap: 6,
             }}
           >
-            <ShieldIcon size={16} color="#E3617B" />
+            <ShieldIcon size={16} color="var(--c-accent)" />
             资质认证
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -327,7 +327,7 @@ export default function CoachProfile() {
               gap: 6,
             }}
           >
-            <SparkleIcon size={16} color="#E3617B" />
+            <SparkleIcon size={16} color="var(--c-accent)" />
             擅长领域
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -339,8 +339,8 @@ export default function CoachProfile() {
                   padding: '6px 14px',
                   borderRadius: 32,
                   fontSize: 13,
-                  background: 'rgba(227,97,123,0.08)',
-                  color: '#E3617B',
+                  background: 'var(--c-accent-soft)',
+                  color: 'var(--c-accent)',
                   fontWeight: 500,
                 }}
               >
@@ -382,7 +382,7 @@ export default function CoachProfile() {
               gap: 6,
             }}
           >
-            <CommentIcon size={16} color="#E3617B" />
+            <CommentIcon size={16} color="var(--c-accent)" />
             个人简介
           </p>
           <p
@@ -402,7 +402,7 @@ export default function CoachProfile() {
         {/* Courses */}
         <SectionHeader
           title={`可约课程 (${coach.courses.length})`}
-          icon={<OrdersIcon size={16} color="#E3617B" />}
+          icon={<OrdersIcon size={16} color="var(--c-accent)" />}
         />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {coach.courses.map((course) => (
@@ -432,9 +432,9 @@ export default function CoachProfile() {
                   }}
                 >
                   {course.isHomeService ? (
-                    <HomeServiceIcon size={14} color="#E3617B" />
+                    <HomeServiceIcon size={14} color="var(--c-accent)" />
                   ) : (
-                    <LocationIcon size={14} color="#E3617B" />
+                    <LocationIcon size={14} color="var(--c-accent)" />
                   )}
                   {course.name}
                 </p>
@@ -487,7 +487,7 @@ export default function CoachProfile() {
             <div style={{ height: 24 }} />
             <SectionHeader
               title={`合作场馆 (${coach.partnerVenues.length}家)`}
-              icon={<BuildingIcon size={16} color="#E3617B" />}
+              icon={<BuildingIcon size={16} color="var(--c-accent)" />}
             />
             <div
               style={{
@@ -554,14 +554,14 @@ export default function CoachProfile() {
           <SectionHeader
             title={`学员评价 (${coachReviews.length})`}
             moreText={showAllReviews ? '收起' : '查看全部'}
-            icon={<CommentIcon size={16} color="#E3617B" />}
+            icon={<CommentIcon size={16} color="var(--c-accent)" />}
             onMore={() => setShowAllReviews(!showAllReviews)}
           />
           <span
             onClick={() => nav(`/review/coach/${coach.id}`)}
             style={{
               padding: '8px 16px', borderRadius: 20, fontSize: 12, fontWeight: 600,
-              background: '#E3617B', color: '#fff', cursor: 'pointer',
+              background: 'var(--c-accent)', color: '#fff', cursor: 'pointer',
               whiteSpace: 'nowrap', flexShrink: 0, userSelect: 'none',
               marginTop: -1,
             }}
@@ -572,7 +572,7 @@ export default function CoachProfile() {
         <div style={{ display: 'flex', gap: 14, marginBottom: 16, padding: '14px 0', borderBottom: '1px solid #f0f0f0' }}>
           {/* Average score big number */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minWidth: 56 }}>
-            <span style={{ fontSize: 32, fontWeight: 700, color: '#E3617B', lineHeight: 1 }}>{coach.rating.toFixed(1)}</span>
+            <span style={{ fontSize: 32, fontWeight: 700, color: 'var(--c-accent)', lineHeight: 1 }}>{coach.rating.toFixed(1)}</span>
             <span style={{ fontSize: 11, color: '#6a6a6a', marginTop: 2 }}>{coachReviews.length}条评价</span>
           </div>
           {/* Bar chart */}
@@ -580,11 +580,11 @@ export default function CoachProfile() {
             {ratingDist.map((d) => (
               <div key={d.star} onClick={() => setReviewFilter(reviewFilter === d.star ? null : d.star)}
                 style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', userSelect: 'none' }}>
-                <span style={{ fontSize: 11, color: reviewFilter === d.star ? '#E3617B' : '#6a6a6a', fontWeight: reviewFilter === d.star ? 600 : 500, width: 22, textAlign: 'right' }}>{d.star}星</span>
+                <span style={{ fontSize: 11, color: reviewFilter === d.star ? 'var(--c-accent)' : '#6a6a6a', fontWeight: reviewFilter === d.star ? 600 : 500, width: 22, textAlign: 'right' }}>{d.star}星</span>
                 <div style={{ flex: 1, height: 6, borderRadius: 3, background: '#f0f0f0', overflow: 'hidden' }}>
-                  <div style={{ height: '100%', borderRadius: 3, background: reviewFilter === d.star ? '#E3617B' : '#ddd', width: `${d.pct}%`, transition: 'width 0.3s ease, background 0.15s' }} />
+                  <div style={{ height: '100%', borderRadius: 3, background: reviewFilter === d.star ? 'var(--c-accent)' : '#ddd', width: `${d.pct}%`, transition: 'width 0.3s ease, background 0.15s' }} />
                 </div>
-                <span style={{ fontSize: 11, color: reviewFilter === d.star ? '#E3617B' : '#929292', fontWeight: reviewFilter === d.star ? 600 : 500, width: 20 }}>{d.count}</span>
+                <span style={{ fontSize: 11, color: reviewFilter === d.star ? 'var(--c-accent)' : '#929292', fontWeight: reviewFilter === d.star ? 600 : 500, width: 20 }}>{d.count}</span>
               </div>
             ))}
           </div>
@@ -593,7 +593,7 @@ export default function CoachProfile() {
         {/* Filter active indicator */}
         {reviewFilter && (
           <div style={{ marginBottom: 12, display: 'flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ fontSize: 12, color: '#E3617B', fontWeight: 500 }}>筛选：{reviewFilter}星</span>
+            <span style={{ fontSize: 12, color: 'var(--c-accent)', fontWeight: 500 }}>筛选：{reviewFilter}星</span>
             <span onClick={() => setReviewFilter(null)} style={{ fontSize: 11, color: '#6a6a6a', cursor: 'pointer' }}>✕ 清除</span>
           </div>
         )}
@@ -620,7 +620,7 @@ export default function CoachProfile() {
         {filteredReviews.length > 3 && !reviewFilter && (
           <div onClick={() => setShowAllReviews(!showAllReviews)} style={{
             textAlign: 'center', padding: '12px 0', fontSize: 13, fontWeight: 500,
-            color: '#E3617B', cursor: 'pointer',
+            color: 'var(--c-accent)', cursor: 'pointer',
           }}>
             {showAllReviews ? '收起 ▲' : `查看全部 ${filteredReviews.length} 条评价 ▼`}
           </div>
@@ -726,7 +726,7 @@ export default function CoachProfile() {
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
                 }}>
-                  <PlayIcon size={28} color="#E3617B" />
+                  <PlayIcon size={28} color="var(--c-accent)" />
                 </div>
               </div>
               {/* Duration badge */}
@@ -820,7 +820,7 @@ export default function CoachProfile() {
           style={{
             padding: '14px 32px',
             borderRadius: 8,
-            background: '#E3617B',
+            background: 'var(--c-accent)',
             color: '#fff',
             fontSize: 15,
             fontWeight: 500,

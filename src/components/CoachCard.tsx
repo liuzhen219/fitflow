@@ -92,8 +92,8 @@ const CoachCard: React.FC<CoachCardProps> = ({
           gap: 2,
         }}
       >
-        <StarFilledIcon size={12} color="#E3617B" />
-        {' '}<span style={{ color: '#E3617B', fontWeight: 600 }}>{rating}</span><span style={{ color: '#6a6a6a' }}> · {classCount}节课</span>
+        <StarFilledIcon size={12} color="var(--c-accent)" />
+        {' '}<span style={{ color: 'var(--c-accent)', fontWeight: 600 }}>{rating}</span><span style={{ color: '#6a6a6a' }}> · {classCount}节课</span>
       </div>
       <div
         style={{

@@ -47,7 +47,7 @@ export default function Login() {
         {!isLogin && (
           <div style={s.agree}>
             <Checkbox checked={agreed} onChange={setAgreed} style={{ '--icon-size':'16px', fontSize:12 } as any}>
-              同意 <span style={{color:'#D44A65'}}>《用户协议》</span>和<span style={{color:'#D44A65'}}>《隐私政策》</span>
+              同意 <span style={{color:'var(--c-accent-deep)'}}>《用户协议》</span>和<span style={{color:'var(--c-accent-deep)'}}>《隐私政策》</span>
             </Checkbox>
           </div>
         )}
@@ -72,7 +72,7 @@ const s: Record<string, React.CSSProperties> = {
   nav: { '--border-bottom': 'none' } as any,
   body: { padding: '24px 28px' },
   header: { marginBottom: 32, marginTop: 16 },
-  title: { fontSize: 28, fontWeight: 500, color: '#E3617B', marginBottom: 6, letterSpacing: 1 },
+  title: { fontSize: 28, fontWeight: 500, color: 'var(--c-accent)', marginBottom: 6, letterSpacing: 1 },
   sub: { fontSize: 14, color: '#6a6a6a', fontWeight: 300 },
   form: { '--border-inner': 'none', '--border-top': 'none', '--border-bottom': '1px solid #ddd' } as any,
   input: {
@@ -80,18 +80,18 @@ const s: Record<string, React.CSSProperties> = {
     '--placeholder-color': '#C0BBB6',
     padding: '14px 0',
   } as any,
-  codeBtn: { color: '#E3617B', fontSize: 13, fontWeight: 500 },
+  codeBtn: { color: 'var(--c-accent)', fontSize: 13, fontWeight: 500 },
   agree: { marginTop: 16, marginBottom: 20 },
   btn: {
-    '--color': '#E3617B',
+    '--color': 'var(--c-accent)',
     borderRadius: 28,
     height: 50,
     fontSize: 16,
     fontWeight: 500,
-    boxShadow: '0 6px 24px rgba(227,97,123,0.35)',
+    boxShadow: '0 6px 24px var(--c-accent-soft)',
     border: 'none',
     marginTop: 12,
   } as any,
   switch: { textAlign: 'center', marginTop: 28, fontSize: 14, color: '#6a6a6a', fontWeight: 300 },
-  switchLink: { color: '#D44A65', fontWeight: 500, cursor: 'pointer', marginLeft: 4 },
+  switchLink: { color: 'var(--c-accent-deep)', fontWeight: 500, cursor: 'pointer', marginLeft: 4 },
 }

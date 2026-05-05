@@ -26,16 +26,16 @@ export default function TrainingArchive() {
       {/* Stats Overview */}
       <div style={{ display: 'flex', gap: 10, padding: '16px' }}>
         {[
-          { value: userProfile.stats.totalClasses, label: '累计课时', icon: <ClockIcon size={18} color="#E3617B" /> },
-          { value: `${totalHours}h`, label: '训练总时长', icon: <DumbbellIcon size={18} color="#E3617B" /> },
-          { value: userProfile.stats.followedCoaches, label: '教练数', icon: <StarFilledIcon size={18} color="#E3617B" /> },
+          { value: userProfile.stats.totalClasses, label: '累计课时', icon: <ClockIcon size={18} color="var(--c-accent)" /> },
+          { value: `${totalHours}h`, label: '训练总时长', icon: <DumbbellIcon size={18} color="var(--c-accent)" /> },
+          { value: userProfile.stats.followedCoaches, label: '教练数', icon: <StarFilledIcon size={18} color="var(--c-accent)" /> },
         ].map((s) => (
           <div key={s.label} style={{
             flex: 1, background: '#fafafa', borderRadius: 14, padding: '16px 12px',
             textAlign: 'center', border: '1px solid #eee',
           }}>
             {s.icon}
-            <div style={{ fontSize: 22, fontWeight: 700, color: '#E3617B', marginTop: 8 }}>{s.value}</div>
+            <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--c-accent)', marginTop: 8 }}>{s.value}</div>
             <div style={{ fontSize: 12, color: '#6a6a6a', marginTop: 2 }}>{s.label}</div>
           </div>
         ))}
@@ -53,9 +53,9 @@ export default function TrainingArchive() {
           <div key={m.label} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
             <span style={{ width: 70, fontSize: 13, fontWeight: 500, color: '#222' }}>{m.label}</span>
             <div style={{ flex: 1, height: 6, borderRadius: 3, background: '#f0f0f0', overflow: 'hidden' }}>
-              <div style={{ height: '100%', borderRadius: 3, background: '#E3617B', width: `${m.pct}%`, transition: 'width 0.5s ease' }} />
+              <div style={{ height: '100%', borderRadius: 3, background: 'var(--c-accent)', width: `${m.pct}%`, transition: 'width 0.5s ease' }} />
             </div>
-            <span style={{ width: 36, fontSize: 12, fontWeight: 600, color: '#E3617B', textAlign: 'right' }}>{m.pct}%</span>
+            <span style={{ width: 36, fontSize: 12, fontWeight: 600, color: 'var(--c-accent)', textAlign: 'right' }}>{m.pct}%</span>
           </div>
         ))}
       </div>
@@ -63,7 +63,7 @@ export default function TrainingArchive() {
       {/* History */}
       <div style={{ padding: '0 16px' }}>
         <div style={{ fontSize: 14, fontWeight: 600, color: '#222', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 4 }}>
-          <ArchiveIcon size={14} color="#E3617B" /> 上课记录
+          <ArchiveIcon size={14} color="var(--c-accent)" /> 上课记录
         </div>
         {completed.length > 0 ? completed.map((item) => (
           <div key={item.id} style={{

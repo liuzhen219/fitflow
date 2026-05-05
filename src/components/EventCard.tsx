@@ -37,7 +37,7 @@ const EventCard: React.FC<EventCardProps> = ({
           position: 'absolute', top: 10, left: 10,
           padding: '4px 10px', borderRadius: 12, fontSize: 11, fontWeight: 600,
           background: type === '户外' ? 'rgba(22,163,74,0.85)'
-            : type === '工作坊' ? 'rgba(227,97,123,0.85)'
+            : type === '工作坊' ? 'var(--c-accent)'
             : 'rgba(34,34,34,0.8)',
           color: '#fff',
         }}>
@@ -47,8 +47,8 @@ const EventCard: React.FC<EventCardProps> = ({
         <span style={{
           position: 'absolute', top: 10, right: 10,
           padding: '4px 10px', borderRadius: 12, fontSize: 12, fontWeight: 600,
-          background: price === '免费' ? 'rgba(22,163,74,0.15)' : 'rgba(227,97,123,0.12)',
-          color: price === '免费' ? '#16A34A' : '#E3617B',
+          background: price === '免费' ? 'rgba(22,163,74,0.15)' : 'var(--c-accent-soft)',
+          color: price === '免费' ? '#16A34A' : 'var(--c-accent)',
         }}>
           {price}
         </span>
@@ -77,7 +77,7 @@ const EventCard: React.FC<EventCardProps> = ({
             <span style={{ fontSize: 11, color: '#6a6a6a' }}>
               已报 {filledSpots}/{totalSpots} 人
             </span>
-            <span style={{ fontSize: 11, fontWeight: 600, color: remaining <= 5 ? '#E3617B' : '#16A34A' }}>
+            <span style={{ fontSize: 11, fontWeight: 600, color: remaining <= 5 ? 'var(--c-accent)' : '#16A34A' }}>
               {remaining <= 5 ? `仅剩 ${remaining} 位` : `余 ${remaining} 位`}
             </span>
           </div>
@@ -87,7 +87,7 @@ const EventCard: React.FC<EventCardProps> = ({
             <div style={{
               height: '100%', borderRadius: 2, transition: 'width 0.3s ease',
               width: `${pct}%`,
-              background: remaining <= 5 ? '#E3617B' : '#E3617B',
+              background: remaining <= 5 ? 'var(--c-accent)' : 'var(--c-accent)',
               opacity: remaining <= 5 ? 1 : 0.6,
             }} />
           </div>

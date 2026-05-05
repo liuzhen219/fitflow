@@ -33,7 +33,7 @@ const StarRating: React.FC<StarRatingProps> = ({
           }}
         >
           {star <= active ? (
-            <StarFilledIcon size={size} color="#E3617B" />
+            <StarFilledIcon size={size} color="var(--c-accent)" />
           ) : (
             <StarIcon size={size} color="#ddd" />
           )}

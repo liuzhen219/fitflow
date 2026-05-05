@@ -56,7 +56,7 @@ export default function PaymentSuccess() {
       {/* Course Reminder Card */}
       <div style={s.reminderCard}>
         <h3 style={s.reminderTitle}>
-          <CalendarIcon size={16} color="#E3617B" />
+          <CalendarIcon size={16} color="var(--c-accent)" />
           {' '}课程提醒
         </h3>
 
@@ -100,7 +100,7 @@ export default function PaymentSuccess() {
           style={s.actionOutline}
           onClick={() => nav('/schedule')}
         >
-          <OrdersIcon size={14} color="#E3617B" />
+          <OrdersIcon size={14} color="var(--c-accent)" />
           {' '}查看订单
         </button>
         <button
@@ -109,7 +109,7 @@ export default function PaymentSuccess() {
             // Add to calendar placeholder
           }}
         >
-          <CalendarIcon size={14} color="#E3617B" />
+          <CalendarIcon size={14} color="var(--c-accent)" />
           {' '}添加到日历
         </button>
       </div>
@@ -149,7 +149,7 @@ const s: Record<string, React.CSSProperties> = {
     marginTop: 8,
     padding: '10px 28px',
     borderRadius: 24,
-    background: '#E3617B',
+    background: 'var(--c-accent)',
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: 600,
@@ -264,7 +264,7 @@ const s: Record<string, React.CSSProperties> = {
     padding: '12px 0',
     borderRadius: 24,
     background: '#FFFFFF',
-    color: '#E3617B',
+    color: 'var(--c-accent)',
     fontSize: 13,
     fontWeight: 600,
     border: '1px solid #E3617B',
@@ -281,7 +281,7 @@ const s: Record<string, React.CSSProperties> = {
     padding: '12px 0',
     borderRadius: 24,
     background: '#FFFFFF',
-    color: '#E3617B',
+    color: 'var(--c-accent)',
     fontSize: 13,
     fontWeight: 600,
     border: '1px solid #E3617B',
@@ -304,7 +304,7 @@ const s: Record<string, React.CSSProperties> = {
     width: '100%',
     padding: '14px 0',
     borderRadius: 24,
-    background: '#E3617B',
+    background: 'var(--c-accent)',
     color: '#FFFFFF',
     fontSize: 15,
     fontWeight: 700,

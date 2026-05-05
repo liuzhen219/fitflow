@@ -59,7 +59,7 @@ export default function Venues() {
           { value: stats.avgRating, label: '场馆均分' },
         ].map((s) => (
           <div key={s.label} style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 18, fontWeight: 700, color: '#E3617B' }}>{s.value}</div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--c-accent)' }}>{s.value}</div>
             <div style={{ fontSize: 11, color: '#6a6a6a', marginTop: 2 }}>{s.label}</div>
           </div>
         ))}

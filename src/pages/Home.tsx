@@ -71,7 +71,7 @@ export default function Home() {
               transition: 'box-shadow 0.15s',
             }}
           >
-            <LocationIcon size={15} color="#E3617B" />
+            <LocationIcon size={15} color="var(--c-accent)" />
             <span style={{ fontSize: 14, fontWeight: 600, color: '#222' }}>{currentCity.name} · {currentDistrict}</span>
             <span style={{ fontSize: 12, color: '#6a6a6a', transform: 'rotate(90deg)', display: 'inline-flex' }}>›</span>
           </div>
@@ -82,7 +82,7 @@ export default function Home() {
             {notifications.filter(n => !n.read).length > 0 && (
               <span style={{
                 position: 'absolute', top: -2, right: -4,
-                width: 8, height: 8, borderRadius: '50%', background: '#E3617B',
+                width: 8, height: 8, borderRadius: '50%', background: 'var(--c-accent)',
                 border: '1.5px solid #fff',
               }} />
             )}
@@ -149,7 +149,7 @@ export default function Home() {
               key={tag}
               onClick={() => setActiveTag(isActive ? null : tag)}
               style={{
-                background: isActive ? '#E3617B' : '#fff',
+                background: isActive ? 'var(--c-accent)' : '#fff',
                 color: isActive ? '#fff' : '#222',
                 padding: '8px 16px',
                 borderRadius: 32,
@@ -178,7 +178,7 @@ export default function Home() {
         <div style={{ padding: '0 16px' }}>
           <SectionHeader
             title="线下活动"
-            icon={<SparkleIcon size={16} color="#E3617B" />}
+            icon={<SparkleIcon size={16} color="var(--c-accent)" />}
             moreText="全部活动"
             onMore={() => nav('/events')}
           />
@@ -208,7 +208,7 @@ export default function Home() {
         <div style={{ padding: '0 16px' }}>
           <SectionHeader
             title="精选教练"
-            icon={<StarFilledIcon size={16} color="#E3617B" />}
+            icon={<StarFilledIcon size={16} color="var(--c-accent)" />}
             onMore={() => nav('/homeservice')}
           />
         </div>
@@ -246,7 +246,7 @@ export default function Home() {
         <div style={{ padding: '0 16px' }}>
           <SectionHeader
             title="精选场馆"
-            icon={<BuildingIcon size={16} color="#E3617B" />}
+            icon={<BuildingIcon size={16} color="var(--c-accent)" />}
             onMore={() => nav('/venues')}
           />
         </div>
@@ -273,14 +273,14 @@ export default function Home() {
         <div style={{ padding: '0 16px', marginBottom: 0 }}>
           <SectionHeader
             title={activeTag ? `「${activeTag}」相关课程` : '为你推荐'}
-            icon={<SparkleIcon size={16} color="#E3617B" />}
+            icon={<SparkleIcon size={16} color="var(--c-accent)" />}
             onMore={() => nav('/studio')}
           />
           {activeTag && (
             <div
               onClick={() => setActiveTag(null)}
               style={{
-                fontSize: 13, fontWeight: 500, color: '#E3617B', cursor: 'pointer',
+                fontSize: 13, fontWeight: 500, color: 'var(--c-accent)', cursor: 'pointer',
                 marginBottom: 12, marginTop: -8, display: 'inline-block',
               }}
             >
@@ -374,7 +374,7 @@ export default function Home() {
                 fontSize: 14, fontWeight: 500, cursor: 'pointer',
                 transition: 'all 0.15s',
                 background: i === districtIndex ? '#FFF0EE' : '#f7f7f7',
-                color: i === districtIndex ? '#E3617B' : '#222',
+                color: i === districtIndex ? 'var(--c-accent)' : '#222',
                 border: i === districtIndex ? '1.5px solid #E3617B' : '1.5px solid transparent',
                 position: 'relative',
               }}
@@ -382,7 +382,7 @@ export default function Home() {
               {district}
               {i === districtIndex && (
                 <span style={{ position: 'absolute', top: 6, right: 8 }}>
-                  <CheckIcon size={14} color="#E3617B" />
+                  <CheckIcon size={14} color="var(--c-accent)" />
                 </span>
               )}
             </div>

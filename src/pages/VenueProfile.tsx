@@ -81,14 +81,14 @@ export default function VenueProfile() {
       {/* ====== Quick Stats ====== */}
       <div style={s.statsRow}>
         {[
-          { icon: <StarFilledIcon size={16} color="#E3617B" />, value: venue.rating.toFixed(1), label: '评分' },
-          { icon: <ClockIcon size={16} color="#E3617B" />, value: venue.openHours, label: '营业时间', compact: true },
-          { icon: <LocationIcon size={16} color="#E3617B" />, value: venue.distance, label: '距离' },
-          { icon: <MapPinIcon size={16} color="#E3617B" />, value: venue.district, label: '区域' },
+          { icon: <StarFilledIcon size={16} color="var(--c-accent)" />, value: venue.rating.toFixed(1), label: '评分' },
+          { icon: <ClockIcon size={16} color="var(--c-accent)" />, value: venue.openHours, label: '营业时间', compact: true },
+          { icon: <LocationIcon size={16} color="var(--c-accent)" />, value: venue.distance, label: '距离' },
+          { icon: <MapPinIcon size={16} color="var(--c-accent)" />, value: venue.district, label: '区域' },
         ].map((stat, i) => (
           <div key={i} style={s.statItem}>
             {stat.icon}
-            <div style={stat.compact ? { fontSize: 12, fontWeight: 600, color: '#E3617B' } : { fontSize: 16, fontWeight: 600, color: '#E3617B' }}>
+            <div style={stat.compact ? { fontSize: 12, fontWeight: 600, color: 'var(--c-accent)' } : { fontSize: 16, fontWeight: 600, color: 'var(--c-accent)' }}>
               {stat.value}
             </div>
             <div style={{ fontSize: 11, color: '#929292' }}>{stat.label}</div>
@@ -103,7 +103,7 @@ export default function VenueProfile() {
 
       {/* ====== Image Gallery ====== */}
       <div style={s.section}>
-        <SectionHeader title="场馆实拍" icon={<PhotoIcon size={16} color="#E3617B" />} />
+        <SectionHeader title="场馆实拍" icon={<PhotoIcon size={16} color="var(--c-accent)" />} />
         <div style={s.gallery}>
           {gallery.map((item, i) => (
             <div key={i} style={{ ...s.galleryItem, cursor: 'pointer', position: 'relative' }}
@@ -123,7 +123,7 @@ export default function VenueProfile() {
                     background: 'rgba(255,255,255,0.9)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                   }}>
-                    <span style={{ color: '#E3617B', fontSize: 16, marginLeft: 2 }}>▶</span>
+                    <span style={{ color: 'var(--c-accent)', fontSize: 16, marginLeft: 2 }}>▶</span>
                   </div>
                 </div>
               )}
@@ -142,7 +142,7 @@ export default function VenueProfile() {
 
       {/* ====== Facilities ====== */}
       <div style={s.section}>
-        <SectionHeader title={`设施配置 (${venue.facilities.length}项)`} icon={<DumbbellIcon size={16} color="#E3617B" />} />
+        <SectionHeader title={`设施配置 (${venue.facilities.length}项)`} icon={<DumbbellIcon size={16} color="var(--c-accent)" />} />
         <div style={s.tagGrid}>
           {venue.facilities.map((f, i) => (
             <div key={i} style={s.tagItem}>
@@ -155,11 +155,11 @@ export default function VenueProfile() {
 
       {/* ====== Services ====== */}
       <div style={s.section}>
-        <SectionHeader title="配套服务" icon={<SparkleIcon size={16} color="#E3617B" />} />
+        <SectionHeader title="配套服务" icon={<SparkleIcon size={16} color="var(--c-accent)" />} />
         <div style={s.tagGrid}>
           {venue.services.map((svc, i) => (
             <div key={i} style={s.tagItem}>
-              <CheckIcon size={14} color="#E3617B" />
+              <CheckIcon size={14} color="var(--c-accent)" />
               <span>{svc}</span>
             </div>
           ))}
@@ -171,7 +171,7 @@ export default function VenueProfile() {
         <div style={s.section}>
           <SectionHeader
             title={`可约课程 (${venueCourses.length}节)`}
-            icon={<ClockIcon size={16} color="#E3617B" />}
+            icon={<ClockIcon size={16} color="var(--c-accent)" />}
           />
           <div>
             {venueCourses.map((course) => (
@@ -200,7 +200,7 @@ export default function VenueProfile() {
         <div style={s.section}>
           <SectionHeader
             title={`驻场教练 (${venueCoaches.length}位)`}
-            icon={<BuildingIcon size={16} color="#E3617B" />}
+            icon={<BuildingIcon size={16} color="var(--c-accent)" />}
             onMore={() => nav('/homeservice')}
           />
           <div style={s.coachScroll}>
@@ -224,10 +224,10 @@ export default function VenueProfile() {
 
       {/* ====== Address / Map ====== */}
       <div style={s.section}>
-        <SectionHeader title="位置交通" icon={<MapPinIcon size={16} color="#E3617B" />} />
+        <SectionHeader title="位置交通" icon={<MapPinIcon size={16} color="var(--c-accent)" />} />
         <div style={s.mapCard}>
           <div style={s.mapPlaceholder}>
-            <MapPinIcon size={32} color="#E3617B" />
+            <MapPinIcon size={32} color="var(--c-accent)" />
             <p style={{ fontSize: 13, color: '#6a6a6a', margin: '8px 0 0' }}>{venue.address}</p>
             <p style={{ fontSize: 12, color: '#929292', margin: '4px 0 0' }}>
               {venue.district} · 距你 {venue.distance}
@@ -242,14 +242,14 @@ export default function VenueProfile() {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
             <SectionHeader
               title={`学员评价 (${venueReviews.length}条)`}
-              icon={<StarFilledIcon size={16} color="#E3617B" />}
+              icon={<StarFilledIcon size={16} color="var(--c-accent)" />}
             />
             {venueCoaches.length > 0 && (
               <span
                 onClick={() => nav(`/review/coach/${venueCoaches[0].id}`)}
                 style={{
                   padding: '8px 16px', borderRadius: 20, fontSize: 12, fontWeight: 600,
-                  background: '#E3617B', color: '#fff', cursor: 'pointer',
+                  background: 'var(--c-accent)', color: '#fff', cursor: 'pointer',
                   whiteSpace: 'nowrap', flexShrink: 0, userSelect: 'none',
                   marginTop: -1,
                 }}
@@ -339,7 +339,7 @@ const s: Record<string, React.CSSProperties> = {
   },
   notFoundText: { fontSize: 16, color: '#222', fontWeight: 500, margin: 0 },
   backBtn: {
-    marginTop: 8, padding: '10px 28px', borderRadius: 24, background: '#E3617B',
+    marginTop: 8, padding: '10px 28px', borderRadius: 24, background: 'var(--c-accent)',
     color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer',
   },
 

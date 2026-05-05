@@ -93,7 +93,7 @@ export default function HomeService() {
                 flexShrink: 0, whiteSpace: 'nowrap', cursor: 'pointer',
                 transition: 'all 0.15s ease', userSelect: 'none',
                 color: activeFilter === f.key ? '#fff' : '#222',
-                background: activeFilter === f.key ? '#E3617B' : '#fff',
+                background: activeFilter === f.key ? 'var(--c-accent)' : '#fff',
                 border: activeFilter === f.key ? '1px solid #E3617B' : '1px solid #ddd',
               }}
             >
@@ -110,7 +110,7 @@ export default function HomeService() {
           padding: '10px 0', fontSize: 13, fontWeight: 500, color: '#6a6a6a',
           display: 'flex', alignItems: 'center', gap: 6,
         }}>
-          共 <span style={{ color: '#E3617B', fontWeight: 700, fontSize: 15 }}>{filtered.length}</span> 节上门课程
+          共 <span style={{ color: 'var(--c-accent)', fontWeight: 700, fontSize: 15 }}>{filtered.length}</span> 节上门课程
         </div>
         {filtered.length > 0 ? (
           filtered.map((course) => (

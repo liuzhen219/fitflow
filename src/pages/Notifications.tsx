@@ -4,9 +4,9 @@ import { notifications } from '../data/mock'
 import { ClockIcon, StarFilledIcon, SparkleIcon, CheckIcon, FireIcon } from '../components/Icons'
 
 const typeIcon: Record<string, React.ReactNode> = {
-  course: <ClockIcon size={16} color="#E3617B" />,
-  review: <StarFilledIcon size={16} color="#E3617B" />,
-  activity: <SparkleIcon size={16} color="#E3617B" />,
+  course: <ClockIcon size={16} color="var(--c-accent)" />,
+  review: <StarFilledIcon size={16} color="var(--c-accent)" />,
+  activity: <SparkleIcon size={16} color="var(--c-accent)" />,
   system: <CheckIcon size={16} color="#16A34A" />,
 }
 
@@ -36,7 +36,7 @@ export default function Notifications() {
           <span style={{ fontSize: 17, fontWeight: 600, color: '#222' }}>消息中心</span>
           {unreadCount > 0 && (
             <span style={{
-              fontSize: 11, fontWeight: 600, color: '#fff', background: '#E3617B',
+              fontSize: 11, fontWeight: 600, color: '#fff', background: 'var(--c-accent)',
               padding: '2px 8px', borderRadius: 10,
             }}>{unreadCount} 未读</span>
           )}
@@ -62,7 +62,7 @@ export default function Notifications() {
               padding: '6px 14px', borderRadius: 20, fontSize: 12, fontWeight: 500,
               flexShrink: 0, cursor: 'pointer', whiteSpace: 'nowrap',
               color: filter === f.key ? '#fff' : '#222',
-              background: filter === f.key ? '#E3617B' : '#f7f7f7',
+              background: filter === f.key ? 'var(--c-accent)' : '#f7f7f7',
             }}>{filter === f.key && <FireIcon size={14} color="#fff" />}{f.label}</span>
         ))}
       </div>
@@ -83,7 +83,7 @@ export default function Notifications() {
             {/* Icon */}
             <div style={{
               width: 40, height: 40, borderRadius: '50%', flexShrink: 0,
-              background: n.read ? '#f7f7f7' : 'rgba(227,97,123,0.08)',
+              background: n.read ? '#f7f7f7' : 'var(--c-accent-soft)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
               {typeIcon[n.type]}
@@ -93,7 +93,7 @@ export default function Notifications() {
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
                 <span style={{ fontSize: 14, fontWeight: n.read ? 500 : 600, color: '#222' }}>{n.title}</span>
-                {!n.read && <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#E3617B', flexShrink: 0 }} />}
+                {!n.read && <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--c-accent)', flexShrink: 0 }} />}
               </div>
               <p style={{ fontSize: 12, color: '#6a6a6a', lineHeight: 1.5, margin: 0 }}>{n.content}</p>
               <p style={{ fontSize: 11, color: '#929292', margin: '4px 0 0' }}>{n.time}</p>

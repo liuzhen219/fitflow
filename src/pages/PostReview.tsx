@@ -68,7 +68,7 @@ export default function PostReview() {
         <p style={{ fontSize: 13, color: '#6a6a6a', margin: 0, textAlign: 'center' }}>
           你可以在上完课后再来评价教练
         </p>
-        <div style={{ marginTop: 8, padding: '10px 28px', borderRadius: 24, background: '#E3617B', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }} onClick={() => nav(-1)}>返回</div>
+        <div style={{ marginTop: 8, padding: '10px 28px', borderRadius: 24, background: 'var(--c-accent)', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }} onClick={() => nav(-1)}>返回</div>
       </div>
     )
   }
@@ -98,7 +98,7 @@ export default function PostReview() {
         {userCompletedCourses.length > 1 && (
           <div style={{ marginBottom: 20 }}>
             <p style={{ fontSize: 13, fontWeight: 600, color: '#222', margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: 4 }}>
-              <SparkleIcon size={14} color="#E3617B" /> 你上过{userCompletedCourses[0]?.coachName}的{userCompletedCourses.length}门课，请选择评价哪一门：
+              <SparkleIcon size={14} color="var(--c-accent)" /> 你上过{userCompletedCourses[0]?.coachName}的{userCompletedCourses.length}门课，请选择评价哪一门：
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {userCompletedCourses.map((c) => (
@@ -106,14 +106,14 @@ export default function PostReview() {
                   style={{
                     padding: '12px 14px', borderRadius: 12, cursor: 'pointer',
                     border: selectedCourse?.id === c.id ? '1.5px solid #E3617B' : '1px solid #ddd',
-                    background: selectedCourse?.id === c.id ? 'rgba(227,97,123,0.04)' : '#fafafa',
+                    background: selectedCourse?.id === c.id ? 'var(--c-accent-bg)' : '#fafafa',
                   }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ fontSize: 14, fontWeight: selectedCourse?.id === c.id ? 600 : 500, color: '#222' }}>
                       {c.courseName}
                     </span>
                     {selectedCourse?.id === c.id && (
-                      <span style={{ fontSize: 11, color: '#E3617B', fontWeight: 600 }}>已选择 ✓</span>
+                      <span style={{ fontSize: 11, color: 'var(--c-accent)', fontWeight: 600 }}>已选择 ✓</span>
                     )}
                   </div>
                   <div style={{ display: 'flex', gap: 8, marginTop: 4, fontSize: 12, color: '#6a6a6a' }}>
@@ -142,14 +142,14 @@ export default function PostReview() {
             {/* Coach Rating */}
             <div style={{ marginBottom: 24 }}>
               <p style={{ fontSize: 14, fontWeight: 600, color: '#222', margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: 4 }}>
-                <UserIcon size={14} color="#E3617B" /> 教练评价
+                <UserIcon size={14} color="var(--c-accent)" /> 教练评价
               </p>
               <StarRating value={coachRating} onChange={setCoachRating} />
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>
                 {coachTags.map((t) => (
                   <span key={t} onClick={() => toggleTag(t, selectedCoachTags, setSelectedCoachTags)} style={{
                     padding: '6px 12px', borderRadius: 16, fontSize: 12, fontWeight: 500, cursor: 'pointer',
-                    background: selectedCoachTags.includes(t) ? '#E3617B' : '#f7f7f7',
+                    background: selectedCoachTags.includes(t) ? 'var(--c-accent)' : '#f7f7f7',
                     color: selectedCoachTags.includes(t) ? '#fff' : '#222',
                   }}>{t}</span>
                 ))}
@@ -160,7 +160,7 @@ export default function PostReview() {
             {!selectedCourse?.isHomeService && (
               <div style={{ marginBottom: 24 }}>
                 <p style={{ fontSize: 14, fontWeight: 600, color: '#222', margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <BuildingIcon size={14} color="#E3617B" /> 场馆评价
+                  <BuildingIcon size={14} color="var(--c-accent)" /> 场馆评价
                 </p>
                 <StarRating value={venueRating} onChange={setVenueRating} />
                 <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>
@@ -217,7 +217,7 @@ export default function PostReview() {
             {/* Submit */}
             <button onClick={() => nav(-1)} style={{
               width: '100%', padding: '14px 0', borderRadius: 8, border: 'none',
-              background: '#E3617B', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer',
+              background: 'var(--c-accent)', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer',
             }}>
               提交评价
             </button>

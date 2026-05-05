@@ -45,7 +45,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
           style={{
             padding: '10px 24px',
             borderRadius: 8,
-            background: '#E3617B',
+            background: 'var(--c-accent)',
             color: '#fff',
             border: 'none',
             fontSize: 14,

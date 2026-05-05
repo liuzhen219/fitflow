@@ -33,7 +33,7 @@ const VenueCard: React.FC<VenueCardProps> = ({
         <span style={{
           position: 'absolute', top: 8, right: 8,
           padding: '3px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600,
-          background: 'rgba(227,97,123,0.85)', color: '#fff',
+          background: 'var(--c-accent)', color: '#fff',
           display: 'flex', alignItems: 'center', gap: 2,
         }}>
           <VerifiedIcon size={10} color="#fff" /> 已核验
@@ -47,8 +47,8 @@ const VenueCard: React.FC<VenueCardProps> = ({
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 500, color: '#6a6a6a' }}>
         <span style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <StarFilledIcon size={11} color="#E3617B" />
-          <span style={{ color: '#E3617B', fontWeight: 600 }}>{rating.toFixed(1)}</span>
+          <StarFilledIcon size={11} color="var(--c-accent)" />
+          <span style={{ color: 'var(--c-accent)', fontWeight: 600 }}>{rating.toFixed(1)}</span>
         </span>
         <span>{reviewCount}条评价</span>
       </div>

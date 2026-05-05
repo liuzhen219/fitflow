@@ -159,7 +159,7 @@ export default function Search() {
           {/* Hot Search */}
           <div>
             <div style={{ fontSize: 14, fontWeight: 600, color: '#222', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 4 }}>
-              <FireIcon size={14} color="#E3617B" /> 热门搜索
+              <FireIcon size={14} color="var(--c-accent)" /> 热门搜索
             </div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {hotSearches.map(tag => (
@@ -239,7 +239,7 @@ export default function Search() {
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexShrink: 0 }}>
-                    <StarFilledIcon size={12} color="#E3617B" />
+                    <StarFilledIcon size={12} color="var(--c-accent)" />
                     <span style={{ fontSize: 13, fontWeight: 600, color: '#222' }}>{c.rating.toFixed(1)}</span>
                   </div>
                   <span style={{ fontSize: 18, color: '#ccc', flexShrink: 0 }}>›</span>
@@ -332,7 +332,7 @@ export default function Search() {
                       {v.name}
                       {v.verified && (
                         <span style={{
-                          fontSize: 10, color: '#E3617B', background: 'rgba(227,97,123,0.08)',
+                          fontSize: 10, color: 'var(--c-accent)', background: 'var(--c-accent-soft)',
                           padding: '1px 6px', borderRadius: 4, fontWeight: 500,
                         }}>已核验</span>
                       )}

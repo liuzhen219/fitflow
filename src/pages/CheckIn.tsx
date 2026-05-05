@@ -138,7 +138,7 @@ const s: Record<string, React.CSSProperties> = {
     marginTop: 8,
     padding: '10px 28px',
     borderRadius: 24,
-    background: '#E3617B',
+    background: 'var(--c-accent)',
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: 600,

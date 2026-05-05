@@ -64,7 +64,7 @@ export default function Events() {
               transition: 'all 0.15s ease', userSelect: 'none',
               display: 'flex', alignItems: 'center', gap: 4,
               color: activeType === f.key ? '#fff' : '#222',
-              background: activeType === f.key ? '#E3617B' : '#fff',
+              background: activeType === f.key ? 'var(--c-accent)' : '#fff',
               border: activeType === f.key ? '1px solid #E3617B' : '1px solid #ddd',
             }}>
             {activeType === f.key && <FireIcon size={14} color="#fff" />}
@@ -76,7 +76,7 @@ export default function Events() {
       {/* Event list */}
       <div style={{ padding: '0 16px' }}>
         <div style={{ padding: '8px 0 14px', fontSize: 13, color: '#6a6a6a', fontWeight: 500 }}>
-          共 <span style={{ color: '#E3617B', fontWeight: 700, fontSize: 15 }}>{filtered.length}</span> 场活动
+          共 <span style={{ color: 'var(--c-accent)', fontWeight: 700, fontSize: 15 }}>{filtered.length}</span> 场活动
         </div>
 
         {filtered.map((ev) => {
@@ -98,7 +98,7 @@ export default function Events() {
                   position: 'absolute', top: 10, left: 10, padding: '4px 10px',
                   borderRadius: 12, fontSize: 11, fontWeight: 600, color: '#fff',
                   background: ev.type === '户外' ? 'rgba(22,163,74,0.85)'
-                    : ev.type === '工作坊' ? 'rgba(227,97,123,0.85)'
+                    : ev.type === '工作坊' ? 'var(--c-accent)'
                     : 'rgba(34,34,34,0.8)',
                 }}>{ev.type}</span>
                 <span style={{
@@ -127,13 +127,13 @@ export default function Events() {
                     <span style={{ fontSize: 11, color: '#6a6a6a' }}>已报 {ev.filledSpots}/{ev.totalSpots} 人</span>
                     <span style={{
                       fontSize: 11, fontWeight: 600,
-                      color: remaining <= 5 ? '#E3617B' : '#16A34A',
+                      color: remaining <= 5 ? 'var(--c-accent)' : '#16A34A',
                     }}>
                       {remaining <= 5 ? `仅剩 ${remaining} 位` : `余 ${remaining} 位`}
                     </span>
                   </div>
                   <div style={{ height: 4, borderRadius: 2, background: '#f0f0f0', overflow: 'hidden' }}>
-                    <div style={{ height: '100%', borderRadius: 2, background: remaining <= 5 ? '#E3617B' : '#E3617B', opacity: remaining <= 5 ? 1 : 0.6, width: `${pct}%`, transition: 'width 0.3s ease' }} />
+                    <div style={{ height: '100%', borderRadius: 2, background: remaining <= 5 ? 'var(--c-accent)' : 'var(--c-accent)', opacity: remaining <= 5 ? 1 : 0.6, width: `${pct}%`, transition: 'width 0.3s ease' }} />
                   </div>
                 </div>
                 {/* Tags */}

@@ -21,7 +21,7 @@ export default function UserProfile() {
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <SearchIcon size={48} color="#c0c0c0" />
         <p style={{ fontSize: 16, color: '#222', fontWeight: 500 }}>用户未找到</p>
-        <div style={{ padding: '10px 28px', borderRadius: 24, background: '#E3617B', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }} onClick={() => nav(-1)}>返回</div>
+        <div style={{ padding: '10px 28px', borderRadius: 24, background: 'var(--c-accent)', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }} onClick={() => nav(-1)}>返回</div>
       </div>
     )
   }
@@ -88,7 +88,7 @@ export default function UserProfile() {
       <div style={{ borderRadius: '20px 20px 0 0', marginTop: -20, background: '#fff', position: 'relative', zIndex: 1, padding: '20px 16px 0' }}>
         {/* Review stats */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 20, paddingBottom: 16, borderBottom: '1px solid #f0f0f0' }}>
-          <StarFilledIcon size={18} color="#E3617B" />
+          <StarFilledIcon size={18} color="var(--c-accent)" />
           <StarRating value={Math.round(avgRating)} size={14} />
           <span style={{ fontSize: 13, color: '#6a6a6a' }}>· 平均 {avgRating.toFixed(1)} 星</span>
         </div>
@@ -96,7 +96,7 @@ export default function UserProfile() {
         {/* Reviewed coaches */}
         {reviewedCoaches.length > 0 && (
           <>
-            <SectionHeader title="评价过的教练" icon={<StarFilledIcon size={16} color="#E3617B" />} />
+            <SectionHeader title="评价过的教练" icon={<StarFilledIcon size={16} color="var(--c-accent)" />} />
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 }}>
               {reviewedCoaches.map((c) => (
                 <span key={c} style={{
@@ -109,7 +109,7 @@ export default function UserProfile() {
         )}
 
         {/* Reviews */}
-        <SectionHeader title={`${user.userName} 的评价 (${userReviews.length})`} icon={<CommentIcon size={16} color="#E3617B" />} />
+        <SectionHeader title={`${user.userName} 的评价 (${userReviews.length})`} icon={<CommentIcon size={16} color="var(--c-accent)" />} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12, paddingBottom: 40 }}>
           {userReviews.map((r) => (
             <ReviewCard key={r.id} {...r} />

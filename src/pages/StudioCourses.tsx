@@ -107,7 +107,7 @@ export default function StudioCourses() {
                 flexShrink: 0, whiteSpace: 'nowrap', cursor: 'pointer',
                 transition: 'all 0.15s ease', userSelect: 'none',
                 color: activeFilter === f.key ? '#fff' : '#222',
-                background: activeFilter === f.key ? '#E3617B' : '#fff',
+                background: activeFilter === f.key ? 'var(--c-accent)' : '#fff',
                 border: activeFilter === f.key ? '1px solid #E3617B' : '1px solid #ddd',
               }}
             >
@@ -124,7 +124,7 @@ export default function StudioCourses() {
           padding: '10px 0', fontSize: 13, fontWeight: 500, color: '#6a6a6a',
           display: 'flex', alignItems: 'center', gap: 6,
         }}>
-          共 <span style={{ color: '#E3617B', fontWeight: 700, fontSize: 15 }}>{filtered.length}</span> 节场馆课程
+          共 <span style={{ color: 'var(--c-accent)', fontWeight: 700, fontSize: 15 }}>{filtered.length}</span> 节场馆课程
         </div>
 
         {filtered.length > 0 ? (
@@ -170,8 +170,8 @@ export default function StudioCourses() {
                       </span>
                       {venue?.verified && (
                         <span style={{
-                          fontSize: 10, fontWeight: 600, color: '#E3617B',
-                          background: 'rgba(227,97,123,0.08)', padding: '2px 6px',
+                          fontSize: 10, fontWeight: 600, color: 'var(--c-accent)',
+                          background: 'var(--c-accent-soft)', padding: '2px 6px',
                           borderRadius: 4,
                         }}>已核验</span>
                       )}
@@ -184,7 +184,7 @@ export default function StudioCourses() {
                         <LocationIcon size={11} color="#6a6a6a" /> {venue?.district || ''} · {venueCourses[0]?.distance}
                       </span>
                       <span style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <StarFilledIcon size={11} color="#E3617B" /> {venue?.rating.toFixed(1)}
+                        <StarFilledIcon size={11} color="var(--c-accent)" /> {venue?.rating.toFixed(1)}
                       </span>
                       <span style={{ color: '#6a6a6a' }}>{venue?.reviewCount}条评价</span>
                     </div>
@@ -196,7 +196,7 @@ export default function StudioCourses() {
                   {/* CTA arrow */}
                   <div style={{
                     display: 'flex', alignItems: 'center', gap: 2,
-                    flexShrink: 0, color: '#E3617B', fontSize: 12, fontWeight: 500,
+                    flexShrink: 0, color: 'var(--c-accent)', fontSize: 12, fontWeight: 500,
                   }}>
                     进入 ›
                   </div>

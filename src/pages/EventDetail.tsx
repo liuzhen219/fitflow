@@ -19,7 +19,7 @@ export default function EventDetail() {
       <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
         <SearchIcon size={48} color="#c0c0c0" />
         <p style={{ fontSize: 16, color: '#222', fontWeight: 500 }}>活动未找到</p>
-        <div style={{ padding: '10px 28px', borderRadius: 24, background: '#E3617B', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }} onClick={() => nav(-1)}>返回</div>
+        <div style={{ padding: '10px 28px', borderRadius: 24, background: 'var(--c-accent)', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' }} onClick={() => nav(-1)}>返回</div>
       </div>
     )
   }
@@ -58,12 +58,12 @@ export default function EventDetail() {
         <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
           <span style={{
             padding: '4px 12px', borderRadius: 12, fontSize: 12, fontWeight: 600, color: '#fff',
-            background: event.type === '户外' ? '#16A34A' : event.type === '工作坊' ? '#E3617B' : '#222',
+            background: event.type === '户外' ? '#16A34A' : event.type === '工作坊' ? 'var(--c-accent)' : '#222',
           }}>{event.type}</span>
           <span style={{
             padding: '4px 12px', borderRadius: 12, fontSize: 12, fontWeight: 600,
             background: event.price === '免费' ? 'rgba(22,163,74,0.1)' : 'rgba(227,97,123,0.1)',
-            color: event.price === '免费' ? '#16A34A' : '#E3617B',
+            color: event.price === '免费' ? '#16A34A' : 'var(--c-accent)',
           }}>{event.price}</span>
           {event.tags.map((tag) => (
             <span key={tag} style={{ padding: '4px 10px', borderRadius: 12, fontSize: 11, fontWeight: 500, background: '#f7f7f7', color: '#6a6a6a' }}>{tag}</span>
@@ -75,21 +75,21 @@ export default function EventDetail() {
         {/* Info Row */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 14, padding: '14px', background: '#fafafa', borderRadius: 12, border: '1px solid #f0f0f0' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, color: '#222', fontWeight: 500 }}>
-            <ClockIcon size={16} color="#E3617B" />
+            <ClockIcon size={16} color="var(--c-accent)" />
             {event.date} · {event.time}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, color: '#222', fontWeight: 500 }}>
-            <MapPinIcon size={16} color="#E3617B" />
+            <MapPinIcon size={16} color="var(--c-accent)" />
             {event.venue}
-            {event.venueId && <span style={{ fontSize: 12, color: '#E3617B', fontWeight: 600, cursor: 'pointer' }} onClick={() => nav(`/venue/${event.venueId}`)}> → 查看场馆</span>}
+            {event.venueId && <span style={{ fontSize: 12, color: 'var(--c-accent)', fontWeight: 600, cursor: 'pointer' }} onClick={() => nav(`/venue/${event.venueId}`)}> → 查看场馆</span>}
           </div>
           {event.coach && (
             <div
               onClick={() => event.coachId && nav(`/coach/${event.coachId}`)}
               style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, color: '#222', fontWeight: 500, cursor: event.coachId ? 'pointer' : 'default' }}>
-              <StarFilledIcon size={16} color="#E3617B" />
+              <StarFilledIcon size={16} color="var(--c-accent)" />
               带领教练：{event.coach}
-              {event.coachId && <span style={{ fontSize: 12, color: '#E3617B', fontWeight: 600 }}> → 了解教练</span>}
+              {event.coachId && <span style={{ fontSize: 12, color: 'var(--c-accent)', fontWeight: 600 }}> → 了解教练</span>}
             </div>
           )}
         </div>
@@ -98,12 +98,12 @@ export default function EventDetail() {
         <div style={{ marginTop: 16 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
             <span style={{ fontSize: 14, fontWeight: 600, color: '#222' }}>报名情况</span>
-            <span style={{ fontSize: 13, fontWeight: 600, color: remaining <= 5 ? '#E3617B' : '#16A34A' }}>
+            <span style={{ fontSize: 13, fontWeight: 600, color: remaining <= 5 ? 'var(--c-accent)' : '#16A34A' }}>
               {remaining <= 5 ? `仅剩 ${remaining} 位` : `剩余 ${remaining} 位 / 共 ${event.totalSpots} 位`}
             </span>
           </div>
           <div style={{ height: 6, borderRadius: 3, background: '#f0f0f0', overflow: 'hidden' }}>
-            <div style={{ height: '100%', borderRadius: 3, background: remaining <= 5 ? '#E3617B' : '#16A34A', width: `${pct}%`, transition: 'width 0.3s ease' }} />
+            <div style={{ height: '100%', borderRadius: 3, background: remaining <= 5 ? 'var(--c-accent)' : '#16A34A', width: `${pct}%`, transition: 'width 0.3s ease' }} />
           </div>
           <p style={{ fontSize: 12, color: '#6a6a6a', marginTop: 4 }}>已报名 {event.filledSpots} 人</p>
         </div>
@@ -111,13 +111,13 @@ export default function EventDetail() {
         <div style={{ height: 20 }} />
 
         {/* Description */}
-        <SectionHeader title="活动介绍" icon={<OrdersIcon size={16} color="#E3617B" />} />
+        <SectionHeader title="活动介绍" icon={<OrdersIcon size={16} color="var(--c-accent)" />} />
         <p style={{ fontSize: 14, color: '#222', lineHeight: 1.6, margin: 0 }}>{event.description}</p>
 
         <div style={{ height: 20 }} />
 
         {/* Schedule */}
-        <SectionHeader title="活动流程" icon={<ClockIcon size={16} color="#E3617B" />} />
+        <SectionHeader title="活动流程" icon={<ClockIcon size={16} color="var(--c-accent)" />} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: 0, borderLeft: '2px solid #E3617B', marginLeft: 6, paddingLeft: 16 }}>
           {event.schedule.map((step, i) => (
             <div key={i} style={{
@@ -126,7 +126,7 @@ export default function EventDetail() {
             }}>
               <div style={{
                 width: 8, height: 8, borderRadius: '50%',
-                background: '#E3617B', flexShrink: 0, marginTop: 4,
+                background: 'var(--c-accent)', flexShrink: 0, marginTop: 4,
                 marginLeft: -21, border: '2px solid #fff', outline: '2px solid #E3617B',
               }} />
               <span style={{ fontSize: 13, color: '#222', lineHeight: 1.5 }}>{step}</span>
@@ -137,11 +137,11 @@ export default function EventDetail() {
         <div style={{ height: 20 }} />
 
         {/* What to bring */}
-        <SectionHeader title="需要准备" icon={<ShieldIcon size={16} color="#E3617B" />} />
+        <SectionHeader title="需要准备" icon={<ShieldIcon size={16} color="var(--c-accent)" />} />
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {event.bringList.map((item) => (
             <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 8, background: '#f7f7f7', fontSize: 13, fontWeight: 500, color: '#222' }}>
-              <CheckIcon size={14} color="#E3617B" />{item}
+              <CheckIcon size={14} color="var(--c-accent)" />{item}
             </div>
           ))}
         </div>
@@ -150,7 +150,7 @@ export default function EventDetail() {
         {coach && (
           <>
             <div style={{ height: 20 }} />
-            <SectionHeader title="带领教练" icon={<StarFilledIcon size={16} color="#E3617B" />} />
+            <SectionHeader title="带领教练" icon={<StarFilledIcon size={16} color="var(--c-accent)" />} />
             <div
               onClick={() => nav(`/coach/${coach.id}`)}
               style={{
@@ -170,14 +170,14 @@ export default function EventDetail() {
                 <div style={{ fontSize: 15, fontWeight: 600, color: '#222' }}>{coach.name}</div>
                 <div style={{ fontSize: 12, color: '#6a6a6a', marginTop: 2 }}>{coach.title} · {coach.specialties.slice(0, 2).join('、')}</div>
               </div>
-              <span style={{ fontSize: 14, color: '#E3617B', fontWeight: 500 }}>了解教练 →</span>
+              <span style={{ fontSize: 14, color: 'var(--c-accent)', fontWeight: 500 }}>了解教练 →</span>
             </div>
           </>
         )}
 
         {/* Image gallery hint */}
         <div style={{ height: 20 }} />
-        <SectionHeader title="往期活动" icon={<PhotoIcon size={16} color="#E3617B" />} />
+        <SectionHeader title="往期活动" icon={<PhotoIcon size={16} color="var(--c-accent)" />} />
         <div style={{ display: 'flex', gap: 8, overflowX: 'auto' }}>
           {[1, 2, 3, 4].map((n) => (
             <div key={n} style={{
@@ -201,7 +201,7 @@ export default function EventDetail() {
         borderTop: '1px solid #ddd', zIndex: 10, display: 'flex', alignItems: 'center', gap: 12,
       }}>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 18, fontWeight: 700, color: event.price === '免费' ? '#16A34A' : '#E3617B' }}>
+          <div style={{ fontSize: 18, fontWeight: 700, color: event.price === '免费' ? '#16A34A' : 'var(--c-accent)' }}>
             {event.price}
             {event.price !== '免费' && <span style={{ fontSize: 12, fontWeight: 500, color: '#6a6a6a' }}> /人</span>}
           </div>
@@ -214,7 +214,7 @@ export default function EventDetail() {
           style={{
             padding: '14px 36px', borderRadius: 8, fontSize: 15, fontWeight: 600,
             cursor: registered ? 'default' : 'pointer',
-            background: registered ? '#f7f7f7' : '#E3617B',
+            background: registered ? '#f7f7f7' : 'var(--c-accent)',
             color: registered ? '#6a6a6a' : '#fff',
           }}>
           {registered ? '已报名 ✓' : '立即报名'}

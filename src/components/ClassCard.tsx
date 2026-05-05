@@ -14,15 +14,15 @@ interface ClassCardProps {
 
 const statusConfig: Record<string, { color: string; label: string; bg: string }> = {
   pending: { color: '#D97706', label: '待付款', bg: '#FFFBEB' },
-  upcoming: { color: '#E3617B', label: '待上课', bg: '#fff' },
-  confirmed: { color: '#E3617B', label: '待确认', bg: '#fff' },
+  upcoming: { color: 'var(--c-accent)', label: '待上课', bg: '#fff' },
+  confirmed: { color: 'var(--c-accent)', label: '待确认', bg: '#fff' },
   completed: { color: '#7BC67E', label: '已完成', bg: '#F5FFF5' },
 }
 
 const borderColorMap: Record<string, string> = {
   pending: '#D97706',
-  upcoming: '#E3617B',
-  confirmed: '#E3617B',
+  upcoming: 'var(--c-accent)',
+  confirmed: 'var(--c-accent)',
   completed: '#7BC67E',
 }
 
@@ -101,12 +101,12 @@ const s: Record<string, React.CSSProperties> = {
     lineHeight: 1.2,
   },
   primaryBtn: {
-    background: '#E3617B',
+    background: 'var(--c-accent)',
     color: '#FFFFFF',
   },
   outlineBtn: {
     background: '#FFFFFF',
-    color: '#E3617B',
+    color: 'var(--c-accent)',
     border: '1px solid #E3617B',
   },
 }
@@ -123,7 +123,7 @@ const ClassCard: React.FC<ClassCardProps> = ({
   onViewDetail,
 }) => {
   const sc = statusConfig[status] || statusConfig.upcoming
-  const borderColor = borderColorMap[status] || '#E3617B'
+  const borderColor = borderColorMap[status] || 'var(--c-accent)'
 
   return (
     <div style={s.card}>

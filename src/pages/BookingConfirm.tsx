@@ -117,7 +117,7 @@ export default function BookingConfirm() {
                   minWidth: 64, padding: '10px 12px', borderRadius: 14,
                   textAlign: 'center', cursor: isPast ? 'default' : 'pointer',
                   flexShrink: 0, userSelect: 'none',
-                  background: isSelected ? '#E3617B' : '#f7f7f7',
+                  background: isSelected ? 'var(--c-accent)' : '#f7f7f7',
                   color: isSelected ? '#fff' : isPast ? '#ccc' : '#222',
                   border: isSelected ? '1.5px solid #E3617B' : '1px solid #eee',
                   opacity: isPast ? 0.5 : 1,
@@ -139,7 +139,7 @@ export default function BookingConfirm() {
         <div style={s.sectionTitle}>
           <ClockIcon size={14} color="#222" /> 选择时段
           {selectedTime && (
-            <span style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 600, color: '#E3617B' }}>
+            <span style={{ marginLeft: 'auto', fontSize: 13, fontWeight: 600, color: 'var(--c-accent)' }}>
               {days[selectedDay].label} {days[selectedDay].weekday} {selectedTime}
             </span>
           )}
@@ -161,7 +161,7 @@ export default function BookingConfirm() {
                       padding: '8px 16px', borderRadius: 20, fontSize: 13, fontWeight: 500,
                       cursor: isUnavailable ? 'default' : 'pointer',
                       whiteSpace: 'nowrap', userSelect: 'none',
-                      background: isActive ? '#E3617B' : isUnavailable ? '#f7f7f7' : '#fff',
+                      background: isActive ? 'var(--c-accent)' : isUnavailable ? '#f7f7f7' : '#fff',
                       color: isActive ? '#fff' : isUnavailable ? '#ccc' : '#222',
                       border: isActive ? '1.5px solid #E3617B'
                         : isUnavailable ? '1px solid #f0f0f0' : '1px solid #ddd',
@@ -213,7 +213,7 @@ export default function BookingConfirm() {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '55vh', gap: 16 }}>
               <div style={{
                 width: 64, height: 64, borderRadius: '50%',
-                border: '3px solid #f0f0f0', borderTopColor: '#E3617B',
+                border: '3px solid #f0f0f0', borderTopColor: 'var(--c-accent)',
                 animation: 'spin 0.8s linear infinite',
               }} />
               <p style={{ fontSize: 16, fontWeight: 600, color: '#222', margin: 0 }}>支付处理中...</p>
@@ -225,7 +225,7 @@ export default function BookingConfirm() {
               {/* Sheet Header */}
               <div style={{ padding: '20px 16px 12px', borderBottom: '1px solid #f0f0f0', textAlign: 'center' }}>
                 <div style={{ fontSize: 18, fontWeight: 600, color: '#222', marginBottom: 2 }}>确认支付</div>
-                <div style={{ fontSize: 28, fontWeight: 700, color: '#E3617B' }}>
+                <div style={{ fontSize: 28, fontWeight: 700, color: 'var(--c-accent)' }}>
                   <span className="num">¥{course.price}</span>
                 </div>
               </div>
@@ -247,14 +247,14 @@ export default function BookingConfirm() {
                     style={{
                       display: 'flex', alignItems: 'center', gap: 10,
                       padding: '14px 12px', borderRadius: 12, marginBottom: 6, cursor: 'pointer',
-                      background: payMethod === m.key ? 'rgba(227,97,123,0.04)' : '#fafafa',
+                      background: payMethod === m.key ? 'var(--c-accent-bg)' : '#fafafa',
                       border: payMethod === m.key ? '1.5px solid #E3617B' : '1px solid #eee',
                     }}>
                     <span style={{ fontSize: 22 }}>{m.icon}</span>
                     <span style={{ flex: 1, fontSize: 14, fontWeight: 500, color: '#222' }}>{m.label}</span>
-                    {m.tag && <span style={{ fontSize: 10, fontWeight: 600, color: '#E3617B', background: 'rgba(227,97,123,0.08)', padding: '2px 8px', borderRadius: 8 }}>{m.tag}</span>}
+                    {m.tag && <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--c-accent)', background: 'var(--c-accent-soft)', padding: '2px 8px', borderRadius: 8 }}>{m.tag}</span>}
                     {m.extra && <span style={{ fontSize: 11, color: '#929292' }}>{m.extra}</span>}
-                    {payMethod === m.key && <CheckIcon size={16} color="#E3617B" />}
+                    {payMethod === m.key && <CheckIcon size={16} color="var(--c-accent)" />}
                   </div>
                 ))}
               </div>
@@ -273,7 +273,7 @@ export default function BookingConfirm() {
                   }}
                   style={{
                     width: '100%', padding: '15px 0', borderRadius: 12,
-                    background: '#E3617B', color: '#fff', textAlign: 'center',
+                    background: 'var(--c-accent)', color: '#fff', textAlign: 'center',
                     fontSize: 16, fontWeight: 600, cursor: 'pointer',
                   }}>
                   立即支付 ¥{course.price}
@@ -291,7 +291,7 @@ const s: Record<string, React.CSSProperties> = {
   page: { minHeight: '100vh', background: '#fff', paddingBottom: 20 },
   notFound: { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', gap: 12, padding: 20 },
   notFoundText: { fontSize: 16, color: '#222', fontWeight: 500, margin: 0 },
-  backBtn: { marginTop: 8, padding: '10px 28px', borderRadius: 24, background: '#E3617B', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' },
+  backBtn: { marginTop: 8, padding: '10px 28px', borderRadius: 24, background: 'var(--c-accent)', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' },
 
   navBar: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', paddingTop: 16 },
   navBack: { width: 34, height: 34, borderRadius: '50%', background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, color: '#fff', cursor: 'pointer', fontWeight: 400, lineHeight: '34px', flexShrink: 0 },
@@ -312,5 +312,5 @@ const s: Record<string, React.CSSProperties> = {
 
   priceCard: { background: '#fff', borderRadius: 16, padding: 14, border: '1px solid #ddd' },
   payArea: { margin: '20px 12px 0' },
-  payBtn: { width: '100%', padding: '14px 0', borderRadius: 24, background: '#E3617B', color: '#fff', fontSize: 15, fontWeight: 700, border: 'none', cursor: 'pointer', textAlign: 'center', lineHeight: 1.2 },
+  payBtn: { width: '100%', padding: '14px 0', borderRadius: 24, background: 'var(--c-accent)', color: '#fff', fontSize: 15, fontWeight: 700, border: 'none', cursor: 'pointer', textAlign: 'center', lineHeight: 1.2 },
 }

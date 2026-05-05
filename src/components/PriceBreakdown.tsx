@@ -41,7 +41,7 @@ const s: Record<string, React.CSSProperties> = {
   totalAmount: {
     fontSize: 14,
     fontWeight: 700,
-    color: '#E3617B',
+    color: 'var(--c-accent)',
   },
 }
 

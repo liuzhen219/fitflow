@@ -33,17 +33,17 @@ export default function Splash() {
             fill="none"
             style={{ marginBottom: 16 }}
           >
-            <circle cx="28" cy="28" r="26" stroke="#E3617B" strokeWidth="1.2" />
+            <circle cx="28" cy="28" r="26" stroke="var(--c-accent)" strokeWidth="1.2" />
             <path
               d="M18 36 Q28 14 38 36"
-              stroke="#E3617B"
+              stroke="var(--c-accent)"
               strokeWidth="1.2"
               fill="none"
               strokeLinecap="round"
             />
             <path
               d="M22 36 Q28 22 34 36"
-              stroke="#E3617B"
+              stroke="var(--c-accent)"
               strokeWidth="0.8"
               fill="none"
               strokeLinecap="round"
@@ -72,7 +72,7 @@ export default function Splash() {
               fontSize: 16,
               fontWeight: 500,
               cursor: 'pointer',
-              background: '#E3617B',
+              background: 'var(--c-accent)',
               color: '#fff',
               boxShadow: '0 6px 24px rgba(227,97,123,0.35)',
             }}
@@ -130,7 +130,7 @@ const s: Record<string, React.CSSProperties> = {
     fontSize: 32,
     fontWeight: 300,
     letterSpacing: 8,
-    color: '#E3617B',
+    color: 'var(--c-accent)',
     marginBottom: 8,
   },
   subtitle: {
@@ -148,7 +148,7 @@ const s: Record<string, React.CSSProperties> = {
   slogan2: {
     fontSize: 20,
     fontWeight: 500,
-    color: '#E3617B',
+    color: 'var(--c-accent)',
     fontStyle: 'italic',
     lineHeight: 1.7,
     margin: 0,
@@ -159,7 +159,7 @@ const s: Record<string, React.CSSProperties> = {
     color: '#6a6a6a',
   },
   linkAction: {
-    color: '#E3617B',
+    color: 'var(--c-accent)',
     fontWeight: 500,
     cursor: 'pointer',
     textDecoration: 'underline',

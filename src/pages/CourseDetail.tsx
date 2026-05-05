@@ -124,7 +124,7 @@ export default function CourseDetail() {
 
         {/* Course Outline */}
         <p style={s.sectionLabel}>
-          <OrdersIcon size={14} color="#E3617B" />
+          <OrdersIcon size={14} color="var(--c-accent)" />
           {' '}课程大纲
         </p>
         <div style={s.outlineList}>
@@ -140,7 +140,7 @@ export default function CourseDetail() {
 
         {/* Target Audience */}
         <p style={s.sectionLabel}>
-          <UserIcon size={14} color="#E3617B" />
+          <UserIcon size={14} color="var(--c-accent)" />
           {' '}适合人群
         </p>
         <div style={s.audienceRow}>
@@ -216,7 +216,7 @@ const s: Record<string, React.CSSProperties> = {
     marginTop: 8,
     padding: '10px 28px',
     borderRadius: 24,
-    background: '#E3617B',
+    background: 'var(--c-accent)',
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: 600,
@@ -390,7 +390,7 @@ const s: Record<string, React.CSSProperties> = {
     width: 20,
     height: 20,
     borderRadius: '50%',
-    background: '#E3617B',
+    background: 'var(--c-accent)',
     color: '#fff',
     fontSize: 11,
     fontWeight: 700,
