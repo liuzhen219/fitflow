@@ -304,6 +304,14 @@ export const InboxIcon: React.FC<IconProps> = ({ size = 24, className, color }) 
   </svg>
 )
 
+// Close / X
+export const CloseIcon: React.FC<IconProps> = ({ size = 24, className, color }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
+    strokeLinecap="round" strokeLinejoin="round" style={iconStyle(size, color)} className={className}>
+    <path d="M18 6L6 18M6 6l12 12"/>
+  </svg>
+)
+
 // Refresh icon
 export const RefreshIcon: React.FC<IconProps> = ({ size = 24, className, color }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}

@@ -1,10 +1,12 @@
+import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { Popup } from 'antd-mobile'
 import StatsRow from '../components/StatsRow'
 import CertBadge from '../components/CertBadge'
 import ReviewCard from '../components/ReviewCard'
 import SectionHeader from '../components/SectionHeader'
 import StarRating from '../components/StarRating'
-import { coaches, reviews } from '../data/mock'
+import { coaches, reviews, venues as allVenues } from '../data/mock'
 import {
   SearchIcon,
   PlayIcon,
@@ -14,17 +16,37 @@ import {
   CommentIcon,
   OrdersIcon,
   BuildingIcon,
-  StarFilledIcon,
   ClockIcon,
   LocationIcon,
   PhotoIcon,
   HomeServiceIcon,
+  CloseIcon,
 } from '../components/Icons'
+
+// Sample teaching photos for the gallery
+const galleryPhotos = [
+  'https://images.unsplash.com/photo-1518611012118-6960729ce99a?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1575057913256-f0c15f37d64e?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600&h=600&fit=crop',
+  'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&h=600&fit=crop',
+]
 
 export default function CoachProfile() {
   const { id } = useParams<{ id: string }>()
   const nav = useNavigate()
   const coach = coaches.find((c) => c.id === Number(id))
+  const [mediaVisible, setMediaVisible] = useState(false)
+  const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null)
+
+  // Look up venue details for partner venues
+  const partnerVenuesWithImages = coach?.partnerVenues
+    .map(pv => {
+      const full = allVenues.find(v => v.id === pv.id)
+      return { ...pv, heroImage: full?.heroImage }
+    })
+    .filter(Boolean) || []
 
   if (!coach) {
     return (
@@ -101,8 +123,9 @@ export default function CoachProfile() {
           <div style={{ width: 32 }} />
         </div>
 
-        {/* Bottom right badge */}
+        {/* Bottom right badge — tappable */}
         <div
+          onClick={() => setMediaVisible(true)}
           style={{
             position: 'absolute',
             bottom: 16,
@@ -117,10 +140,12 @@ export default function CoachProfile() {
             color: '#fff',
             fontSize: 12,
             fontWeight: 500,
+            cursor: 'pointer',
+            userSelect: 'none',
           }}
         >
           {coach.hasVideo ? (
-            <><PlayIcon size={12} color="#fff" /> 观看介绍视频 2:30</>
+            <><PlayIcon size={12} color="#fff" /> 观看介绍视频</>
           ) : (
             <><PhotoIcon size={12} color="#fff" /> 查看教学照片</>
           )}
@@ -448,47 +473,44 @@ export default function CoachProfile() {
                 paddingBottom: 4,
               }}
             >
-              {coach.partnerVenues.map((venue) => (
+              {partnerVenuesWithImages.map((venue) => (
                 <div
                   key={venue.id}
                   onClick={() => nav(`/venue/${venue.id}`)}
                   style={{
-                    minWidth: 110,
+                    minWidth: 140,
                     background: '#fff',
                     borderRadius: 14,
                     border: '1px solid #ddd',
-                    padding: '16px 14px',
+                    overflow: 'hidden',
                     cursor: 'pointer',
                     flexShrink: 0,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: 4,
                   }}
                 >
-                  <BuildingIcon size={24} color="#E3617B" />
-                  <p
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 600,
-                      color: '#222',
-                      margin: 0,
-                      lineHeight: 1.25,
-                      textAlign: 'center',
-                    }}
-                  >
-                    {venue.name}
-                  </p>
-                  <p
-                    style={{
-                      fontSize: 11,
-                      color: '#6a6a6a',
-                      margin: 0,
-                      lineHeight: 1.25,
-                    }}
-                  >
-                    {venue.district} · {venue.distance}
-                  </p>
+                  {/* Venue thumbnail */}
+                  <div style={{
+                    width: '100%', height: 90,
+                    background: venue.heroImage
+                      ? `url(${venue.heroImage}) center/cover no-repeat`
+                      : 'linear-gradient(135deg, #f5e0d8, #e8d4c8)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    {!venue.heroImage && <BuildingIcon size={28} color="#fff" />}
+                  </div>
+                  {/* Venue info */}
+                  <div style={{ padding: '10px 12px' }}>
+                    <p style={{
+                      fontSize: 13, fontWeight: 600, color: '#222',
+                      margin: 0, lineHeight: 1.25,
+                    }}>
+                      {venue.name}
+                    </p>
+                    <p style={{
+                      fontSize: 11, color: '#6a6a6a', margin: '2px 0 0', lineHeight: 1.25,
+                    }}>
+                      {venue.district} · {venue.distance}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -528,6 +550,143 @@ export default function CoachProfile() {
         {/* Bottom spacer for fixed CTA */}
         <div style={{ height: 80 }} />
       </div>
+
+      {/* ======== Media Popup ======== */}
+      <Popup
+        visible={mediaVisible}
+        onClose={() => { setMediaVisible(false); setSelectedPhoto(null) }}
+        onMaskClick={() => { setMediaVisible(false); setSelectedPhoto(null) }}
+        bodyStyle={{
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          maxHeight: '80vh',
+          minHeight: '50vh',
+          background: '#fff',
+        }}
+      >
+        {/* Header */}
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '18px 16px', borderBottom: '1px solid #ddd',
+        }}>
+          <div>
+            <div style={{ fontSize: 18, fontWeight: 600, color: '#222' }}>
+              {coach.hasVideo ? '介绍视频' : '教学照片'}
+            </div>
+            <div style={{ fontSize: 13, color: '#6a6a6a', marginTop: 2 }}>
+              {coach.hasVideo ? `${coach.name} 的自我介绍与教学展示` : `${coach.name} 的教学瞬间`}
+            </div>
+          </div>
+          <div
+            onClick={() => { setMediaVisible(false); setSelectedPhoto(null) }}
+            style={{
+              width: 32, height: 32, borderRadius: '50%', background: '#f7f7f7',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', flexShrink: 0,
+            }}
+          >
+            <CloseIcon size={16} color="#6a6a6a" />
+          </div>
+        </div>
+
+        {/* Content */}
+        {selectedPhoto ? (
+          /* Full-screen photo view */
+          <div style={{
+            position: 'relative', display: 'flex',
+            alignItems: 'center', justifyContent: 'center',
+            background: '#000', minHeight: 400,
+          }}>
+            <img src={selectedPhoto} alt="教学照片"
+              style={{ width: '100%', maxHeight: '70vh', objectFit: 'contain' }} />
+            <div
+              onClick={() => setSelectedPhoto(null)}
+              style={{
+                position: 'absolute', top: 12, right: 12,
+                width: 36, height: 36, borderRadius: '50%',
+                background: 'rgba(0,0,0,0.5)', color: '#fff',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer',
+              }}
+            >
+              <CloseIcon size={18} color="#fff" />
+            </div>
+          </div>
+        ) : coach.hasVideo ? (
+          /* Video placeholder */
+          <div style={{
+            display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center',
+            padding: '60px 20px', gap: 16,
+          }}>
+            {/* Video player placeholder */}
+            <div style={{
+              width: '100%', maxWidth: 340, height: 220,
+              borderRadius: 16, position: 'relative', overflow: 'hidden',
+              background: coach.heroImage
+                ? `url(${coach.heroImage}) center/cover no-repeat`
+                : 'linear-gradient(135deg, #E3617B, #D44A65)',
+            }}>
+              {/* Dark overlay */}
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'rgba(0,0,0,0.3)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                {/* Play button */}
+                <div style={{
+                  width: 64, height: 64, borderRadius: '50%',
+                  background: 'rgba(255,255,255,0.9)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
+                }}>
+                  <PlayIcon size={28} color="#E3617B" />
+                </div>
+              </div>
+              {/* Duration badge */}
+              <div style={{
+                position: 'absolute', bottom: 10, right: 10,
+                padding: '4px 10px', borderRadius: 6,
+                background: 'rgba(0,0,0,0.6)', color: '#fff',
+                fontSize: 11, fontWeight: 500,
+              }}>
+                2:30
+              </div>
+            </div>
+            <p style={{ fontSize: 14, color: '#6a6a6a', textAlign: 'center', lineHeight: 1.5, margin: 0 }}>
+              了解{coach.name}的教学风格与训练理念<br />更直观地感受课程氛围
+            </p>
+          </div>
+        ) : (
+          /* Photo gallery grid */
+          <div style={{ padding: '16px', overflowY: 'auto' }}>
+            <div style={{
+              display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8,
+            }}>
+              {galleryPhotos.map((photo, i) => (
+                <div
+                  key={i}
+                  onClick={() => setSelectedPhoto(photo)}
+                  style={{
+                    aspectRatio: '1',
+                    borderRadius: 10,
+                    overflow: 'hidden',
+                    cursor: 'pointer',
+                    background: `url(${photo}) center/cover no-repeat`,
+                    ...(i === 0 ? { gridColumn: 'span 2', gridRow: 'span 2', aspectRatio: 'auto' } : {}),
+                  }}
+                />
+              ))}
+            </div>
+            <p style={{
+              fontSize: 13, color: '#6a6a6a', textAlign: 'center',
+              marginTop: 16, lineHeight: 1.5,
+            }}>
+              点击照片查看大图
+            </p>
+          </div>
+        )}
+      </Popup>
 
       {/* Fixed Bottom CTA */}
       <div
