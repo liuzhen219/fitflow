@@ -183,7 +183,7 @@ export default function Home() {
             onMore={() => nav('/events')}
           />
         </div>
-        <div style={{ display: 'flex', gap: 14, overflowX: 'auto', padding: '0 16px' }}>
+        <div style={{ display: 'flex', gap: 14, overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', padding: '0 16px' }}>
           {events.map((ev) => (
             <EventCard
               key={ev.id}
@@ -216,10 +216,9 @@ export default function Home() {
           style={{
             display: 'flex',
             gap: 16,
-            overflowX: 'auto',
+            overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none',
             padding: '0 16px',
-          }}
-        >
+          }}>
           {coaches.map((c) => (
             <CoachCard
               key={c.id}
@@ -250,7 +249,7 @@ export default function Home() {
             onMore={() => nav('/venues')}
           />
         </div>
-        <div style={{ display: 'flex', gap: 16, overflowX: 'auto', padding: '0 16px' }}>
+        <div style={{ display: 'flex', gap: 16, overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', padding: '0 16px' }}>
           {venues.map((v) => (
             <VenueCard
               key={v.id}
