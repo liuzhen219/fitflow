@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { notifications } from '../data/mock'
-import { ClockIcon, StarFilledIcon, SparkleIcon, CheckIcon } from '../components/Icons'
+import { ClockIcon, StarFilledIcon, SparkleIcon, CheckIcon, FireIcon } from '../components/Icons'
 
 const typeIcon: Record<string, React.ReactNode> = {
   course: <ClockIcon size={16} color="#E3617B" />,
@@ -63,7 +63,7 @@ export default function Notifications() {
               flexShrink: 0, cursor: 'pointer', whiteSpace: 'nowrap',
               color: filter === f.key ? '#fff' : '#222',
               background: filter === f.key ? '#E3617B' : '#f7f7f7',
-            }}>{f.label}</span>
+            }}>{filter === f.key && <FireIcon size={14} color="#fff" />}{f.label}</span>
         ))}
       </div>
 

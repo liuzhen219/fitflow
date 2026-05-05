@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import EmptyState from '../components/EmptyState'
 import { scheduleItems } from '../data/mock'
-import { CalendarIcon, ClockIcon, OrdersIcon } from '../components/Icons'
+import { CalendarIcon, ClockIcon, OrdersIcon, FireIcon } from '../components/Icons'
 
 const statusFilters = ['全部', '待付款', '待上课', '已完成', '退款']
 
@@ -65,7 +65,7 @@ export default function OrderList() {
               }}
               onClick={() => setActiveFilter(f.label)}
             >
-              {f.label}
+              {active && <FireIcon size={14} color="#fff" />}{f.label}
             </span>
           )
         })}
@@ -161,7 +161,7 @@ const s: Record<string, React.CSSProperties> = {
     whiteSpace: 'nowrap',
   },
   filterChip: {
-    display: 'inline-block',
+    display: 'inline-flex', alignItems: 'center', gap: 4,
     padding: '6px 14px',
     borderRadius: 16,
     fontSize: 12,

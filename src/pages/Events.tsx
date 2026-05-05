@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { events } from '../data/mock'
 import {
-  ClockIcon, MapPinIcon, StarFilledIcon, DumbbellIcon,
+  ClockIcon, MapPinIcon, StarFilledIcon, FireIcon,
 } from '../components/Icons'
 
 const typeFilters = [
@@ -60,10 +60,12 @@ export default function Events() {
               padding: '8px 16px', borderRadius: 32, fontSize: 13, fontWeight: 500,
               flexShrink: 0, cursor: 'pointer', whiteSpace: 'nowrap',
               transition: 'all 0.15s ease', userSelect: 'none',
+              display: 'flex', alignItems: 'center', gap: 4,
               color: activeType === f.key ? '#fff' : '#222',
               background: activeType === f.key ? '#E3617B' : '#fff',
               border: activeType === f.key ? '1px solid #E3617B' : '1px solid #ddd',
             }}>
+            {activeType === f.key && <FireIcon size={14} color="#fff" />}
             {f.label}
           </span>
         ))}

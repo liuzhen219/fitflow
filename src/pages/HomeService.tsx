@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import CourseCard from '../components/CourseCard'
 import EmptyState from '../components/EmptyState'
 import { courses } from '../data/mock'
+import { FireIcon } from '../components/Icons'
 
 const filters = [
   { key: 'all', label: '全部' },
@@ -96,7 +97,8 @@ export default function HomeService() {
                 border: activeFilter === f.key ? '1px solid #E3617B' : '1px solid #ddd',
               }}
             >
-              {f.label}
+              {activeFilter === f.key && <FireIcon size={14} color="#fff" />}
+                {f.label}
             </span>
           ))}
         </div>
