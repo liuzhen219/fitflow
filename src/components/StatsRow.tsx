@@ -35,7 +35,7 @@ const StatsRow: React.FC<StatsRowProps> = ({ items }) => {
             style={{
               fontSize: 16,
               fontWeight: 600,
-              color: '#222',
+              color: '#E3617B',
               margin: 0,
               lineHeight: 1.18,
             }}

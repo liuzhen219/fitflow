@@ -141,14 +141,14 @@ export default function Home() {
               key={tag}
               onClick={() => setActiveTag(isActive ? null : tag)}
               style={{
-                background: isActive ? '#222' : '#fff',
+                background: isActive ? '#E3617B' : '#fff',
                 color: isActive ? '#fff' : '#222',
                 padding: '8px 16px',
                 borderRadius: 32,
                 fontSize: 13,
                 fontWeight: 500,
                 whiteSpace: 'nowrap',
-                border: isActive ? 'none' : '1px solid #ddd',
+                border: isActive ? '1px solid #E3617B' : '1px solid #ddd',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',

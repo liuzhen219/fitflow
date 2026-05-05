@@ -93,7 +93,7 @@ const CoachCard: React.FC<CoachCardProps> = ({
         }}
       >
         <StarFilledIcon size={12} color="#E3617B" />
-        {' '}{rating} · {classCount}节课
+        {' '}<span style={{ color: '#E3617B', fontWeight: 600 }}>{rating}</span><span style={{ color: '#6a6a6a' }}> · {classCount}节课</span>
       </div>
       <div
         style={{

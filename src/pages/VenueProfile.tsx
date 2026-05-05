@@ -81,7 +81,7 @@ export default function VenueProfile() {
         ].map((stat, i) => (
           <div key={i} style={s.statItem}>
             {stat.icon}
-            <div style={stat.compact ? { fontSize: 12, fontWeight: 600, color: '#222' } : { fontSize: 16, fontWeight: 600, color: '#222' }}>
+            <div style={stat.compact ? { fontSize: 12, fontWeight: 600, color: '#E3617B' } : { fontSize: 16, fontWeight: 600, color: '#E3617B' }}>
               {stat.value}
             </div>
             <div style={{ fontSize: 11, color: '#929292' }}>{stat.label}</div>
