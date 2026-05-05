@@ -67,7 +67,7 @@ h1, h2, h3, h4 { font-weight: 600; line-height: 1.18; }
 .text-caption { font-size: 14px; font-weight: 500; line-height: 1.29; color: var(--c-text-secondary); }
 .text-micro { font-size: 12px; font-weight: 500; line-height: 1.33; }
 .text-legal { font-size: 10px; font-weight: 500; line-height: 1.33; color: var(--c-text-muted); }
-.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.num { font-feature-settings: 'tnum' 1; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
 
 /* Animations */
 @keyframes fadeInUp {
