@@ -33,6 +33,7 @@ import TrainingArchive from './pages/TrainingArchive'
 import Notifications from './pages/Notifications'
 import Venues from './pages/Venues'
 import MembershipCard from './pages/MembershipCard'
+import Support from './pages/Support'
 
 const tabs = [
   { key: '/home', title: '首页', icon: (active: boolean) => <AppOutline fontSize={22} color={active ? 'var(--c-accent)' : '#6a6a6a'} /> },
@@ -102,6 +103,7 @@ export default function App() {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/venues" element={<Venues />} />
         <Route path="/membership" element={<MembershipCard />} />
+        <Route path="/support" element={<Support />} />
       </Routes>
     </HashRouter>
   )
