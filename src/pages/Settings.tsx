@@ -18,7 +18,7 @@ export default function Settings() {
         <div onClick={() => nav(-1)} style={{
           width: 34, height: 34, borderRadius: '50%', background: 'rgba(0,0,0,0.35)',
           backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 18, color: '#fff', cursor: 'pointer', fontWeight: 500, lineHeight: 1,
+          fontSize: 20, color: '#fff', cursor: 'pointer', fontWeight: 400, lineHeight: '34px', flexShrink: 0,
         }}>‹</div>
         <span style={{ fontSize: 17, fontWeight: 600, color: '#222' }}>设置</span>
       </div>

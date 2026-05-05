@@ -135,8 +135,8 @@ export default function CoachProfile() {
               width: 34, height: 34, borderRadius: '50%',
               background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(8px)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 18, color: '#fff', cursor: 'pointer',
-              fontWeight: 500, lineHeight: 1, flexShrink: 0,
+              fontSize: 20, color: '#fff', cursor: 'pointer',
+              fontWeight: 400, lineHeight: '34px', flexShrink: 0,
             }}
           >
             ‹

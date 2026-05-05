@@ -198,7 +198,7 @@ const s: Record<string, React.CSSProperties> = {
   backBtn: { marginTop: 8, padding: '10px 28px', borderRadius: 24, background: '#E3617B', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer' },
 
   navBar: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', paddingTop: 16 },
-  navBack: { width: 34, height: 34, borderRadius: '50%', background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, color: '#fff', cursor: 'pointer', fontWeight: 500, lineHeight: 1, flexShrink: 0 },
+  navBack: { width: 34, height: 34, borderRadius: '50%', background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, color: '#fff', cursor: 'pointer', fontWeight: 400, lineHeight: '34px', flexShrink: 0 },
   navTitle: { fontSize: 16, fontWeight: 600, color: '#222' },
   navPlaceholder: { width: 32 },
 
