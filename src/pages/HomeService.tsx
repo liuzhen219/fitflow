@@ -42,6 +42,16 @@ export default function HomeService() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff', paddingBottom: 32 }}>
+      {/* Page header */}
+      <div style={{ padding: '16px 16px 4px' }}>
+        <h1 style={{ fontSize: 22, fontWeight: 700, color: '#222', margin: 0, lineHeight: 1.18 }}>
+          上门私教
+        </h1>
+        <p style={{ fontSize: 13, color: '#6a6a6a', margin: '4px 0 0', lineHeight: 1.29 }}>
+          专业教练到你家 · 足不出户享受一对一私教
+        </p>
+      </div>
+
       {/* Filter chips — scrollable with fade hint */}
       <div style={{ position: 'relative' }}>
         <div
@@ -62,8 +72,8 @@ export default function HomeService() {
                 flexShrink: 0, whiteSpace: 'nowrap', cursor: 'pointer',
                 transition: 'all 0.15s ease', userSelect: 'none',
                 color: activeFilter === f.key ? '#fff' : '#222',
-                background: activeFilter === f.key ? '#222' : '#fff',
-                border: activeFilter === f.key ? 'none' : '1px solid #ddd',
+                background: activeFilter === f.key ? '#E3617B' : '#fff',
+                border: activeFilter === f.key ? '1px solid #E3617B' : '1px solid #ddd',
               }}
             >
               {f.label}
@@ -74,6 +84,12 @@ export default function HomeService() {
 
       {/* Course list */}
       <div style={{ padding: '0 16px' }}>
+        <div style={{
+          padding: '10px 0', fontSize: 13, fontWeight: 500, color: '#6a6a6a',
+          display: 'flex', alignItems: 'center', gap: 6,
+        }}>
+          共 <span style={{ color: '#E3617B', fontWeight: 700, fontSize: 15 }}>{filtered.length}</span> 节上门课程
+        </div>
         {filtered.length > 0 ? (
           filtered.map((course) => (
             <CourseCard

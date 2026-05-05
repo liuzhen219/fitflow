@@ -133,7 +133,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
             <ClockIcon size={12} color="#6a6a6a" />
             {' '}{time}
           </span>
-          <span style={{ fontSize: 18, fontWeight: 600, color: '#222' }}>
+          <span style={{ fontSize: 18, fontWeight: 600, color: '#E3617B' }}>
             <span className="num">¥{price}</span>
           </span>
         </div>
