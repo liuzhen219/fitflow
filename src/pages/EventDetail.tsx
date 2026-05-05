@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Toast } from 'antd-mobile'
+import { Popup, Toast } from 'antd-mobile'
 import { events, coaches } from '../data/mock'
 import SectionHeader from '../components/SectionHeader'
 import {
@@ -13,6 +13,8 @@ export default function EventDetail() {
   const nav = useNavigate()
   const event = events.find((e) => e.id === Number(id))
   const [registered, setRegistered] = useState(false)
+  const [showPayPopup, setShowPayPopup] = useState(false)
+  const [isPaying, setIsPaying] = useState(false)
 
   if (!event) {
     return (
@@ -26,13 +28,11 @@ export default function EventDetail() {
 
   const remaining = event.totalSpots - event.filledSpots
   const pct = Math.round((event.filledSpots / event.totalSpots) * 100)
+  const isFree = event.price === '免费'
   const coach = event.coachId ? coaches.find((c) => c.id === event.coachId) : null
 
-  const handleRegister = () => {
-    if (registered) return
-    setRegistered(true)
-    Toast.show({ icon: 'success', content: '报名成功！' })
-  }
+  const handleRegister = () => { if (registered) return; if (isFree) { setRegistered(true); Toast.show({ icon: 'success', content: '报名成功！' }); } else { setShowPayPopup(true); } };
+  const handlePayAndRegister = () => { setIsPaying(true); setTimeout(() => { setIsPaying(false); setShowPayPopup(false); setRegistered(true); Toast.show({ icon: 'success', content: '支付成功，报名完成！' }); }, 1500); }
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff' }}>
@@ -193,6 +193,53 @@ export default function EventDetail() {
 
         <div style={{ height: 100 }} />
       </div>
+
+      {/* ====== Payment Popup ====== */}
+      <Popup
+        visible={showPayPopup}
+        onClose={() => { if (!isPaying) setShowPayPopup(false) }}
+        onMaskClick={() => { if (!isPaying) setShowPayPopup(false) }}
+        bodyStyle={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, background: '#fff' }}
+      >
+        {isPaying ? (
+          <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+            <div style={{
+              width: 56, height: 56, borderRadius: '50%', margin: '0 auto 16px',
+              border: '3px solid #f0f0f0', borderTopColor: 'var(--c-accent)',
+              animation: 'spin 0.8s linear infinite',
+            }} />
+            <div style={{ fontSize: 16, fontWeight: 600, color: '#222', marginBottom: 4 }}>支付处理中...</div>
+            <div style={{ fontSize: 13, color: '#6a6a6a' }}>请稍候，正在确认付款</div>
+            <style>{'@keyframes spin { to { transform: rotate(360deg); } }'}</style>
+          </div>
+        ) : (
+          <div style={{ padding: '24px 16px 30px', textAlign: 'center' }}>
+            <div style={{ fontSize: 18, fontWeight: 600, color: '#222', marginBottom: 4 }}>确认报名</div>
+            <div style={{ fontSize: 14, color: '#6a6a6a', marginBottom: 20 }}>{event.title}</div>
+            <div style={{ fontSize: 36, fontWeight: 700, color: 'var(--c-accent)', marginBottom: 20 }}>
+              {event.price}
+            </div>
+            <div style={{
+              padding: '12px 14px', borderRadius: 12, background: '#fafafa', border: '1px solid #eee',
+              marginBottom: 20, textAlign: 'left', fontSize: 12, color: '#6a6a6a',
+            }}>
+              <div>📅 {event.date} · {event.time}</div>
+              <div>📍 {event.venue}</div>
+              <div>👤 {event.coach}</div>
+            </div>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <div onClick={() => setShowPayPopup(false)} style={{
+                flex: 1, padding: '14px', borderRadius: 12, textAlign: 'center',
+                background: '#f7f7f7', color: '#6a6a6a', fontSize: 14, fontWeight: 600, cursor: 'pointer',
+              }}>取消</div>
+              <div onClick={handlePayAndRegister} style={{
+                flex: 1, padding: '14px', borderRadius: 12, textAlign: 'center',
+                background: 'var(--c-accent)', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer',
+              }}>确认支付 {event.price}</div>
+            </div>
+          </div>
+        )}
+      </Popup>
 
       {/* Fixed CTA */}
       <div style={{
