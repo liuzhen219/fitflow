@@ -227,7 +227,15 @@ export default function Schedule() {
                 <span style={{ fontSize: 28, fontWeight: 700, color: '#E3617B' }}>¥420</span>
               </div>
               <div
-                onClick={() => { setIsPaying(true); setTimeout(() => { setIsPaying(false); setCheckinItem(null); Toast.show({ icon: 'success', content: '支付成功，可签到签到！' }) }, 1500) }}
+                onClick={() => {
+                  setIsPaying(true)
+                  setTimeout(() => {
+                    setIsPaying(false)
+                    Toast.show({ icon: 'success', content: '支付成功！' })
+                    // Transition to check-in: update item status to upcoming
+                    setCheckinItem({ ...checkinItem, status: 'upcoming' })
+                  }, 1500)
+                }}
                 style={{ padding: '14px', borderRadius: 12, background: '#E3617B', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer', textAlign: 'center' }}>
                 立即支付 ¥420
               </div>
