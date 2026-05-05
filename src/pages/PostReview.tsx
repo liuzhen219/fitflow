@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import StarRating from '../components/StarRating'
 import { scheduleItems } from '../data/mock'
 import {
@@ -40,6 +40,22 @@ export default function PostReview() {
   const [venueRating, setVenueRating] = useState(0)
   const [selectedCoachTags, setSelectedCoachTags] = useState<string[]>([])
   const [selectedVenueTags, setSelectedVenueTags] = useState<string[]>([])
+  const [photos, setPhotos] = useState<string[]>([])
+  const fileRef = useRef<HTMLInputElement>(null)
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files) return
+    for (let i = 0; i < files.length && photos.length < 6; i++) {
+      const reader = new FileReader()
+      reader.onload = (ev) => {
+        setPhotos((prev) => [...prev, ev.target?.result as string].slice(0, 6))
+      }
+      reader.readAsDataURL(files[i])
+    }
+  }
+
+  const removePhoto = (idx: number) => setPhotos((prev) => prev.filter((_, i) => i !== idx))
 
   const toggleTag = (tag: string, selected: string[], setFn: (v: string[]) => void) =>
     setFn(selected.includes(tag) ? selected.filter((t) => t !== tag) : [...selected, tag])
@@ -140,22 +156,24 @@ export default function PostReview() {
               </div>
             </div>
 
-            {/* Venue Rating */}
-            <div style={{ marginBottom: 24 }}>
-              <p style={{ fontSize: 14, fontWeight: 600, color: '#222', margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: 4 }}>
-                <BuildingIcon size={14} color="#E3617B" /> 场馆评价
-              </p>
-              <StarRating value={venueRating} onChange={setVenueRating} />
-              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>
-                {venueTags.map((t) => (
-                  <span key={t} onClick={() => toggleTag(t, selectedVenueTags, setSelectedVenueTags)} style={{
-                    padding: '6px 12px', borderRadius: 16, fontSize: 12, fontWeight: 500, cursor: 'pointer',
-                    background: selectedVenueTags.includes(t) ? '#C4A882' : '#f7f7f7',
-                    color: selectedVenueTags.includes(t) ? '#fff' : '#222',
-                  }}>{t}</span>
-                ))}
+            {/* Venue Rating — only for studio courses */}
+            {!selectedCourse?.isHomeService && (
+              <div style={{ marginBottom: 24 }}>
+                <p style={{ fontSize: 14, fontWeight: 600, color: '#222', margin: '0 0 8px', display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <BuildingIcon size={14} color="#E3617B" /> 场馆评价
+                </p>
+                <StarRating value={venueRating} onChange={setVenueRating} />
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>
+                  {venueTags.map((t) => (
+                    <span key={t} onClick={() => toggleTag(t, selectedVenueTags, setSelectedVenueTags)} style={{
+                      padding: '6px 12px', borderRadius: 16, fontSize: 12, fontWeight: 500, cursor: 'pointer',
+                      background: selectedVenueTags.includes(t) ? '#C4A882' : '#f7f7f7',
+                      color: selectedVenueTags.includes(t) ? '#fff' : '#222',
+                    }}>{t}</span>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Text */}
             <div style={{ marginBottom: 24 }}>
@@ -163,12 +181,36 @@ export default function PostReview() {
               <div style={{ background: '#f7f7f7', borderRadius: 12, padding: 12, minHeight: 80, fontSize: 13, color: '#929292' }} contentEditable>
                 分享你的上课感受，帮助其他学员做出选择～
               </div>
-              <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
-                {[1, 2, 3].map((i) => (
-                  <div key={i} style={{ width: 60, height: 60, background: '#f7f7f7', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1.5px dashed #ddd' }}>
-                    <PhotoIcon size={22} color="#c0c0c0" />
+
+              {/* Photo upload */}
+              <div style={{ display: 'flex', gap: 8, marginTop: 10, flexWrap: 'wrap' }}>
+                {/* Uploaded photos */}
+                {photos.map((p, i) => (
+                  <div key={i} style={{ width: 64, height: 64, borderRadius: 8, overflow: 'hidden', position: 'relative' }}>
+                    <img src={p} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <div onClick={() => removePhoto(i)} style={{
+                      position: 'absolute', top: 2, right: 2, width: 18, height: 18, borderRadius: '50%',
+                      background: 'rgba(0,0,0,0.5)', color: '#fff', fontSize: 10,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      cursor: 'pointer', lineHeight: 1,
+                    }}>✕</div>
                   </div>
                 ))}
+                {/* Add photo button */}
+                {photos.length < 6 && (
+                  <div onClick={() => fileRef.current?.click()} style={{
+                    width: 64, height: 64, background: '#f7f7f7', borderRadius: 8,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    border: '1.5px dashed #ddd', cursor: 'pointer',
+                  }}>
+                    <PhotoIcon size={22} color="#c0c0c0" />
+                  </div>
+                )}
+              </div>
+              <input ref={fileRef} type="file" accept="image/*" multiple
+                onChange={handlePhotoUpload} style={{ display: 'none' }} />
+              <div style={{ fontSize: 11, color: '#929292', marginTop: 4 }}>
+                最多上传 6 张照片 ({photos.length}/6)
               </div>
             </div>
 
