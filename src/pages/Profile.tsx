@@ -250,7 +250,7 @@ export default function Profile() {
           }}
         >
           {[
-            { icon: <WalletIcon size={18} color="var(--c-accent)" />, label: '储值卡', value: `¥${userProfile.balance}`, path: '/orders' },
+            { icon: <WalletIcon size={18} color="var(--c-accent)" />, label: '会员卡', value: '2张可用', highlight: true, path: '/membership' },
             { icon: <TicketIcon size={18} color="var(--c-accent)" />, label: '优惠券', value: `${userProfile.coupons}张可用`, highlight: true, path: '/orders' },
             { icon: <SupportIcon size={18} color="var(--c-accent)" />, label: '客服帮助', path: '' },
           ].map((item, idx, arr) => (
