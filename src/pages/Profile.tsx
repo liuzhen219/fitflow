@@ -111,8 +111,8 @@ export default function Profile() {
         }}
       >
         {[
-          { num: userProfile.stats.totalClasses, label: '累计课时' },
-          { num: userProfile.stats.totalMinutes, label: '训练分钟' },
+          { num: `${userProfile.stats.totalClasses}节`, label: '累计上课' },
+          { num: `${Math.round(userProfile.stats.totalMinutes / 60)}h`, label: '训练时长' },
           { num: userProfile.stats.followedCoaches, label: '关注教练' },
         ].map((stat, i) => (
           <div
