@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { scheduleItems, userProfile } from '../data/mock'
+import { useAppState } from '../store/AppContext'
+import { userProfile } from '../data/mock'
 import { ClockIcon, StarFilledIcon, ArchiveIcon, DumbbellIcon, CheckIcon, SparkleIcon } from '../components/Icons'
 
 interface BodyData {
@@ -24,6 +25,7 @@ const fields: { key: keyof BodyData; label: string; unit: string }[] = [
 ]
 
 export default function TrainingArchive() {
+  const { scheduleItems } = useAppState()
   const nav = useNavigate()
   const completed = scheduleItems.filter((s) => s.status === 'completed')
   const totalHours = Math.round(userProfile.stats.totalMinutes / 60)

@@ -1,17 +1,26 @@
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import CoachCard from '../components/CoachCard'
 import EmptyState from '../components/EmptyState'
-import { coaches, userProfile } from '../data/mock'
+import { coaches } from '../data/mock'
 
-// Mock: user's followed coaches (first N from the coaches array)
-const followedCoaches = coaches.slice(0, userProfile.stats.followedCoaches)
+const FAVORITES_KEY = 'fitflow_favorites'
+
+function getFavorites(): { type: string; id: number }[] {
+  try { return JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]') } catch { return [] }
+}
 
 export default function FollowedCoaches() {
   const nav = useNavigate()
+  const [favorites] = useState(getFavorites)
+
+  const followedCoaches = favorites
+    .filter(f => f.type === 'coach')
+    .map(f => coaches.find(c => c.id === f.id))
+    .filter(Boolean)
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff' }}>
-      {/* Header */}
       <div style={{
         display: 'flex', alignItems: 'center', padding: '14px 16px',
         borderBottom: '1px solid #f0f0f0', gap: 8,
@@ -26,24 +35,20 @@ export default function FollowedCoaches() {
         </span>
       </div>
 
-      {/* Coach grid */}
       <div style={{ padding: '16px', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14 }}>
         {followedCoaches.length > 0 ? followedCoaches.map((c) => (
           <CoachCard
-            key={c.id}
-            name={c.name}
-            title={c.title}
-            certification={c.certifications[0]}
-            rating={c.rating}
-            classCount={c.reviewCount}
-            price={c.basePrice}
-            imageUrl={c.avatar}
-            gradient={`linear-gradient(135deg, ${
-              ['#f5e0d8', '#e8d4c8', '#f0ddd4'][c.id % 3]
-            }, ${
-              ['#e8d4c8', '#d4c0b0', '#e0ccc0'][c.id % 3]
-            })`}
-            onClick={() => nav(`/coach/${c.id}`)}
+            key={c!.id}
+            name={c!.name}
+            title={c!.title}
+            certification={c!.certifications[0]}
+            rating={c!.rating}
+            classCount={c!.reviewCount}
+            price={c!.basePrice}
+            imageUrl={c!.avatar}
+            gradient={`linear-gradient(135deg, ${['#f5e0d8', '#e8d4c8', '#f0ddd4'][c!.id % 3]}, ${['#e8d4c8', '#d4c0b0', '#e0ccc0'][c!.id % 3]})`}
+            onClick={() => nav(`/coach/${c!.id}`)}
+            coachId={c!.id}
           />
         )) : (
           <div style={{ gridColumn: 'span 2' }}>

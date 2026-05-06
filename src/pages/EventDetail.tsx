@@ -2,9 +2,10 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Popup, Toast } from 'antd-mobile'
 import { events, coaches } from '../data/mock'
+import { useAppState } from '../store/AppContext'
 import SectionHeader from '../components/SectionHeader'
 import {
-  SearchIcon, ClockIcon, MapPinIcon, StarFilledIcon,
+  SearchIcon, ClockIcon, MapPinIcon, StarFilledIcon, UserIcon,
   CheckIcon, OrdersIcon, ShieldIcon, PhotoIcon,
 } from '../components/Icons'
 
@@ -12,9 +13,11 @@ export default function EventDetail() {
   const { id } = useParams<{ id: string }>()
   const nav = useNavigate()
   const event = events.find((e) => e.id === Number(id))
-  const [registered, setRegistered] = useState(false)
+  const { registeredEventIds, registerForEvent } = useAppState()
   const [showPayPopup, setShowPayPopup] = useState(false)
   const [isPaying, setIsPaying] = useState(false)
+
+  const registered = event ? registeredEventIds.includes(event.id) : false
 
   if (!event) {
     return (
@@ -31,8 +34,24 @@ export default function EventDetail() {
   const isFree = event.price === '免费'
   const coach = event.coachId ? coaches.find((c) => c.id === event.coachId) : null
 
-  const handleRegister = () => { if (registered) return; if (isFree) { setRegistered(true); Toast.show({ icon: 'success', content: '报名成功！' }); } else { setShowPayPopup(true); } };
-  const handlePayAndRegister = () => { setIsPaying(true); setTimeout(() => { setIsPaying(false); setShowPayPopup(false); setRegistered(true); Toast.show({ icon: 'success', content: '支付成功，报名完成！' }); }, 1500); }
+  const handleRegister = () => {
+    if (registered) return
+    if (isFree) {
+      registerForEvent(event.id, event.title)
+      Toast.show({ icon: 'success', content: '报名成功！' })
+    } else {
+      setShowPayPopup(true)
+    }
+  }
+  const handlePayAndRegister = () => {
+    setIsPaying(true)
+    setTimeout(() => {
+      setIsPaying(false)
+      setShowPayPopup(false)
+      registerForEvent(event.id, event.title)
+      Toast.show({ icon: 'success', content: '支付成功，报名完成！' })
+    }, 1500)
+  }
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff' }}>
@@ -184,7 +203,7 @@ export default function EventDetail() {
               width: 140, height: 100, borderRadius: 10, overflow: 'hidden',
               flexShrink: 0, background: '#f0f0f0',
             }}>
-              <img src={`https://picsum.photos/seed/past-event-${event.id}-${n}/280/200`} alt=""
+              <img src={``} alt=""
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
@@ -223,9 +242,15 @@ export default function EventDetail() {
               padding: '12px 14px', borderRadius: 12, background: '#fafafa', border: '1px solid #eee',
               marginBottom: 20, textAlign: 'left', fontSize: 12, color: '#6a6a6a',
             }}>
-              <div>📅 {event.date} · {event.time}</div>
-              <div>📍 {event.venue}</div>
-              <div>👤 {event.coach}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                <ClockIcon size={12} color="#6a6a6a" /> {event.date} · {event.time}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                <MapPinIcon size={12} color="#6a6a6a" /> {event.venue}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                <UserIcon size={12} color="#6a6a6a" /> {event.coach}
+              </div>
             </div>
             <div style={{ display: 'flex', gap: 10 }}>
               <div onClick={() => setShowPayPopup(false)} style={{

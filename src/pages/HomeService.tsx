@@ -42,7 +42,7 @@ export default function HomeService() {
   }, [activeFilter, homeServiceCourses])
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fff', paddingBottom: 32 }}>
+    <div className="page-enter" style={{ minHeight: '100vh', background: '#fff', paddingBottom: 32 }}>
       {/* Page hero — image with gradient fallback */}
       <div style={{
         height: 160, margin: '0 16px', borderRadius: 16, overflow: 'hidden',
@@ -52,7 +52,7 @@ export default function HomeService() {
       }}>
         {/* Hero image */}
         <img
-          src="https://picsum.photos/seed/HomeService-0/800/300"
+          src=""
           alt=""
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}

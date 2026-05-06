@@ -4,16 +4,10 @@ import { Popup, Toast } from 'antd-mobile'
 import StarRating from '../components/StarRating'
 import PriceBreakdown from '../components/PriceBreakdown'
 import { courses, venues } from '../data/mock'
+import { useAppState, type Address } from '../store/AppContext'
 import {
-  SearchIcon, HomeServiceIcon, LocationIcon, ClockIcon, CheckIcon,
+  SearchIcon, HomeServiceIcon, LocationIcon, ClockIcon, CheckIcon, MapPinIcon,
 } from '../components/Icons'
-
-const paymentMethods = [
-  { key: 'wechat', label: '微信支付', icon: '💚', tag: '推荐' },
-  { key: 'alipay', label: '支付宝', icon: '💙' },
-  { key: 'balance', label: '平台余额', icon: '💰', extra: '余额 ¥0' },
-  { key: 'card', label: '银行卡', icon: '💳' },
-]
 
 // Generate next N days from today
 function getNextDays(count: number) {
@@ -26,7 +20,7 @@ function getNextDays(count: number) {
       date: d,
       label: i === 0 ? '今天' : i === 1 ? '明天' : `${d.getMonth() + 1}/${d.getDate()}`,
       weekday: weekNames[d.getDay()],
-      key: `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`,
+      key: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`,
     })
   }
   return days
@@ -44,12 +38,24 @@ export default function BookingConfirm() {
   const nav = useNavigate()
   const course = courses.find((c) => c.id === Number(id))
 
+  const { addBooking, addresses, coupons, useCoupon, balance, payWithBalance } = useAppState()
   const days = useMemo(() => getNextDays(14), [])
+
+  const paymentMethods = [
+    { key: 'wechat', label: '微信支付', icon: '💚', tag: '推荐' },
+    { key: 'alipay', label: '支付宝', icon: '💙' },
+    { key: 'balance', label: '平台余额', icon: '💰', extra: `余额 ¥${balance}` },
+    { key: 'card', label: '银行卡', icon: '💳' },
+  ]
+  const defaultAddr = addresses.find(a => a.isDefault) || addresses[0]
+  const [selectedAddr, setSelectedAddr] = useState<Address | null>(defaultAddr || null)
+  const [showAddrPicker, setShowAddrPicker] = useState(false)
 
   const [selectedDay, setSelectedDay] = useState(1)
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
   const [showPaySheet, setShowPaySheet] = useState(false)
   const [payMethod, setPayMethod] = useState('wechat')
+  const [selectedCoupon, setSelectedCoupon] = useState<number | null>(null)
   const [isPaying, setIsPaying] = useState(false)
 
   if (!course) {
@@ -67,6 +73,11 @@ export default function BookingConfirm() {
   const venue = venues.find((v) => v.id === course.venueId)
   const courseFee = Math.round(course.price * 0.9)
   const venueFee = course.isHomeService ? 0 : course.price - courseFee
+
+  const availableCoupons = coupons.filter(c => c.status === 'active' && c.minOrder <= course.price)
+  const activeCoupon = selectedCoupon ? coupons.find(c => c.id === selectedCoupon) : null
+  const discount = activeCoupon ? Math.min(activeCoupon.value, course.price) : 0
+  const finalPrice = course.price - discount
 
   // Randomly unavailable slots for realism
   const unavailableSlots = new Set(['07:00'])
@@ -98,6 +109,27 @@ export default function BookingConfirm() {
         </div>
         {!course.isHomeService && venue && (
           <div style={s.address}>{venue.address}</div>
+        )}
+        {/* Home-service address picker */}
+        {course.isHomeService && selectedAddr && (
+          <div
+            onClick={() => setShowAddrPicker(true)}
+            style={{
+              marginTop: 12, padding: '12px', borderRadius: 12,
+              background: '#fafafa', border: '1px solid #eee',
+              display: 'flex', alignItems: 'center', gap: 8,
+              cursor: 'pointer', userSelect: 'none',
+            }}
+          >
+            <span style={{
+              padding: '2px 8px', borderRadius: 4, fontSize: 11, fontWeight: 600,
+              background: 'var(--c-accent-soft)', color: 'var(--c-accent)', flexShrink: 0,
+            }}>{selectedAddr.tag}</span>
+            <span style={{ flex: 1, fontSize: 13, color: '#222', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {selectedAddr.full}
+            </span>
+            <span style={{ fontSize: 14, color: '#929292', flexShrink: 0 }}>›</span>
+          </div>
         )}
       </div>
 
@@ -195,7 +227,7 @@ export default function BookingConfirm() {
           onClick={() => selectedTime && setShowPaySheet(true)}
           disabled={!selectedTime}
         >
-          确认支付 ¥{course.price}
+          确认支付 ¥{finalPrice}
         </button>
 
         {/* ====== Payment Sheet ====== */}
@@ -226,8 +258,13 @@ export default function BookingConfirm() {
               <div style={{ padding: '20px 16px 12px', borderBottom: '1px solid #f0f0f0', textAlign: 'center' }}>
                 <div style={{ fontSize: 18, fontWeight: 600, color: '#222', marginBottom: 2 }}>确认支付</div>
                 <div style={{ fontSize: 28, fontWeight: 700, color: 'var(--c-accent)' }}>
-                  <span className="num">¥{course.price}</span>
+                  <span className="num">¥{finalPrice}</span>
                 </div>
+                {discount > 0 && (
+                  <div style={{ fontSize: 12, color: '#929292' }}>
+                    已优惠 ¥{discount}，原价 ¥{course.price}
+                  </div>
+                )}
               </div>
 
               {/* Order Brief */}
@@ -237,6 +274,40 @@ export default function BookingConfirm() {
                   {course.coachName} · {selectedTime && `${days[selectedDay].label}${days[selectedDay].weekday} ${selectedTime}`} · {course.duration}分钟
                 </div>
               </div>
+
+              {/* Coupon Picker */}
+              {availableCoupons.length > 0 && (
+                <div style={{ padding: '12px 16px', borderBottom: '1px solid #f0f0f0' }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#6a6a6a', marginBottom: 8 }}>优惠券</div>
+                  <div style={{ display: 'flex', gap: 8, overflowX: 'auto', scrollbarWidth: 'none' }}>
+                    <div
+                      onClick={() => setSelectedCoupon(null)}
+                      style={{
+                        padding: '8px 14px', borderRadius: 20, fontSize: 12, fontWeight: 500,
+                        flexShrink: 0, cursor: 'pointer',
+                        background: !selectedCoupon ? 'var(--c-accent)' : '#f7f7f7',
+                        color: !selectedCoupon ? '#fff' : '#6a6a6a',
+                        border: !selectedCoupon ? '1.5px solid #E3617B' : '1px solid #eee',
+                      }}
+                    >不使用</div>
+                    {availableCoupons.map(c => (
+                      <div
+                        key={c.id}
+                        onClick={() => setSelectedCoupon(c.id === selectedCoupon ? null : c.id)}
+                        style={{
+                          padding: '8px 14px', borderRadius: 20, fontSize: 12, fontWeight: 500,
+                          flexShrink: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4,
+                          background: selectedCoupon === c.id ? 'var(--c-accent-soft)' : '#f7f7f7',
+                          color: selectedCoupon === c.id ? 'var(--c-accent)' : '#6a6a6a',
+                          border: selectedCoupon === c.id ? '1.5px solid #E3617B' : '1px solid #eee',
+                        }}
+                      >
+                        -¥{c.value}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Payment Methods */}
               <div style={{ padding: '12px 16px' }}>
@@ -263,12 +334,29 @@ export default function BookingConfirm() {
               <div style={{ padding: '12px 16px 20px' }}>
                 <div
                   onClick={() => {
+                    if (payMethod === 'balance') {
+                      const ok = payWithBalance(finalPrice, course.title)
+                      if (!ok) {
+                        Toast.show({ icon: 'fail', content: '余额不足，请选择其他支付方式' })
+                        return
+                      }
+                      setShowPaySheet(false)
+                      const dateKey = days[selectedDay].key
+                      const booking = addBooking({ course, date: dateKey, timeSlot: selectedTime! })
+                      if (selectedCoupon) useCoupon(selectedCoupon)
+                      Toast.show({ icon: 'success', content: `支付成功 ¥${finalPrice}` })
+                      nav(`/payment-success/${booking.id}/${course.id}`)
+                      return
+                    }
                     setIsPaying(true)
                     setTimeout(() => {
                       setShowPaySheet(false)
                       setIsPaying(false)
-                      Toast.show({ icon: 'success', content: '支付成功' })
-                      nav(`/payment-success/${course.id}`)
+                      const dateKey = days[selectedDay].key
+                      const booking = addBooking({ course, date: dateKey, timeSlot: selectedTime! })
+                      if (selectedCoupon) useCoupon(selectedCoupon)
+                      Toast.show({ icon: 'success', content: `支付成功 ¥${finalPrice}` })
+                      nav(`/payment-success/${booking.id}/${course.id}`)
                     }, 1500)
                   }}
                   style={{
@@ -276,11 +364,57 @@ export default function BookingConfirm() {
                     background: 'var(--c-accent)', color: '#fff', textAlign: 'center',
                     fontSize: 16, fontWeight: 600, cursor: 'pointer',
                   }}>
-                  立即支付 ¥{course.price}
+                  立即支付 ¥{finalPrice}
                 </div>
               </div>
             </>
           )}
+        </Popup>
+
+        {/* Address Picker Popup */}
+        <Popup
+          visible={showAddrPicker}
+          onClose={() => setShowAddrPicker(false)}
+          onMaskClick={() => setShowAddrPicker(false)}
+          bodyStyle={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, background: '#fff', maxHeight: '60vh', display: 'flex', flexDirection: 'column' }}
+        >
+          <div style={{ padding: '20px 16px 12px', borderBottom: '1px solid #f0f0f0', flexShrink: 0 }}>
+            <div style={{ fontSize: 18, fontWeight: 600, color: '#222', textAlign: 'center' }}>选择上门地址</div>
+          </div>
+          <div style={{ flex: 1, overflowY: 'auto', padding: '12px 16px' }}>
+            {addresses.map(addr => (
+              <div key={addr.id}
+                onClick={() => { setSelectedAddr(addr); setShowAddrPicker(false) }}
+                style={{
+                  padding: '14px', borderRadius: 12, marginBottom: 8, cursor: 'pointer',
+                  background: selectedAddr?.id === addr.id ? 'var(--c-accent-soft)' : '#fafafa',
+                  border: selectedAddr?.id === addr.id ? '1.5px solid var(--c-accent)' : '1px solid #eee',
+                  display: 'flex', alignItems: 'center', gap: 10,
+                }}
+              >
+                <span style={{
+                  padding: '3px 10px', borderRadius: 6, fontSize: 11, fontWeight: 600, flexShrink: 0,
+                  background: addr.tag === '家' ? 'rgba(227,97,123,0.1)' : addr.tag === '公司' ? 'rgba(44,138,158,0.1)' : 'rgba(22,163,74,0.1)',
+                  color: addr.tag === '家' ? 'var(--c-accent)' : addr.tag === '公司' ? '#2C8A9E' : '#16A34A',
+                }}>{addr.tag}</span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: '#222' }}>{addr.name} <span style={{ fontSize: 12, fontWeight: 400, color: '#6a6a6a' }}>{addr.phone}</span></div>
+                  <div style={{ fontSize: 12, color: '#6a6a6a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: 2 }}>
+                    <MapPinIcon size={11} color="#929292" /> {addr.full}
+                  </div>
+                </div>
+                {selectedAddr?.id === addr.id && <CheckIcon size={18} color="var(--c-accent)" />}
+              </div>
+            ))}
+          </div>
+          <div style={{ padding: '12px 16px 20px', borderTop: '1px solid #f0f0f0', flexShrink: 0 }}>
+            <div onClick={() => { nav('/addresses'); setShowAddrPicker(false) }} style={{
+              textAlign: 'center', padding: '12px', borderRadius: 12, background: '#f7f7f7',
+              color: 'var(--c-accent)', fontSize: 14, fontWeight: 600, cursor: 'pointer',
+            }}>
+              + 管理地址
+            </div>
+          </div>
         </Popup>
       </div>
     </div>

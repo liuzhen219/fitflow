@@ -39,9 +39,9 @@ export default function VenueProfile() {
   const gallery = [
     { type: 'video' as const, src: 'https://www.w3schools.com/html/mov_bbb.mp4', poster: venue.heroImage },
     { type: 'image' as const, src: venue.heroImage },
-    { type: 'image' as const, src: `https://picsum.photos/seed/venue-${venue.id}-1/400/300` },
-    { type: 'image' as const, src: `https://picsum.photos/seed/venue-${venue.id}-2/400/300` },
-    { type: 'image' as const, src: `https://picsum.photos/seed/venue-${venue.id}-3/400/300` },
+    { type: 'image' as const, src: `` },
+    { type: 'image' as const, src: `` },
+    { type: 'image' as const, src: `` },
   ]
 
   // Media viewer state

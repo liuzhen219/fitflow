@@ -1,17 +1,26 @@
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import VenueCard from '../components/VenueCard'
 import EmptyState from '../components/EmptyState'
 import { venues } from '../data/mock'
 
-// Mock: user's saved/followed venues (first 3)
-const followedVenues = venues.slice(0, 3)
+const FAVORITES_KEY = 'fitflow_favorites'
+
+function getFavorites(): { type: string; id: number }[] {
+  try { return JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]') } catch { return [] }
+}
 
 export default function FollowedVenues() {
   const nav = useNavigate()
+  const [favorites] = useState(getFavorites)
+
+  const followedVenues = favorites
+    .filter(f => f.type === 'venue')
+    .map(f => venues.find(v => v.id === f.id))
+    .filter(Boolean)
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff' }}>
-      {/* Header */}
       <div style={{
         display: 'flex', alignItems: 'center', padding: '14px 16px',
         borderBottom: '1px solid #f0f0f0', gap: 8,
@@ -26,20 +35,20 @@ export default function FollowedVenues() {
         </span>
       </div>
 
-      {/* Venue grid */}
       <div style={{ padding: '16px', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 14 }}>
         {followedVenues.length > 0 ? followedVenues.map((v) => (
           <VenueCard
-            key={v.id}
-            name={v.name}
-            district={v.district}
-            distance={v.distance}
-            rating={v.rating}
-            reviewCount={v.reviewCount}
-            imageUrl={v.heroImage}
-            facilities={v.facilities}
-            verified={v.verified}
-            onClick={() => nav(`/venue/${v.id}`)}
+            key={v!.id}
+            name={v!.name}
+            district={v!.district}
+            distance={v!.distance}
+            rating={v!.rating}
+            reviewCount={v!.reviewCount}
+            imageUrl={v!.heroImage}
+            facilities={v!.facilities}
+            verified={v!.verified}
+            onClick={() => nav(`/venue/${v!.id}`)}
+            venueId={v!.id}
           />
         )) : (
           <div style={{ gridColumn: 'span 2' }}>

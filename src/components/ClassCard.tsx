@@ -150,7 +150,7 @@ const ClassCard: React.FC<ClassCardProps> = ({
           {status === 'completed' ? (
             <>
               <button style={{ ...s.actionBtn, ...s.outlineBtn }} onClick={onViewDetail}>查看详情</button>
-              <button style={{ ...s.actionBtn, ...s.primaryBtn }} onClick={onCheckIn}>✎ 去评价</button>
+              <button style={{ ...s.actionBtn, ...s.primaryBtn }} onClick={onCheckIn}>去评价</button>
             </>
           ) : status === 'pending' ? (
             <>

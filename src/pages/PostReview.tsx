@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useMemo, useRef } from 'react'
 import StarRating from '../components/StarRating'
-import { scheduleItems } from '../data/mock'
+import { useAppState } from '../store/AppContext'
+import { userProfile } from '../data/mock'
 import {
   SearchIcon, UserIcon, BuildingIcon, PhotoIcon,
   ClockIcon, LocationIcon, SparkleIcon,
@@ -13,6 +14,7 @@ const venueTags = ['器械齐全', '环境干净', '交通便利', '服务周到
 export default function PostReview() {
   const { id } = useParams<{ id: string }>()
   const nav = useNavigate()
+  const { scheduleItems, addReview } = useAppState()
 
   // Determine entry mode: from schedule item id or from coach id
   const isCoachMode = window.location.hash.includes('/review/coach/')
@@ -215,7 +217,21 @@ export default function PostReview() {
             </div>
 
             {/* Submit */}
-            <button onClick={() => nav(-1)} style={{
+            <button onClick={() => {
+              if (!selectedCourse) return
+              addReview({
+                userName: userProfile.name,
+                userAvatar: userProfile.avatar,
+                rating: coachRating || 5,
+                tags: selectedCoachTags.length > 0 ? selectedCoachTags : ['专业认真'],
+                content: '评价已提交',
+                images: photos,
+                courseLabel: selectedCourse.courseName,
+                classCount: 1,
+                date: new Date().toISOString().slice(0, 10),
+              })
+              nav(-1)
+            }} style={{
               width: '100%', padding: '14px 0', borderRadius: 8, border: 'none',
               background: 'var(--c-accent)', color: '#fff', fontSize: 15, fontWeight: 600, cursor: 'pointer',
             }}>

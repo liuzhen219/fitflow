@@ -1,6 +1,20 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { userProfile } from '../data/mock'
+import { useAppState } from '../store/AppContext'
+
+const FAVORITES_KEY = 'fitflow_favorites'
+
+function getFavCounts(): { coaches: number; venues: number; courses: number } {
+  try {
+    const list: { type: string; id: number }[] = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]')
+    return {
+      coaches: list.filter(f => f.type === 'coach').length,
+      venues: list.filter(f => f.type === 'venue').length,
+      courses: list.filter(f => f.type === 'course').length,
+    }
+  } catch { return { coaches: 0, venues: 0, courses: 0 } }
+}
+import CountUp from '../components/CountUp'
 import {
   UserIcon,
   SettingsIcon,
@@ -14,21 +28,19 @@ import {
   ArchiveIcon,
   CommentIcon,
   HeartIcon,
+  HeartFilledIcon,
   BuildingIcon,
   MapPinIcon,
+  SparkleIcon,
 } from '../components/Icons'
 
 export default function Profile() {
   const nav = useNavigate()
-  const [isMale, setIsMale] = useState(() => document.documentElement.getAttribute('data-theme') === 'male')
+  const favCounts = getFavCounts()
+  const { coupons, balance, points, gender, setGender, membershipCards } = useAppState()
+  const activeCouponCount = coupons.filter(c => c.status === 'active').length
 
-  const toggleTheme = () => {
-    const next = !isMale
-    setIsMale(next)
-    document.documentElement.setAttribute('data-theme', next ? 'male' : '')
-    localStorage.setItem('fitflow_theme', next ? 'male' : 'female')
-  }
-
+  const isMale = gender === 'male'
   const accent = isMale ? '#219EA5' : 'var(--c-accent)'
   const accentDeep = isMale ? '#177D85' : 'var(--c-accent-deep)'
 
@@ -39,7 +51,7 @@ export default function Profile() {
   })
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fff' }}>
+    <div className="page-enter" style={{ minHeight: '100vh', background: '#fff' }}>
       {/* Header */}
       <div
         style={{
@@ -119,7 +131,7 @@ export default function Profile() {
           ].map((t) => {
             const active = t.key === 'male' ? isMale : !isMale
             return (
-              <span key={t.key} onClick={() => { if (t.key === 'male' && !isMale) toggleTheme(); if (t.key === 'female' && isMale) toggleTheme() }}
+              <span key={t.key} onClick={() => setGender(t.key as 'female' | 'male')}
                 style={{
                   padding: '5px 12px', borderRadius: 16, fontSize: 11, fontWeight: 600,
                   cursor: 'pointer', userSelect: 'none', transition: 'all 0.15s',
@@ -144,9 +156,9 @@ export default function Profile() {
         }}
       >
         {[
-          { num: `${userProfile.stats.totalClasses}节`, label: '累计上课' },
-          { num: `${Math.round(userProfile.stats.totalMinutes / 60)}h`, label: '训练时长' },
-          { num: userProfile.stats.followedCoaches, label: '关注教练' },
+          { num: <CountUp end={userProfile.stats.totalClasses} suffix="节" />, label: '累计上课' },
+          { num: <CountUp end={Math.round(userProfile.stats.totalMinutes / 60)} suffix="h" />, label: '训练时长' },
+          { num: <CountUp end={favCounts.coaches} />, label: '关注教练' },
         ].map((stat, i) => (
           <div
             key={i}
@@ -203,7 +215,7 @@ export default function Profile() {
           }}
         >
           <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <OrdersIcon size={18} color="var(--c-accent)" />
+            <OrdersIcon size={18} color="#6a6a6a" />
             我的订单
           </span>
           <span style={{ fontSize: 16, color: '#929292', fontWeight: 500 }}>
@@ -212,10 +224,10 @@ export default function Profile() {
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           {[
-            { icon: <WalletIcon size={24} color="var(--c-accent)" />, label: '待付款', path: '/orders?status=待付款' },
-            { icon: <CalendarIcon size={24} color="var(--c-accent)" />, label: '待上课', path: '/orders?status=待上课' },
-            { icon: <CheckIcon size={24} color="var(--c-accent)" />, label: '已完成', path: '/orders?status=已完成' },
-            { icon: <RefreshIcon size={24} color="var(--c-accent)" />, label: '退款', path: '/orders?status=退款' },
+            { icon: <WalletIcon size={24} color="#6a6a6a" />, label: '待付款', path: '/orders?status=待付款' },
+            { icon: <CalendarIcon size={24} color="#6a6a6a" />, label: '待上课', path: '/orders?status=待上课' },
+            { icon: <CheckIcon size={24} color="#6a6a6a" />, label: '已完成', path: '/orders?status=已完成' },
+            { icon: <RefreshIcon size={24} color="#6a6a6a" />, label: '退款', path: '/orders?status=退款' },
           ].map((item) => (
             <div
               key={item.label}
@@ -250,9 +262,12 @@ export default function Profile() {
           }}
         >
           {[
-            { icon: <WalletIcon size={18} color="var(--c-accent)" />, label: '会员卡', value: '2张可用', highlight: true, path: '/membership' },
-            { icon: <TicketIcon size={18} color="var(--c-accent)" />, label: '优惠券', value: `${userProfile.coupons}张可用`, highlight: true, path: '/coupons' },
-            { icon: <SupportIcon size={18} color="var(--c-accent)" />, label: '客服帮助', path: '/support' },
+            { icon: <WalletIcon size={18} color="#6a6a6a" />, label: '我的钱包', value: balance > 0 ? `余额 ¥${balance}` : '', path: '/wallet' },
+            { icon: <WalletIcon size={18} color="#6a6a6a" />, label: '会员卡', value: `${membershipCards.filter(c => c.status === 'active').length}张可用`, highlight: true, path: '/membership' },
+            { icon: <TicketIcon size={18} color="#6a6a6a" />, label: '优惠券', value: `${activeCouponCount}张可用`, highlight: true, path: '/coupons' },
+            { icon: <SparkleIcon size={18} color="#6a6a6a" />, label: '积分商城', value: `${points}积分`, highlight: true, path: '/points-shop' },
+            { icon: <SparkleIcon size={18} color="#6a6a6a" />, label: '邀请好友', value: '赚积分', path: '/invite' },
+            { icon: <SupportIcon size={18} color="#6a6a6a" />, label: '客服帮助', path: '/support' },
           ].map((item, idx, arr) => (
             <div key={item.label}>
               <div
@@ -338,10 +353,11 @@ export default function Profile() {
           }}
         >
           {[
-            { icon: <ArchiveIcon size={18} color="var(--c-accent)" />, label: '训练档案', path: '/training' },
-            { icon: <CommentIcon size={18} color="var(--c-accent)" />, label: '我的评价', value: '待评价 1条', highlight: true, path: '/orders' },
-            { icon: <HeartIcon size={18} color="var(--c-accent)" />, label: '关注教练', value: `${userProfile.stats.followedCoaches}位`, path: '/followed-coaches' },
-            { icon: <BuildingIcon size={18} color="var(--c-accent)" />, label: '收藏场馆', value: '3家', path: '/followed-venues' },
+            { icon: <ArchiveIcon size={18} color="#6a6a6a" />, label: '训练档案', path: '/training' },
+            { icon: <CommentIcon size={18} color="#6a6a6a" />, label: '我的评价', value: '待评价 1条', highlight: true, path: '/orders' },
+            { icon: <HeartFilledIcon size={18} color="#6a6a6a" />, label: '我的收藏', value: `${favCounts.courses + favCounts.coaches + favCounts.venues}项`, path: '/favorites' },
+            { icon: <HeartIcon size={18} color="#6a6a6a" />, label: '关注教练', value: `${favCounts.coaches}位`, path: '/followed-coaches' },
+            { icon: <BuildingIcon size={18} color="#6a6a6a" />, label: '收藏场馆', value: `${favCounts.venues}家`, path: '/followed-venues' },
           ].map((item, idx, arr) => (
             <div key={item.label}>
               <div
@@ -427,8 +443,8 @@ export default function Profile() {
           }}
         >
           {[
-            { icon: <MapPinIcon size={18} color="var(--c-accent)" />, label: '常用地址', path: '/addresses' },
-            { icon: <SettingsIcon size={18} color="var(--c-accent)" />, label: '设置', path: '/settings' },
+            { icon: <MapPinIcon size={18} color="#6a6a6a" />, label: '常用地址', path: '/addresses' },
+            { icon: <SettingsIcon size={18} color="#6a6a6a" />, label: '设置', path: '/settings' },
           ].map((item, idx, arr) => (
             <div key={item.label}>
               <div

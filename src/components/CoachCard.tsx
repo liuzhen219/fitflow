@@ -1,5 +1,31 @@
-import React from 'react'
-import { StarFilledIcon } from './Icons'
+import React, { useState, useCallback } from 'react'
+import { StarFilledIcon, HeartIcon, HeartFilledIcon } from './Icons'
+
+const FAVORITES_KEY = 'fitflow_favorites'
+
+function getFavorites(): { type: string; id: number }[] {
+  try {
+    return JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]')
+  } catch { return [] }
+}
+
+function isFavorited(type: string, id: number): boolean {
+  return getFavorites().some(f => f.type === type && f.id === id)
+}
+
+function toggleFavorite(type: string, id: number): boolean {
+  const list = getFavorites()
+  const idx = list.findIndex(f => f.type === type && f.id === id)
+  if (idx >= 0) {
+    list.splice(idx, 1)
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(list))
+    return false
+  } else {
+    list.push({ type, id })
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(list))
+    return true
+  }
+}
 
 interface CoachCardProps {
   name: string
@@ -11,6 +37,8 @@ interface CoachCardProps {
   imageUrl?: string
   gradient: string
   onClick: () => void
+  favoritable?: boolean
+  coachId?: number
 }
 
 const CoachCard: React.FC<CoachCardProps> = ({
@@ -23,7 +51,21 @@ const CoachCard: React.FC<CoachCardProps> = ({
   imageUrl,
   gradient,
   onClick,
-}) => (
+  favoritable = true,
+  coachId,
+}) => {
+  const [hearted, setHearted] = useState(() =>
+    favoritable && coachId != null ? isFavorited('coach', coachId) : false
+  )
+
+  const handleHeart = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (coachId == null) return
+    const next = toggleFavorite('coach', coachId)
+    setHearted(next)
+  }, [coachId])
+
+  return (
   <div
     onClick={onClick}
     style={{
@@ -63,6 +105,22 @@ const CoachCard: React.FC<CoachCardProps> = ({
         >
           {name[0]}
         </div>
+      )}
+      {favoritable && coachId != null && (
+        <span
+          onClick={handleHeart}
+          style={{
+            position: 'absolute', top: 8, right: 8,
+            cursor: 'pointer', lineHeight: 1,
+            display: 'inline-flex',
+            filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))',
+          }}
+        >
+          {hearted
+            ? <HeartFilledIcon size={16} color="#E3617B" />
+            : <HeartIcon size={16} color="#fff" />
+          }
+        </span>
       )}
     </div>
     {/* Text below image */}
@@ -110,6 +168,6 @@ const CoachCard: React.FC<CoachCardProps> = ({
       </div>
     </div>
   </div>
-)
+)}
 
 export default CoachCard

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import EmptyState from '../components/EmptyState'
-import { scheduleItems } from '../data/mock'
+import { useAppState } from '../store/AppContext'
 import { CalendarIcon, ClockIcon, OrdersIcon, FireIcon } from '../components/Icons'
 
 const statusFilters = ['全部', '待付款', '待上课', '已完成', '退款']
@@ -33,6 +33,7 @@ function getInitialFilter(): string {
 }
 
 export default function OrderList() {
+  const { scheduleItems } = useAppState()
   const nav = useNavigate()
   const [activeFilter, setActiveFilter] = useState(getInitialFilter)
 

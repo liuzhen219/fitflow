@@ -85,7 +85,7 @@ export default function Search() {
   const showHotAndHistory = !query.trim()
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fff' }}>
+    <div className="page-enter" style={{ minHeight: '100vh', background: '#fff' }}>
       {/* NavBar + SearchBar */}
       <div style={{
         display: 'flex', alignItems: 'center', gap: 10,

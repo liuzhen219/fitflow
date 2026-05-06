@@ -19,7 +19,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: 16,
+      marginBottom: 12,
     }}
   >
     <span style={{ fontWeight: 600, fontSize: 20, lineHeight: 1.18, color: '#222', display: 'flex', alignItems: 'center', gap: 6 }}>

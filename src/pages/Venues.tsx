@@ -27,7 +27,7 @@ export default function Venues() {
         justifyContent: 'flex-end', padding: '20px', marginTop: 16,
         background: 'linear-gradient(135deg, #E3617B, #D44A65)',
       }}>
-        <img src="https://picsum.photos/seed/venues-hero/800/400" alt=""
+        <img src="" alt=""
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
         <div style={{

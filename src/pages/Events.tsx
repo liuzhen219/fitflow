@@ -1,8 +1,9 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { events } from '../data/mock'
+import { useAppState } from '../store/AppContext'
 import {
-  ClockIcon, MapPinIcon, StarFilledIcon, FireIcon,
+  ClockIcon, MapPinIcon, StarFilledIcon, FireIcon, CheckIcon, UserIcon,
 } from '../components/Icons'
 
 const typeFilters = [
@@ -14,6 +15,7 @@ const typeFilters = [
 
 export default function Events() {
   const nav = useNavigate()
+  const { registeredEventIds } = useAppState()
   const [activeType, setActiveType] = useState('all')
 
   const filtered = useMemo(() => {
@@ -31,7 +33,7 @@ export default function Events() {
         background: 'linear-gradient(135deg, #E3617B, #D44A65)',
       }}>
         <img
-          src="https://picsum.photos/seed/events-hero/800/400"
+          src=""
           alt="" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
         <div style={{
@@ -106,6 +108,16 @@ export default function Events() {
                   borderRadius: 12, fontSize: 12, fontWeight: 600, color: '#fff',
                   background: ev.price === '免费' ? 'rgba(22,163,74,0.85)' : 'rgba(0,0,0,0.55)',
                 }}>{ev.price}</span>
+                {registeredEventIds.includes(ev.id) && (
+                  <span style={{
+                    position: 'absolute', bottom: 10, right: 10, padding: '3px 10px',
+                    borderRadius: 10, fontSize: 11, fontWeight: 600,
+                    background: 'var(--c-accent)', color: '#fff',
+                    display: 'flex', alignItems: 'center', gap: 2,
+                  }}>
+                    <CheckIcon size={11} color="#fff" /> 已报名
+                  </span>
+                )}
               </div>
               {/* Content */}
               <div style={{ padding: 14 }}>
@@ -118,7 +130,7 @@ export default function Events() {
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: '#6a6a6a' }}>
                     <MapPinIcon size={12} color="#6a6a6a" />{ev.venue}
-                    {ev.coach && <span> · 👤 {ev.coach}</span>}
+                    {ev.coach && <span> · <UserIcon size={11} color="#6a6a6a" /> {ev.coach}</span>}
                   </div>
                 </div>
                 {/* Progress */}

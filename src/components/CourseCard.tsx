@@ -1,5 +1,31 @@
-import React from 'react'
-import { LocationIcon, ClockIcon, HomeServiceIcon, DumbbellIcon } from './Icons'
+import React, { useState, useCallback } from 'react'
+import { LocationIcon, ClockIcon, HomeServiceIcon, DumbbellIcon, HeartIcon, HeartFilledIcon } from './Icons'
+
+const FAVORITES_KEY = 'fitflow_favorites'
+
+function getFavorites(): { type: string; id: number }[] {
+  try {
+    return JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]')
+  } catch { return [] }
+}
+
+function isFavorited(type: string, id: number): boolean {
+  return getFavorites().some(f => f.type === type && f.id === id)
+}
+
+function toggleFavorite(type: string, id: number): boolean {
+  const list = getFavorites()
+  const idx = list.findIndex(f => f.type === type && f.id === id)
+  if (idx >= 0) {
+    list.splice(idx, 1)
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(list))
+    return false
+  } else {
+    list.push({ type, id })
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(list))
+    return true
+  }
+}
 
 interface CourseCardProps {
   title: string
@@ -14,6 +40,8 @@ interface CourseCardProps {
   isHomeService: boolean
   thumbnail?: string
   onClick: () => void
+  favoritable?: boolean
+  courseId?: number
 }
 
 const CourseCard: React.FC<CourseCardProps> = ({
@@ -29,7 +57,21 @@ const CourseCard: React.FC<CourseCardProps> = ({
   isHomeService,
   thumbnail,
   onClick,
-}) => (
+  favoritable = true,
+  courseId,
+}) => {
+  const [hearted, setHearted] = useState(() =>
+    favoritable && courseId != null ? isFavorited('course', courseId) : false
+  )
+
+  const handleHeart = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (courseId == null) return
+    const next = toggleFavorite('course', courseId)
+    setHearted(next)
+  }, [courseId])
+
+  return (
   <div
     onClick={onClick}
     style={{
@@ -49,6 +91,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
           flexShrink: 0,
           background: imageGradient,
           overflow: 'hidden',
+          position: 'relative',
         }}
       >
         {thumbnail ? (
@@ -73,6 +116,22 @@ const CourseCard: React.FC<CourseCardProps> = ({
               <DumbbellIcon size={36} color="#fff" />
             )}
           </div>
+        )}
+        {favoritable && courseId != null && (
+          <span
+            onClick={handleHeart}
+            style={{
+              position: 'absolute', top: 8, right: 8,
+              cursor: 'pointer', lineHeight: 1,
+              display: 'inline-flex',
+              filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))',
+            }}
+          >
+            {hearted
+              ? <HeartFilledIcon size={16} color="#E3617B" />
+              : <HeartIcon size={16} color="#fff" />
+            }
+          </span>
         )}
       </div>
       {/* Content */}
@@ -157,6 +216,6 @@ const CourseCard: React.FC<CourseCardProps> = ({
       </div>
     </div>
   </div>
-)
+)}
 
 export default CourseCard

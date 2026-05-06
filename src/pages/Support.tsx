@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { SupportIcon, ClockIcon, CheckIcon, SparkleIcon } from '../components/Icons'
+import { SupportIcon, ClockIcon, SparkleIcon, PhoneIcon, CommentIcon, MailIcon } from '../components/Icons'
 
 const faqs = [
   { q: '如何取消已预约的课程？', a: '在「行程」页面找到对应课程，开课前1小时可免费取消并退款。超过截止时间将无法取消。' },
@@ -35,15 +35,15 @@ export default function Support() {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
           {[
-            { icon: '📞', label: '客服电话', value: '400-888-6666', sub: '工作日 09:00-21:00' },
-            { icon: '💬', label: '在线客服', value: '点此发起对话', sub: '响应时间 < 5分钟' },
-            { icon: '📧', label: '邮件支持', value: 'help@fitflow.app', sub: '24小时内回复' },
+            { icon: <PhoneIcon size={20} color="var(--c-accent)" />, label: '客服电话', value: '400-888-6666', sub: '工作日 09:00-21:00' },
+            { icon: <CommentIcon size={20} color="var(--c-accent)" />, label: '在线客服', value: '点此发起对话', sub: '响应时间 < 5分钟' },
+            { icon: <MailIcon size={20} color="var(--c-accent)" />, label: '邮件支持', value: 'help@fitflow.app', sub: '24小时内回复' },
           ].map((item) => (
             <div key={item.label} style={{
               display: 'flex', alignItems: 'center', gap: 12, padding: '12px 0',
               borderBottom: '1px solid #f7f7f7', cursor: 'pointer',
             }}>
-              <span style={{ fontSize: 24 }}>{item.icon}</span>
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, flexShrink: 0 }}>{item.icon}</span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 14, fontWeight: 500, color: '#222' }}>{item.label}</div>
                 <div style={{ fontSize: 12, color: '#6a6a6a', marginTop: 2 }}>{item.sub}</div>

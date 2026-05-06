@@ -1,16 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { TicketIcon, ClockIcon } from '../components/Icons'
-
-const coupons = [
-  { id: 1, name: '新人专享券', value: '¥30', desc: '满 ¥300 可用', minOrder: 300, expireDate: '2026-06-30', status: 'active', color: '#E3617B' },
-  { id: 2, name: '季卡专属券', value: '¥50', desc: '季卡续费可用', minOrder: 0, expireDate: '2026-07-15', status: 'active', color: '#2C8A9E' },
-  { id: 3, name: '好友推荐券', value: '¥20', desc: '无门槛', minOrder: 0, expireDate: '2026-05-20', status: 'active', color: '#16A34A' },
-  { id: 4, name: '春节活动券', value: '¥100', desc: '满 ¥800 可用', minOrder: 800, expireDate: '2026-02-28', status: 'expired', color: '#6a6a6a' },
-  { id: 5, name: '双十一特惠券', value: '¥80', desc: '满 ¥500 可用', minOrder: 500, expireDate: '2025-12-31', status: 'expired', color: '#6a6a6a' },
-]
+import { useAppState } from '../store/AppContext'
 
 export default function Coupons() {
   const nav = useNavigate()
+  const { coupons } = useAppState()
   const activeCoupons = coupons.filter(c => c.status === 'active')
   const expiredCoupons = coupons.filter(c => c.status === 'expired')
 
@@ -49,7 +43,7 @@ export default function Coupons() {
               alignItems: 'center', justifyContent: 'center', padding: '18px 12px',
               borderRight: '1.5px dashed rgba(255,255,255,0.3)', flexShrink: 0,
             }}>
-              <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1, marginBottom: 4 }}>{c.value}</div>
+              <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1, marginBottom: 4 }}>¥{c.value}</div>
               <div style={{ fontSize: 11, opacity: 0.8 }}>{c.desc}</div>
             </div>
             {/* Right — info */}
@@ -83,7 +77,7 @@ export default function Coupons() {
                 alignItems: 'center', justifyContent: 'center', padding: '18px 12px',
                 borderRight: '1.5px dashed rgba(255,255,255,0.3)', flexShrink: 0,
               }}>
-                <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1, marginBottom: 4 }}>{c.value}</div>
+                <div style={{ fontSize: 28, fontWeight: 700, lineHeight: 1, marginBottom: 4 }}>¥{c.value}</div>
                 <div style={{ fontSize: 11 }}>{c.desc}</div>
               </div>
               <div style={{ flex: 1, padding: '14px 16px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>

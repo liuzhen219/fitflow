@@ -1,16 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Popup } from 'antd-mobile'
+import { Popup, PullToRefresh } from 'antd-mobile'
 import SceneCard from '../components/SceneCard'
 import CoachCard from '../components/CoachCard'
 import CourseCard from '../components/CourseCard'
 import SectionHeader from '../components/SectionHeader'
 import EventCard from '../components/EventCard'
 import VenueCard from '../components/VenueCard'
-import { coaches, courses, events, notifications, venues } from '../data/mock'
+import { coaches, courses, events, venues } from '../data/mock'
+import { useAppState } from '../store/AppContext'
+import FeedCard from '../components/FeedCard'
+import { SkeletonCard, SkeletonCoachCard, SkeletonVenueCard } from '../components/Skeleton'
 import {
   LocationIcon, SearchIcon, BuildingIcon, HomeServiceIcon,
-  StarFilledIcon, SparkleIcon, FireIcon, CheckIcon,
+  StarFilledIcon, SparkleIcon, FireIcon, CheckIcon, BellIcon,
 } from '../components/Icons'
 
 const hotTags = ['普拉提核心床', '产后恢复', '体态矫正', '脊柱健康', '孕期普拉提']
@@ -33,10 +36,14 @@ const cities: City[] = [
 
 export default function Home() {
   const nav = useNavigate()
+  const { feedPosts, notifications } = useAppState()
   const [locationVisible, setLocationVisible] = useState(false)
   const [cityIndex, setCityIndex] = useState(0)
   const [districtIndex, setDistrictIndex] = useState(0)
   const [activeTag, setActiveTag] = useState<string | null>(null)
+  const [refreshing, setRefreshing] = useState(false)
+  const [showSkeleton, setShowSkeleton] = useState(true)
+  useEffect(() => { const t = setTimeout(() => setShowSkeleton(false), 800); return () => clearTimeout(t) }, [])
 
   const currentCity = cities[cityIndex]
   const currentDistrict = currentCity.districts[districtIndex]
@@ -56,7 +63,10 @@ export default function Home() {
     : courses
 
   return (
-    <div style={{ minHeight: '100vh', background: '#fff', paddingBottom: 32 }}>
+    <PullToRefresh
+      onRefresh={async () => { setRefreshing(true); await new Promise(r => setTimeout(r, 600)); setRefreshing(false) }}
+    >
+    <div className="page-enter" style={{ minHeight: '100vh', background: '#fff', paddingBottom: 32 }}>
       {/* Location + Search Pill */}
       <div style={{ padding: '16px 16px 12px' }}>
         {/* Location row with bell */}
@@ -78,7 +88,7 @@ export default function Home() {
 
           {/* Notification bell */}
           <div onClick={() => nav('/notifications')} style={{ position: 'relative', cursor: 'pointer' }}>
-            <span style={{ fontSize: 22 }}>🔔</span>
+            <BellIcon size={22} color="#6a6a6a" />
             {notifications.filter(n => !n.read).length > 0 && (
               <span style={{
                 position: 'absolute', top: -2, right: -4,
@@ -117,7 +127,7 @@ export default function Home() {
           subtitle="到店体验 · 专业器械"
           count="6家场馆可选"
           gradient="linear-gradient(145deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2))"
-          imageUrl="https://picsum.photos/seed/Home-0/600/400"
+          imageUrl=""
           onClick={() => nav('/studio')}
         />
         <SceneCard
@@ -126,7 +136,7 @@ export default function Home() {
           subtitle="在家练 · 专属指导"
           count="8位教练可约"
           gradient="linear-gradient(145deg, rgba(0,0,0,0.4), rgba(0,0,0,0.2))"
-          imageUrl="https://picsum.photos/seed/Home-1/600/400"
+          imageUrl=""
           onClick={() => nav('/homeservice')}
         />
       </div>
@@ -174,7 +184,7 @@ export default function Home() {
       </div>
 
       {/* Offline Events */}
-      <div style={{ padding: '0 0 24px' }}>
+      <div style={{ padding: '0 0 12px' }}>
         <div style={{ padding: '0 16px' }}>
           <SectionHeader
             title="线下活动"
@@ -204,7 +214,7 @@ export default function Home() {
       </div>
 
       {/* Featured Coaches */}
-      <div style={{ padding: '0 0 24px' }}>
+      <div style={{ padding: '0 0 12px' }}>
         <div style={{ padding: '0 16px' }}>
           <SectionHeader
             title="精选教练"
@@ -241,7 +251,7 @@ export default function Home() {
       </div>
 
       {/* Featured Venues */}
-      <div style={{ padding: '0 0 24px' }}>
+      <div style={{ padding: '0 0 12px' }}>
         <div style={{ padding: '0 16px' }}>
           <SectionHeader
             title="精选场馆"
@@ -267,6 +277,25 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Social Feed Preview */}
+      <div style={{ padding: '0 0 2px' }}>
+        <div style={{ padding: '0 16px' }}>
+          <SectionHeader
+            title="社区动态"
+            icon={<SparkleIcon size={16} color="var(--c-accent)" />}
+            moreText="查看更多"
+            onMore={() => nav('/feed')}
+          />
+        </div>
+        <div style={{ padding: '0 16px', display: 'flex', gap: 12, overflowX: 'auto', overflowY: 'hidden', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
+          {feedPosts.slice(0, 2).map((post) => (
+            <div key={post.id} style={{ width: 360, flexShrink: 0 }}>
+              <FeedCard post={post} compact onClick={() => nav('/feed')} />
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Recommended Courses */}
       <div>
         <div style={{ padding: '0 16px', marginBottom: 0 }}>
@@ -288,8 +317,13 @@ export default function Home() {
           )}
         </div>
         <div style={{ padding: '0 16px' }}>
-          {filteredCourses.length > 0 ? (
-            filteredCourses.map((c) => (
+          {showSkeleton ? (
+            <>
+              <SkeletonCard /><SkeletonCard /><SkeletonCard />
+            </>
+          ) : filteredCourses.length > 0 ? (
+            filteredCourses.map((c, i) => (
+              <div key={c.id} className={`a-fade-up a-d${Math.min(i + 1, 10)}`}>
               <CourseCard
                 key={c.id}
                 title={c.title}
@@ -305,6 +339,7 @@ export default function Home() {
                 isHomeService={c.isHomeService}
                 onClick={() => nav(`/course/${c.id}`)}
               />
+              </div>
             ))
           ) : (
             <div style={{ textAlign: 'center', padding: '40px 0', color: '#6a6a6a', fontSize: 14 }}>
@@ -389,5 +424,6 @@ export default function Home() {
         </div>
       </Popup>
     </div>
+    </PullToRefresh>
   )
 }

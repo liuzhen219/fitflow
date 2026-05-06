@@ -1,13 +1,17 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { NavBar, Button, Input, Form, Toast, Checkbox } from 'antd-mobile'
+import { useAppState } from '../store/AppContext'
 
 export default function Login() {
   const nav = useNavigate()
+  const { setGender } = useAppState()
   const [isLogin, setIsLogin] = useState(true)
   const [agreed, setAgreed] = useState(false)
+  const [registerGender, setRegisterGender] = useState<'female' | 'male'>('female')
 
   const handleSubmit = () => {
+    setGender(registerGender)
     Toast.show({ icon: 'success', content: isLogin ? '登录成功' : '注册成功' })
     setTimeout(() => nav('/home'), 600)
   }
@@ -26,9 +30,30 @@ export default function Login() {
 
         <Form layout="horizontal" style={s.form}>
           {!isLogin && (
-            <Form.Item>
-              <Input placeholder="昵称" clearable style={s.input} />
-            </Form.Item>
+            <>
+              <Form.Item>
+                <Input placeholder="昵称" clearable style={s.input} />
+              </Form.Item>
+              <Form.Item>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 0' }}>
+                  <span style={{ fontSize: 15, color: '#6a6a6a', flexShrink: 0 }}>性别</span>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    {[
+                      { key: 'female', label: '♀ 女性' },
+                      { key: 'male', label: '♂ 男性' },
+                    ].map(g => (
+                      <span key={g.key} onClick={() => setRegisterGender(g.key as 'female' | 'male')} style={{
+                        padding: '7px 18px', borderRadius: 20, fontSize: 13, fontWeight: 500,
+                        cursor: 'pointer', userSelect: 'none',
+                        background: registerGender === g.key ? 'var(--c-accent)' : '#f7f7f7',
+                        color: registerGender === g.key ? '#fff' : '#6a6a6a',
+                        border: registerGender === g.key ? '1.5px solid var(--c-accent)' : '1px solid #ddd',
+                      }}>{g.label}</span>
+                    ))}
+                  </div>
+                </div>
+              </Form.Item>
+            </>
           )}
           <Form.Item>
             <Input placeholder="手机号" type="tel" clearable style={s.input} />

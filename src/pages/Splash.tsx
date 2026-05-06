@@ -7,7 +7,7 @@ export default function Splash() {
     <div style={s.page}>
       {/* Background image layer */}
       <img
-        src="https://picsum.photos/seed/Splash-0/800/1200"
+        src=""
         alt=""
         onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
         style={{

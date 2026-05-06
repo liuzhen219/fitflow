@@ -1,0 +1,22 @@
+{
+  "name": "FitFlow · 普拉提",
+  "short_name": "FitFlow",
+  "description": "体态塑造的自由流动空间 — 专业普拉提预约平台",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#E3617B",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

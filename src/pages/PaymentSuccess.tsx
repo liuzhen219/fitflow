@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { courses, coaches, venues } from '../data/mock'
+import { useAppState } from '../store/AppContext'
 import {
   SearchIcon,
   CheckIcon,
@@ -9,10 +10,18 @@ import {
   QRIcon,
 } from '../components/Icons'
 
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr)
+  const weekNames = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
+  return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日 ${weekNames[d.getDay()]}`
+}
+
 export default function PaymentSuccess() {
-  const { id } = useParams<{ id: string }>()
+  const { bookingId, courseId } = useParams<{ bookingId: string; courseId: string }>()
   const nav = useNavigate()
-  const course = courses.find((c) => c.id === Number(id))
+  const { scheduleItems } = useAppState()
+  const booking = scheduleItems.find(s => s.id === Number(bookingId))
+  const course = courses.find((c) => c.id === Number(courseId))
 
   if (!course) {
     return (
@@ -28,6 +37,8 @@ export default function PaymentSuccess() {
 
   const coach = coaches.find((c) => c.id === course.coachId)
   const venue = venues.find((v) => v.id === course.venueId)
+  const displayDate = booking ? formatDate(booking.date) : '待确认'
+  const displayTime = booking ? booking.time : '待确认'
 
   return (
     <div style={s.page}>
@@ -44,7 +55,7 @@ export default function PaymentSuccess() {
       <div style={s.qrSection}>
         <div style={s.qrBox}>
           <img
-            src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://fitflow.app/checkin/12345"
+            src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://fitflow.app/checkin/${bookingId || '12345'}`}
             alt="签到二维码"
             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
             style={{ width: 140, height: 140, borderRadius: 12 }}
@@ -63,11 +74,11 @@ export default function PaymentSuccess() {
         <div style={s.reminderList}>
           <div style={s.reminderItem}>
             <span style={s.reminderLabel}>日期</span>
-            <span style={s.reminderValue}>2026年5月9日 周六</span>
+            <span style={s.reminderValue}>{displayDate}</span>
           </div>
           <div style={s.reminderItem}>
             <span style={s.reminderLabel}>时间</span>
-            <span style={s.reminderValue}>10:00 - {10 + Math.floor(course.duration / 60)}:{String(course.duration % 60).padStart(2, '0')}</span>
+            <span style={s.reminderValue}>{displayTime}</span>
           </div>
           <div style={s.reminderItem}>
             <span style={s.reminderLabel}>场馆</span>
@@ -106,7 +117,25 @@ export default function PaymentSuccess() {
         <button
           style={s.actionPrimary}
           onClick={() => {
-            // Add to calendar placeholder
+            if (!booking || !course) return
+            const [startTime, endTime] = booking.time.split(' - ')
+            const start = new Date(`${booking.date}T${startTime}:00`)
+            const end = new Date(`${booking.date}T${endTime}:00`)
+            const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'
+            const ics = [
+              'BEGIN:VCALENDAR', 'VERSION:2.0',
+              'BEGIN:VEVENT',
+              `DTSTART:${fmt(start)}`, `DTEND:${fmt(end)}`,
+              `SUMMARY:${course.title} · FitFlow普拉提`,
+              `DESCRIPTION:教练：${course.coachName}\\n场馆：${course.venueName || '上门服务'}`,
+              `LOCATION:${course.venueName || booking.venueName || '待确认'}`,
+              'END:VEVENT', 'END:VCALENDAR',
+            ].join('\r\n')
+            const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' })
+            const url = URL.createObjectURL(blob)
+            const a = document.createElement('a')
+            a.href = url; a.download = `fitflow-${booking.id}.ics`; a.click()
+            URL.revokeObjectURL(url)
           }}
         >
           <CalendarIcon size={14} color="var(--c-accent)" />

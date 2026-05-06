@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Switch, Popup, Toast } from 'antd-mobile'
+import { WarningIcon } from '../components/Icons'
 
 export default function Settings() {
   const nav = useNavigate()
   const [pushOn, setPushOn] = useState(true)
   const [smsOn, setSmsOn] = useState(true)
   const [wechatOn, setWechatOn] = useState(false)
+  const [darkMode, setDarkMode] = useState(() => document.documentElement.getAttribute('data-theme')?.includes('dark') || false)
 
   // Phone
   const [phoneVisible, setPhoneVisible] = useState(false)
@@ -90,6 +92,31 @@ export default function Settings() {
             <Switch checked={item.state} onChange={item.set} />
           </div>
         ))}
+      </div>
+
+      {/* Appearance */}
+      <div style={{ margin: '0 12px 12px', background: '#fff', borderRadius: 14, overflow: 'hidden' }}>
+        <div style={{ padding: '14px 16px', borderBottom: '1px solid #f0f0f0', fontSize: 13, fontWeight: 600, color: '#6a6a6a' }}>外观</div>
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '14px 16px',
+        }}>
+          <div>
+            <div style={{ fontSize: 14, fontWeight: 500, color: '#222' }}>深色模式</div>
+            <div style={{ fontSize: 12, color: '#929292', marginTop: 2 }}>切换深色界面，夜间更护眼</div>
+          </div>
+          <Switch checked={darkMode} onChange={(v) => {
+            setDarkMode(v)
+            const current = document.documentElement.getAttribute('data-theme') || ''
+            const isMale = current.includes('male')
+            if (v) {
+              document.documentElement.setAttribute('data-theme', isMale ? 'dark male' : 'dark')
+            } else {
+              document.documentElement.setAttribute('data-theme', isMale ? 'male' : '')
+            }
+            localStorage.setItem('fitflow_dark', v ? '1' : '0')
+          }} />
+        </div>
       </div>
 
       {/* Account Security */}
@@ -179,7 +206,9 @@ export default function Settings() {
       <Popup visible={deleteVisible} onClose={() => setDeleteVisible(false)} onMaskClick={() => setDeleteVisible(false)}
         bodyStyle={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, background: '#fff' }}>
         <div style={{ padding: '24px 16px 30px', textAlign: 'center' }}>
-          <div style={{ fontSize: 40, marginBottom: 12 }}>⚠️</div>
+          <div style={{ marginBottom: 12, display: 'flex', justifyContent: 'center' }}>
+            <WarningIcon size={40} color="#c13515" />
+          </div>
           <div style={{ fontSize: 18, fontWeight: 600, color: '#c13515', marginBottom: 8 }}>注销账户</div>
           <div style={{ fontSize: 13, color: '#6a6a6a', lineHeight: 1.6, marginBottom: 16 }}>
             注销后，你的所有数据将被永久删除，包括课程记录、会员卡、优惠券等，且无法恢复。确定要继续吗？

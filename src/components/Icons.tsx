@@ -157,6 +157,14 @@ export const HeartIcon: React.FC<IconProps> = ({ size = 24, className, color }) 
   </svg>
 )
 
+// Heart Filled
+export const HeartFilledIcon: React.FC<IconProps> = ({ size = 24, className, color }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth={1.5}
+    strokeLinecap="round" strokeLinejoin="round" style={iconStyle(size, color)} className={className}>
+    <path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 000-7.8z"/>
+  </svg>
+)
+
 // Settings/Gear
 export const SettingsIcon: React.FC<IconProps> = ({ size = 24, className, color }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}
@@ -318,5 +326,60 @@ export const RefreshIcon: React.FC<IconProps> = ({ size = 24, className, color }
     strokeLinecap="round" strokeLinejoin="round" style={iconStyle(size, color)} className={className}>
     <path d="M1 4v6h6M23 20v-6h-6"/>
     <path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/>
+  </svg>
+)
+
+// Share / forward arrow
+export const ShareIcon: React.FC<IconProps> = ({ size = 24, className, color }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}
+    strokeLinecap="round" strokeLinejoin="round" style={iconStyle(size, color)} className={className}>
+    <circle cx="18" cy="5" r="3"/>
+    <circle cx="6" cy="12" r="3"/>
+    <circle cx="18" cy="19" r="3"/>
+    <path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/>
+  </svg>
+)
+
+// Bell / notification
+export const BellIcon: React.FC<IconProps> = ({ size = 24, className, color }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}
+    strokeLinecap="round" strokeLinejoin="round" style={iconStyle(size, color)} className={className}>
+    <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+    <path d="M13.73 21a2 2 0 01-3.46 0"/>
+  </svg>
+)
+
+// Copy / clipboard
+export const CopyIcon: React.FC<IconProps> = ({ size = 24, className, color }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}
+    strokeLinecap="round" strokeLinejoin="round" style={iconStyle(size, color)} className={className}>
+    <rect x="9" y="9" width="13" height="13" rx="2"/>
+    <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+  </svg>
+)
+
+// Phone
+export const PhoneIcon: React.FC<IconProps> = ({ size = 24, className, color }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}
+    strokeLinecap="round" strokeLinejoin="round" style={iconStyle(size, color)} className={className}>
+    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+  </svg>
+)
+
+// Mail
+export const MailIcon: React.FC<IconProps> = ({ size = 24, className, color }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}
+    strokeLinecap="round" strokeLinejoin="round" style={iconStyle(size, color)} className={className}>
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+    <polyline points="22,6 12,13 2,6"/>
+  </svg>
+)
+
+// Warning triangle
+export const WarningIcon: React.FC<IconProps> = ({ size = 24, className, color }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}
+    strokeLinecap="round" strokeLinejoin="round" style={iconStyle(size, color)} className={className}>
+    <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+    <path d="M12 9v4M12 17h.01"/>
   </svg>
 )

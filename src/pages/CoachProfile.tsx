@@ -6,7 +6,8 @@ import CertBadge from '../components/CertBadge'
 import ReviewCard from '../components/ReviewCard'
 import SectionHeader from '../components/SectionHeader'
 import StarRating from '../components/StarRating'
-import { coaches, reviews, venues as allVenues } from '../data/mock'
+import { coaches, reviews as mockReviews, venues as allVenues } from '../data/mock'
+import { useAppState } from '../store/AppContext'
 import {
   SearchIcon,
   PlayIcon,
@@ -25,12 +26,12 @@ import {
 
 // Sample teaching photos for the gallery
 const galleryPhotos = [
-  'https://picsum.photos/seed/CoachProfile-0/600/600',
-  'https://picsum.photos/seed/CoachProfile-1/600/600',
-  'https://picsum.photos/seed/CoachProfile-2/600/600',
-  'https://picsum.photos/seed/CoachProfile-3/600/600',
-  'https://picsum.photos/seed/CoachProfile-4/600/600',
-  'https://picsum.photos/seed/CoachProfile-5/600/600',
+  '',
+  '',
+  '',
+  '',
+  '',
+  '',
 ]
 
 export default function CoachProfile() {
@@ -47,6 +48,9 @@ export default function CoachProfile() {
       return { ...pv, heroImage: full?.heroImage }
     })
     .filter(Boolean) || []
+
+  const { userReviews } = useAppState()
+  const reviews = [...userReviews, ...mockReviews]
 
   if (!coach) {
     return (

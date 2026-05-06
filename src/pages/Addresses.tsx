@@ -1,32 +1,19 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Popup, Toast } from 'antd-mobile'
-import { MapPinIcon, LocationIcon, CheckIcon } from '../components/Icons'
-
-interface Address {
-  id: number
-  tag: string
-  name: string
-  phone: string
-  full: string
-  isDefault: boolean
-}
-
-const initAddresses: Address[] = [
-  { id: 1, tag: '家', name: '李女士', phone: '138****6789', full: '上海市徐汇区衡山路8弄3号1201室', isDefault: true },
-  { id: 2, tag: '公司', name: '李女士', phone: '138****6789', full: '上海市静安区南京西路1515号静安嘉里中心18F', isDefault: false },
-  { id: 3, tag: '父母家', name: '李建国', phone: '139****1234', full: '上海市浦东新区张杨路500号华润时代广场对面小区2号楼301', isDefault: false },
-]
+import { MapPinIcon, CheckIcon } from '../components/Icons'
+import { useAppState, type Address } from '../store/AppContext'
 
 export default function Addresses() {
   const nav = useNavigate()
-  const [addresses, setAddresses] = useState<Address[]>(initAddresses)
+  const { addresses, addAddress, updateAddress, removeAddress, setDefaultAddress } = useAppState()
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState<number | null>(null)
   const [formTag, setFormTag] = useState('')
   const [formName, setFormName] = useState('')
   const [formPhone, setFormPhone] = useState('')
   const [formFull, setFormFull] = useState('')
+  const [deleteTarget, setDeleteTarget] = useState<Address | null>(null)
 
   const openAdd = () => {
     setEditingId(null)
@@ -51,26 +38,21 @@ export default function Addresses() {
       Toast.show({ content: '请填写完整信息' })
       return
     }
+    const data = { tag: formTag, name: formName, phone: formPhone || '未填写', full: formFull }
     if (editingId) {
-      setAddresses(prev => prev.map(a => a.id === editingId ? { ...a, tag: formTag, name: formName, phone: formPhone || a.phone, full: formFull } : a))
+      updateAddress(editingId, data)
     } else {
-      const newAddr: Address = {
-        id: Date.now(), tag: formTag, name: formName,
-        phone: formPhone || '未填写', full: formFull, isDefault: false,
-      }
-      setAddresses(prev => [...prev, newAddr])
+      addAddress(data)
     }
     Toast.show({ icon: 'success', content: editingId ? '地址已更新' : '地址已添加' })
     setShowForm(false)
   }
 
-  const setDefault = (id: number) => {
-    setAddresses(prev => prev.map(a => ({ ...a, isDefault: a.id === id })))
-  }
-
-  const removeAddress = (id: number) => {
-    setAddresses(prev => prev.filter(a => a.id !== id))
+  const confirmDelete = () => {
+    if (!deleteTarget) return
+    removeAddress(deleteTarget.id)
     Toast.show({ content: '地址已删除' })
+    setDeleteTarget(null)
   }
 
   return (
@@ -126,7 +108,7 @@ export default function Addresses() {
             {/* Actions */}
             <div style={{ display: 'flex', gap: 0, marginTop: 12, borderTop: '1px solid #f7f7f7', paddingTop: 10 }}>
               {!addr.isDefault && (
-                <span onClick={() => setDefault(addr.id)} style={{
+                <span onClick={() => setDefaultAddress(addr.id)} style={{
                   fontSize: 12, color: 'var(--c-accent)', cursor: 'pointer', fontWeight: 500,
                 }}>设为默认</span>
               )}
@@ -134,7 +116,7 @@ export default function Addresses() {
                 fontSize: 12, color: '#6a6a6a', cursor: 'pointer', fontWeight: 500,
                 marginLeft: 16,
               }}>编辑</span>
-              <span onClick={() => removeAddress(addr.id)} style={{
+              <span onClick={() => setDeleteTarget(addr)} style={{
                 fontSize: 12, color: '#c13515', cursor: 'pointer', fontWeight: 500,
                 marginLeft: 16,
               }}>删除</span>
@@ -204,6 +186,34 @@ export default function Addresses() {
             color: '#fff', textAlign: 'center', fontSize: 15, fontWeight: 600, cursor: 'pointer',
           }}>
             {editingId ? '保存修改' : '添加地址'}
+          </div>
+        </div>
+      </Popup>
+
+      {/* Delete confirmation */}
+      <Popup
+        visible={!!deleteTarget}
+        onClose={() => setDeleteTarget(null)}
+        onMaskClick={() => setDeleteTarget(null)}
+        bodyStyle={{ borderTopLeftRadius: 20, borderTopRightRadius: 20, background: '#fff' }}
+      >
+        <div style={{ padding: '24px 16px 30px', textAlign: 'center' }}>
+          <div style={{ fontSize: 18, fontWeight: 600, color: '#222', marginBottom: 4 }}>确认删除</div>
+          <div style={{ fontSize: 14, color: '#6a6a6a', marginBottom: 8 }}>
+            {deleteTarget?.tag ? `「${deleteTarget.tag}」` : ''} {deleteTarget?.full}
+          </div>
+          <div style={{ fontSize: 12, color: '#c13515', marginBottom: 20 }}>
+            删除后将无法恢复
+          </div>
+          <div style={{ display: 'flex', gap: 10 }}>
+            <div onClick={() => setDeleteTarget(null)} style={{
+              flex: 1, padding: '14px', borderRadius: 12, textAlign: 'center',
+              background: '#f7f7f7', color: '#6a6a6a', fontSize: 14, fontWeight: 600, cursor: 'pointer',
+            }}>取消</div>
+            <div onClick={confirmDelete} style={{
+              flex: 1, padding: '14px', borderRadius: 12, textAlign: 'center',
+              background: '#c13515', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer',
+            }}>确认删除</div>
           </div>
         </div>
       </Popup>

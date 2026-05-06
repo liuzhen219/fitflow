@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { notifications } from '../data/mock'
+import { useAppState } from '../store/AppContext'
 import { ClockIcon, StarFilledIcon, SparkleIcon, CheckIcon, FireIcon } from '../components/Icons'
 
 const typeIcon: Record<string, React.ReactNode> = {
@@ -12,13 +12,11 @@ const typeIcon: Record<string, React.ReactNode> = {
 
 export default function Notifications() {
   const nav = useNavigate()
+  const { notifications, markNotificationRead, markAllNotificationsRead } = useAppState()
   const [filter, setFilter] = useState<string>('all')
-  const [items, setItems] = useState(notifications)
 
-  const filtered = filter === 'all' ? items : items.filter((n) => n.type === filter)
-  const unreadCount = items.filter((n) => !n.read).length
-
-  const markAllRead = () => setItems(items.map((n) => ({ ...n, read: true })))
+  const filtered = filter === 'all' ? notifications : notifications.filter((n) => n.type === filter)
+  const unreadCount = notifications.filter((n) => !n.read).length
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff' }}>
@@ -42,7 +40,7 @@ export default function Notifications() {
           )}
         </div>
         {unreadCount > 0 && (
-          <span onClick={markAllRead} style={{ fontSize: 13, color: '#6a6a6a', cursor: 'pointer' }}>
+          <span onClick={markAllNotificationsRead} style={{ fontSize: 13, color: '#6a6a6a', cursor: 'pointer' }}>
             全部已读
           </span>
         )}
@@ -72,7 +70,7 @@ export default function Notifications() {
         {filtered.map((n) => (
           <div key={n.id}
             onClick={() => {
-              setItems(items.map((i) => i.id === n.id ? { ...i, read: true } : i))
+              markNotificationRead(n.id)
               if (n.link) nav(n.link)
             }}
             style={{
